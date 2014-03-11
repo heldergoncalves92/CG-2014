@@ -84,6 +84,7 @@ void renderScene(void) {
 		
 		FILE *f = fopen("/Users/duarteduarte/Desktop/esfera.3d", "r");
 		while (fscanf(f, "%f %f %f\n", &cx, &cy, &cz)!=EOF){
+            glColor3f(cx, cy, cz);
 			glVertex3f(cx, cy, cz);
             i++;
             if (i%1000==0)
@@ -137,7 +138,7 @@ int main(int argc, char* argv[]){
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(800, 800);
-	glutCreateWindow("BananaCorp");
+	glutCreateWindow("BananaCorp®");
     
     
 	// registo de funÁıes
