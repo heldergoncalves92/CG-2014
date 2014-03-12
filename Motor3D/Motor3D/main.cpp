@@ -65,11 +65,10 @@ void renderScene(void) {
 	float cx,cy,cz;
     
 	
-	//TiXmlDocument *doc = new TiXmlDocument("/Users/helderjosealvesgoncalves/Desktop/exemplo.xml");
-    TiXmlDocument doc;
-	if(doc.LoadFile("/Users/helderjosealvesgoncalves/Desktop/exemplo.xml")){
+	TiXmlDocument *doc = new TiXmlDocument("/Users/helderjosealvesgoncalves/Desktop/test.xml");
+	if(doc->LoadFile()){
     
-        TiXmlElement *root = doc.RootElement();
+        TiXmlElement *root = doc->RootElement();
         
         
         /*TiXmlNode *child = root->FirstChild();
