@@ -106,6 +106,38 @@ void renderScene(void) {
 	glutSwapBuffers();
 }
 
+void mexeTecla(unsigned char tecla, int x, int y){
+	switch (tecla){
+        case ('a') :
+            angulo -= 10.0f;
+            xr = 0.0f;
+            yr = 1.0f;
+            break;
+        case ('d') :
+            angulo += 10.0f;
+            xr = 0.0f;
+            yr = 1.0f;
+            break;
+        case ('e') :
+            zoom += 1.0f;
+            break;
+        case ('q') :
+            zoom -= 1.0f;
+            break;
+        case ('w') :
+            angulo += 10.0f;
+            xr = 1.0f;
+            yr = 0.0f;
+            break;
+        case ('s') :
+            angulo -= 10.0f;
+            xr = 1.0f;
+            yr = 0.0f;
+            break;
+    }
+	glutPostRedisplay();
+}
+
 
 
 
@@ -148,7 +180,7 @@ int main(int argc, char* argv[]){
     
     
 	// pÙr aqui registo da funÁıes do teclado e rato
-	//glutKeyboardFunc(mexeTecla);
+	glutKeyboardFunc(mexeTecla);
     
 	// pÙr aqui a criaÁ„o do menu
     
