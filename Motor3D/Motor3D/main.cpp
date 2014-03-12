@@ -13,16 +13,9 @@
 #include <stdio.h>
 #include "tinyxml/tinyxml.h"
 
-//#include "CenaHandler.h"
 
-#undef _CRT_TERMINATE_DEFINED
-#define _CRT_TERMINATE_DEFINED 0
 
-float angulo = 0.0f;
-float xr = 0.0f;
-float yr = 1.0f;
-float zr = 0.0f;
-float zoom = 2.0f;
+float raio=5,cam_h=0,cam_v=0.5;
 
 void changeSize(int w, int h) {
     
@@ -52,7 +45,7 @@ void changeSize(int w, int h) {
 
 
 void renderScene(void) {
-    int i=0;
+    
 	//LL *lista = listaPontos;
 	//lista = lista->next;
     
@@ -61,46 +54,47 @@ void renderScene(void) {
     
 	// set the camera
 	glLoadIdentity();
-	gluLookAt(0.0f, 0.0f, 5.0f,
-              0.0, 0.0, 0.0,
+	
+    //Câmera em modo explorador
+	gluLookAt(raio*sin(cam_h)*cos(cam_v),raio*sin(cam_v),raio*cos(cam_h)*cos(cam_v),
+	          0.0, 0.0, 0.0,
               0.0f, 1.0f, 0.0f);
     
-	glRotatef(angulo, xr, yr, zr); // ‚ngulo em graus
     
 	// pÙr instruÁıes de desenho aqui
-	float cx=0, cy=0, cz=0;
+	float cx,cy,cz;
     
-	glBegin(GL_TRIANGLES);
-	//TiXmlDocument *doc = new TiXmlDocument("/Users/duarteduarte/Desktop/esfera.3d");
-	//bool loaded = doc->LoadFile();
+	
+	TiXmlDocument *doc = new TiXmlDocument("/Users/helderjosealvesgoncalves/Desktop/test.xml");
+	if(doc->LoadFile()){
     
-	//TiXmlElement *root = doc->RootElement();
-	//for (TiXmlNode *child = root->FirstChild(); child != NULL; child = child->NextSibling()){
-	//	child->Print(stdout, NULL);
-	//	TiXmlAttribute *attr = child->ToElement()->FirstAttribute();
-	//	const char *attrName = attr->Name();
-	//	const char *attrValue = attr->Value();
-    {
-		
-		FILE *f = fopen("/Users/duarteduarte/Desktop/esfera.3d", "r");
-		while (fscanf(f, "%f %f %f\n", &cx, &cy, &cz)!=EOF){
+        TiXmlElement *root = doc->RootElement();
+        
+        
+        /*TiXmlNode *child = root->FirstChild();
+        child = child->NextSibling();
+            child->Print(stdout, NULL);
+            TiXmlAttribute *attr = child->ToElement()->FirstAttribute();
+            const char *attrName = attr->Name();
+            const char *attrValue = attr->Value();
+*/
+        const char* texto= root->GetText();
+        printf("Ola -> %s",texto);
+
+    }
+    else
+        printf("Falhou!! Não fez load do ficheiro!\n");
+    
+	
+    FILE *f = fopen("/Users/helderjosealvesgoncalves/Desktop/esfera.3d", "r");
+    if(f){
+        glBegin(GL_TRIANGLES);
+        while (fscanf(f, "%f %f %f\n", &cx, &cy, &cz)!=EOF){
             glColor3f(cx, cy, cz);
-			glVertex3f(cx, cy, cz);
-            i++;
-            if (i%1000==0)
-                printf("%d\n",i);
-			//insertLL(lista, 0, cx, cy, cz);
-		}
-        /*while (lista != NULL){
-         if (lista->tipo == 1000){
-         glColor3f(lista->coordenadaX, lista->coordenadaY, lista->coordenadaZ);
-         }
-         else{
-         glVertex3f(lista->coordenadaX, lista->coordenadaY, lista->coordenadaZ);
-         }
-         lista = lista->next;*/
-	}
-	glEnd();
+            glVertex3f(cx, cy, cz);
+        }
+        glEnd();
+    }
     
 	// End of frame
 	glutSwapBuffers();
@@ -139,14 +133,61 @@ void mexeTecla(unsigned char tecla, int x, int y){
 }
 
 
+void teclado_normal(unsigned char tecla,int x, int y){
+    switch (tecla) {
+        case 'a':
+            raio-=0.1;
+            break;
+        case 'd':
+            raio+=0.1;
+            break;
+            
+        default:
+            break;
+    }
+    glutPostRedisplay();
+}
 
+void teclado_especial(int tecla,int x, int y){
+    switch (tecla) {
+        case GLUT_KEY_UP:
+            if(cam_v+0.05<M_PI_2)   //Para câmera não virar ao contrário
+                cam_v+=0.05;
+            break;
+        case GLUT_KEY_DOWN:
+            if(cam_v-0.05>-M_PI_2)  //Para câmera não virar ao contrário
+                cam_v-=0.05;
+            break;
+            
+        case GLUT_KEY_LEFT:
+            cam_h-=0.05;
+            break;
+        case GLUT_KEY_RIGHT:
+            cam_h+=0.05;
+            break;
+            
+        default:
+            break;
+    }
+    glutPostRedisplay();
+}
 
-
-
-
-
-
-
+void front_menu(int op){
+    switch (op) {
+        case 1:
+            glPolygonMode(GL_FRONT,GL_POINT);
+            break;
+        case 2:
+            glPolygonMode(GL_FRONT,GL_LINE);
+            break;
+        case 3:
+            glPolygonMode(GL_FRONT,GL_FILL);
+            break;
+        default:
+            break;
+    }
+    glutPostRedisplay();
+}
 
 int main(int argc, char* argv[]){
 	/*if (argc < 2){
@@ -173,16 +214,33 @@ int main(int argc, char* argv[]){
 	glutCreateWindow("BananaCorp®");
     
     
-	// registo de funÁıes
-	//LL *lista = NULL;
-	glutDisplayFunc(renderScene);
+    // pÙr registo de funÁıes aqui
+    glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
     
+    // funções do teclado e rato
+	glutKeyboardFunc(teclado_normal);
+    glutSpecialFunc(teclado_especial);
     
+    
+    //MENU
+    glutCreateMenu(front_menu);
+    glutAddMenuEntry("GL POINT",1);
+    glutAddMenuEntry("GL LINE",2);
+    glutAddMenuEntry("GL FILL",3);
+    
+<<<<<<< HEAD
 	// pÙr aqui registo da funÁıes do teclado e rato
 	glutKeyboardFunc(mexeTecla);
+=======
+    glutAttachMenu(GLUT_RIGHT_BUTTON);
+>>>>>>> FETCH_HEAD
     
-	// pÙr aqui a criaÁ„o do menu
+    
+    // alguns settings para OpenGL
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glClearColor(0.0f,0.0f,0.0f,0.0f);
     
 	// alguns settings para OpenGL
 	glEnable(GL_DEPTH_TEST);
