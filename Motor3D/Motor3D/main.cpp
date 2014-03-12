@@ -8,13 +8,11 @@
 
 #include <iostream>
 
-#include <GLUT/glut.h>
 #include <math.h>
-#include <stdio.h>
-#include "tinyxml/tinyxml.h"
+#include "motor.h"
 
-
-
+//Inicializaçoes Principais
+TiXmlDocument doc("test.xml");
 float raio=5,cam_h=0,cam_v=0.5;
 
 void changeSize(int w, int h) {
@@ -62,39 +60,9 @@ void renderScene(void) {
     
     
 	// pÙr instruÁıes de desenho aqui
-	float cx,cy,cz;
-    
 	
-	TiXmlDocument *doc = new TiXmlDocument("/Users/helderjosealvesgoncalves/Desktop/test.xml");
-	if(doc->LoadFile()){
     
-        TiXmlElement *root = doc->RootElement();
-        
-        
-        /*TiXmlNode *child = root->FirstChild();
-        child = child->NextSibling();
-            child->Print(stdout, NULL);
-            TiXmlAttribute *attr = child->ToElement()->FirstAttribute();
-            const char *attrName = attr->Name();
-            const char *attrValue = attr->Value();
-*/
-        const char* texto= root->GetText();
-        printf("Ola -> %s",texto);
-
-    }
-    else
-        printf("Falhou!! Não fez load do ficheiro!\n");
-    
-	
-    FILE *f = fopen("/Users/helderjosealvesgoncalves/Desktop/esfera.3d", "r");
-    if(f){
-        glBegin(GL_TRIANGLES);
-        while (fscanf(f, "%f %f %f\n", &cx, &cy, &cz)!=EOF){
-            glColor3f(cx, cy, cz);
-            glVertex3f(cx, cy, cz);
-        }
-        glEnd();
-    }
+    motor_XML(doc);
     
 	// End of frame
 	glutSwapBuffers();
@@ -158,21 +126,8 @@ void front_menu(int op){
 }
 
 int main(int argc, char* argv[]){
-	/*if (argc < 2){
-     perror("Usage: motor <scene.xml>");
-     exit(-1);
-     }*/
-    
-    
-    
-	//CenaHandler *ch = new CenaHandler();
-	/*argv[1]*/
-	//listaPontos = (LL*)malloc(sizeof(LL));
-	//listaPontos->coordenadaX = INT_MAX;
-	//listaPontos->coordenadaY = INT_MAX;
-	//listaPontos->coordenadaZ = INT_MAX;
-	//listaPontos->next = NULL;
-	//ch->LoadFile("C:/Users/Duarte Duarte/Desktop/abrir.xml",listaPontos);
+
+	if(doc.LoadFile()){
     
 	// inicializaÁ„o
 	glutInit(&argc, argv);
@@ -205,14 +160,14 @@ int main(int argc, char* argv[]){
 	glEnable(GL_CULL_FACE);
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
     
-	// alguns settings para OpenGL
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-    
     glPolygonMode(GL_FRONT, GL_LINE);
     
 	// entrar no ciclo do GLUT 
 	glutMainLoop();
+        
+    }
+    else
+        printf("Falhou!! Não fez load do ficheiro!\n");
     
 	return 0;
     
