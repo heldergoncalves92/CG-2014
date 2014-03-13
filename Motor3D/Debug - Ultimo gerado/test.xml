@@ -1,4 +1,14 @@
-<cena>
-    <modelo ficheiro='esfera.3d'/>
-    <modelo ficheiro='plano.3d'/>
-</cena>
+<?xml version="1.0" ?>
+<xml>
+	<camera>
+		Alas
+	</camera>
+    <cena>
+        <grupo>
+            <translacao x='0' y='1.0' z='0'/>
+            <modelo ficheiro='esfera.3d'/>
+        </grupo>
+        <rotacao angulo='45' y='1'/>
+        <modelo ficheiro='plano.3d'/>
+    </cena>
+</xml>

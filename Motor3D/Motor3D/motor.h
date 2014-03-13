@@ -13,6 +13,6 @@
 #include <stdio.h>
 #include "tinyxml/tinyxml.h"
 
-void motor_XML(TiXmlDocument doc);
+void motor_XML(TiXmlNode *doc);
 
 #endif

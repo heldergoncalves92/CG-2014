@@ -12,7 +12,10 @@
 #include "motor.h"
 
 //Inicializaçoes Principais
-TiXmlDocument doc("test.xml");
+
+TiXmlElement *root=NULL;
+TiXmlNode *cena=NULL;
+
 float raio=5,cam_h=0,cam_v=0.5;
 
 void changeSize(int w, int h) {
@@ -61,8 +64,8 @@ void renderScene(void) {
     
 	// pÙr instruÁıes de desenho aqui
 	
-    
-    motor_XML(doc);
+   
+    motor_XML(cena);
     
 	// End of frame
 	glutSwapBuffers();
@@ -126,43 +129,53 @@ void front_menu(int op){
 
 int main(int argc, char* argv[]){
 
+    TiXmlDocument doc("test.xml");
+  //  TiXmlElement *child_aux;
+    
 	if(doc.LoadFile()){
     
-	// inicializaÁ„o
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowPosition(100, 100);
-	glutInitWindowSize(800, 800);
-	glutCreateWindow("BananaCorp®");
-    
-    
-    // pÙr registo de funÁıes aqui
-    glutDisplayFunc(renderScene);
-	glutReshapeFunc(changeSize);
-    
-    // funções do teclado e rato
-	glutKeyboardFunc(teclado_normal);
-    glutSpecialFunc(teclado_especial);
-    
-    
-    //MENU
-    glutCreateMenu(front_menu);
-    glutAddMenuEntry("GL POINT",1);
-    glutAddMenuEntry("GL LINE",2);
-    glutAddMenuEntry("GL FILL",3);
-    
-    glutAttachMenu(GLUT_RIGHT_BUTTON);
-    
-    // alguns settings para OpenGL
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-	glClearColor(0.0f,0.0f,0.0f,0.0f);
-    
-    glPolygonMode(GL_FRONT, GL_LINE);
-    
-	// entrar no ciclo do GLUT 
-	glutMainLoop();
+        root=doc.RootElement();
+        cena=root->FirstChild("cena");
         
+        if (cena) {
+            // inicializaÁ„o
+            glutInit(&argc, argv);
+            glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+            glutInitWindowPosition(100, 100);
+            glutInitWindowSize(800, 800);
+            glutCreateWindow("BananaCorp®");
+            
+            
+            // pÙr registo de funÁıes aqui
+            glutDisplayFunc(renderScene);
+            glutReshapeFunc(changeSize);
+            
+            // funções do teclado e rato
+            glutKeyboardFunc(teclado_normal);
+            glutSpecialFunc(teclado_especial);
+            
+            
+            //MENU
+            glutCreateMenu(front_menu);
+            glutAddMenuEntry("GL POINT",1);
+            glutAddMenuEntry("GL LINE",2);
+            glutAddMenuEntry("GL FILL",3);
+            
+            glutAttachMenu(GLUT_RIGHT_BUTTON);
+            
+            // alguns settings para OpenGL
+            glEnable(GL_DEPTH_TEST);
+            glEnable(GL_CULL_FACE);
+            glClearColor(0.0f,0.0f,0.0f,0.0f);
+            
+            glPolygonMode(GL_FRONT, GL_LINE);
+            
+            // entrar no ciclo do GLUT 
+            glutMainLoop();
+            
+        }
+        else
+            printf("Falhou!! Sem tag 'cena' no XML!\n");
     }
     else
         printf("Falhou!! Não fez load do ficheiro!\n");

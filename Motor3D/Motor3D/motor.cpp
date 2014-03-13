@@ -20,15 +20,15 @@ void desenha_modelo(const char* filename){
         }
         glEnd();
     }
-
+    fclose(f);
 }
 
-void motor_XML(TiXmlDocument doc){
+void motor_XML(TiXmlNode* root){
     
-    TiXmlElement *root = doc.RootElement();
     TiXmlNode *child;
     TiXmlAttribute * attr;
     const char* tag;
+    float x,y,z,angulo;
     
     
     for (child = root->FirstChild(); child; child=child->NextSibling()) {
@@ -39,7 +39,43 @@ void motor_XML(TiXmlDocument doc){
             if (strcmp(attr->Name(), "ficheiro")==0) {
                 desenha_modelo(attr->Value());
             }
-
-        }
+        }else
+            if (strcmp(tag, "grupo")==0) {
+                glPushMatrix();
+                motor_XML((child));
+                glPopMatrix();
+            }else
+                if (strcmp(tag, "translacao")==0) {
+                    x=y=z=0;
+                    for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                        if (strcmp(attr->Name(), "x")==0)
+                            x=atof(attr->Value());
+                        else
+                            if (strcmp(attr->Name(), "y")==0)
+                            y=atof(attr->Value());
+                        else
+                            if (strcmp(attr->Name(), "z")==0)
+                                z=atof(attr->Value());
+                    }
+                    glTranslatef(x, y, z);
+                }else
+                    if (strcmp(tag, "rotacao")==0) {
+                        angulo=x=y=z=0;
+                        for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                            if (strcmp(attr->Name(), "x")==0)
+                                x=atof(attr->Value());
+                            else
+                                if (strcmp(attr->Name(), "y")==0)
+                                    y=atof(attr->Value());
+                                else
+                                    if (strcmp(attr->Name(), "z")==0)
+                                        z=atof(attr->Value());
+                                    else
+                                        if (strcmp(attr->Name(), "angulo")==0)
+                                            angulo=atof(attr->Value());
+                        }
+                        glRotatef(angulo, x, y, z);
+                    }
+        
     }
 }
