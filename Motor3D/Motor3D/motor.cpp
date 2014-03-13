@@ -15,7 +15,7 @@ void desenha_modelo(const char* filename){
     if(f){
         glBegin(GL_TRIANGLES);
         while (fscanf(f, "%f %f %f\n", &cx, &cy, &cz)!=EOF){
-            glColor3f(cx, cy, cz);
+ //           glColor3f(cx, cy, cz);
             glVertex3f(cx, cy, cz);
         }
         glEnd();

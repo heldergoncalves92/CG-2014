@@ -68,39 +68,6 @@ void renderScene(void) {
 	glutSwapBuffers();
 }
 
-void mexeTecla(unsigned char tecla, int x, int y){
-	switch (tecla){
-        case ('a') :
-            angulo -= 10.0f;
-            xr = 0.0f;
-            yr = 1.0f;
-            break;
-        case ('d') :
-            angulo += 10.0f;
-            xr = 0.0f;
-            yr = 1.0f;
-            break;
-        case ('e') :
-            zoom += 1.0f;
-            break;
-        case ('q') :
-            zoom -= 1.0f;
-            break;
-        case ('w') :
-            angulo += 10.0f;
-            xr = 1.0f;
-            yr = 0.0f;
-            break;
-        case ('s') :
-            angulo -= 10.0f;
-            xr = 1.0f;
-            yr = 0.0f;
-            break;
-    }
-	glutPostRedisplay();
-}
-
-
 void teclado_normal(unsigned char tecla,int x, int y){
     switch (tecla) {
         case 'a':
@@ -184,13 +151,7 @@ int main(int argc, char* argv[]){
     glutAddMenuEntry("GL LINE",2);
     glutAddMenuEntry("GL FILL",3);
     
-<<<<<<< HEAD
-	// pÙr aqui registo da funÁıes do teclado e rato
-	glutKeyboardFunc(mexeTecla);
-=======
     glutAttachMenu(GLUT_RIGHT_BUTTON);
->>>>>>> FETCH_HEAD
-    
     
     // alguns settings para OpenGL
 	glEnable(GL_DEPTH_TEST);
