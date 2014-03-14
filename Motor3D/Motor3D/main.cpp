@@ -6,17 +6,14 @@
 //  Copyright (c) 2014 Duarte Nuno Ferreira Duarte. All rights reserved.
 //
 
-#include <iostream>
-
-#include <math.h>
 #include "motor.h"
+#include "camera.h"
 
 //Inicializaçoes Principais
-
-TiXmlElement *root=NULL;
 TiXmlNode *cena=NULL;
+int tipo_camera=0;
+char ficheiro[]="test.xml";
 
-float raio=5,cam_h=0,cam_v=0.5;
 
 void changeSize(int w, int h) {
     
@@ -56,59 +53,22 @@ void renderScene(void) {
 	// set the camera
 	glLoadIdentity();
 	
-    //Câmera em modo explorador
-	gluLookAt(raio*sin(cam_h)*cos(cam_v),raio*sin(cam_v),raio*cos(cam_h)*cos(cam_v),
-	          0.0, 0.0, 0.0,
-              0.0f, 1.0f, 0.0f);
-    
+    if (tipo_camera)
+        modo_explorador();
+    else{
+        gluLookAt(0,3,5,
+                  0.0, 0.0, 0.0,
+                  0.0f, 1.0f, 0.0f);
+    }
     
 	// pÙr instruÁıes de desenho aqui
 	
-   
     motor_XML(cena);
     
 	// End of frame
 	glutSwapBuffers();
 }
 
-void teclado_normal(unsigned char tecla,int x, int y){
-    switch (tecla) {
-        case 'a':
-            raio-=0.1;
-            break;
-        case 'd':
-            raio+=0.1;
-            break;
-            
-        default:
-            break;
-    }
-    glutPostRedisplay();
-}
-
-void teclado_especial(int tecla,int x, int y){
-    switch (tecla) {
-        case GLUT_KEY_UP:
-            if(cam_v+0.05<M_PI_2)   //Para câmera não virar ao contrário
-                cam_v+=0.05;
-            break;
-        case GLUT_KEY_DOWN:
-            if(cam_v-0.05>-M_PI_2)  //Para câmera não virar ao contrário
-                cam_v-=0.05;
-            break;
-            
-        case GLUT_KEY_LEFT:
-            cam_h-=0.05;
-            break;
-        case GLUT_KEY_RIGHT:
-            cam_h+=0.05;
-            break;
-            
-        default:
-            break;
-    }
-    glutPostRedisplay();
-}
 
 void front_menu(int op){
     switch (op) {
@@ -129,12 +89,14 @@ void front_menu(int op){
 
 int main(int argc, char* argv[]){
 
-    TiXmlDocument doc("test.xml");
-  //  TiXmlElement *child_aux;
+    TiXmlDocument doc(ficheiro);
+    TiXmlElement *root=NULL;
+    TiXmlNode *node=NULL;
+    TiXmlAttribute *attr=NULL;
     
 	if(doc.LoadFile()){
     
-        root=doc.RootElement();
+       root=doc.RootElement();
         cena=root->FirstChild("cena");
         
         if (cena) {
@@ -151,9 +113,17 @@ int main(int argc, char* argv[]){
             glutReshapeFunc(changeSize);
             
             // funções do teclado e rato
-            glutKeyboardFunc(teclado_normal);
-            glutSpecialFunc(teclado_especial);
-            
+            if((node=root->FirstChild("camera")) && (attr=node->ToElement()->FirstAttribute())){
+                if (strcmp(attr->Name(), "tipo")==0) {
+                    if(strcmp(attr->Value(), "explorador")==0){
+                        glutKeyboardFunc(teclado_normal_explorador);
+                        glutSpecialFunc(teclado_especial_explrador);
+                        glutMouseFunc(rato_explorador);
+                        glutMotionFunc(mov_rato_explorador);
+                        tipo_camera=1;
+                    }
+                }
+            }
             
             //MENU
             glutCreateMenu(front_menu);
