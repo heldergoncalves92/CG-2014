@@ -1,5 +1,5 @@
 //
-//  camera.h
+//  camera_explorador.h
 //  Motor3D
 //
 //  Created by Hélder José Alves Gonçalves on 14/03/14.
@@ -12,12 +12,11 @@
 #include <math.h>
 #include <GLUT/glut.h>
 
-
-//Modo explorador
 void modo_explorador();
 void rato_explorador(int botao, int estado, int x, int y);
 void mov_rato_explorador(int x, int y);
 void teclado_normal_explorador(unsigned char tecla,int x, int y);
-void teclado_especial_explrador(int tecla,int x, int y);
+void teclado_especial_explorador(int tecla,int x, int y);
+
 
 #endif

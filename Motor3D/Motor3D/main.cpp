@@ -7,7 +7,8 @@
 //
 
 #include "motor.h"
-#include "camera.h"
+#include "camera_explorador.h"
+#include "camera_fps.h"
 
 //Inicializaçoes Principais
 TiXmlNode *cena=NULL;
@@ -53,13 +54,17 @@ void renderScene(void) {
 	// set the camera
 	glLoadIdentity();
 	
-    if (tipo_camera)
+    if (tipo_camera==1)
         modo_explorador();
-    else{
-        gluLookAt(0,3,5,
-                  0.0, 0.0, 0.0,
-                  0.0f, 1.0f, 0.0f);
-    }
+    else
+        if (tipo_camera==2)
+            modo_fps();
+        else{
+            gluLookAt(0,3,5,
+                      0.0, 0.0, 0.0,
+                      0.0f, 1.0f, 0.0f);
+        }
+    
     
 	// pÙr instruÁıes de desenho aqui
 	
@@ -117,11 +122,18 @@ int main(int argc, char* argv[]){
                 if (strcmp(attr->Name(), "tipo")==0) {
                     if(strcmp(attr->Value(), "explorador")==0){
                         glutKeyboardFunc(teclado_normal_explorador);
-                        glutSpecialFunc(teclado_especial_explrador);
+                        glutSpecialFunc(teclado_especial_explorador);
                         glutMouseFunc(rato_explorador);
                         glutMotionFunc(mov_rato_explorador);
                         tipo_camera=1;
-                    }
+                    }else
+                        if(strcmp(attr->Value(), "fps")==0){
+                            glutKeyboardFunc(teclado_normal_fps);
+                            glutSpecialFunc(teclado_especial_fps);
+                            glutMouseFunc(rato_fps);
+                            glutMotionFunc(mov_rato_fps);
+                            tipo_camera=2;
+                        }
                 }
             }
             

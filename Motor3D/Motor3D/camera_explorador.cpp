@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Duarte Nuno Ferreira Duarte. All rights reserved.
 //
 
-#include "camera.h"
+#include "camera_explorador.h"
 
 
 float raio=5,angCam_h=0,angCam_v=0.5,angAux_h=0,angAux_v=0,x_tela,y_tela;
@@ -71,7 +71,7 @@ void teclado_normal_explorador(unsigned char tecla,int x, int y){
     glutPostRedisplay();
 }
 
-void teclado_especial_explrador(int tecla,int x, int y){
+void teclado_especial_explorador(int tecla,int x, int y){
     switch (tecla) {
         case GLUT_KEY_UP:
             if(angCam_v+0.05<M_PI_2)   //Para câmera não virar ao contrário
