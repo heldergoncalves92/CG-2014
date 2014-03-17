@@ -9,7 +9,7 @@
 #include "camera_explorador.h"
 
 
-float raio=5,angCam_h=0,angCam_v=0.5,angAux_h=0,angAux_v=0,x_tela,y_tela;
+float raio=5,raioAux=0,angCam_h=0,angCam_v=0.5,angAux_h=0,angAux_v=0,x_tela,y_tela;
 int estado_botao=0;
 
 
@@ -17,7 +17,7 @@ int estado_botao=0;
 
 void modo_explorador(){
     //Câmera em modo explorador
-	gluLookAt(raio*sin(angCam_h+angAux_h)*cos(angCam_v+angAux_v),raio*sin(angCam_v+angAux_v),raio*cos(angCam_h+angAux_h)*cos(angCam_v+angAux_v),
+	gluLookAt((raio+raioAux)*sin(angCam_h+angAux_h)*cos(angCam_v+angAux_v),(raio+raioAux)*sin(angCam_v+angAux_v),(raio+raioAux)*cos(angCam_h+angAux_h)*cos(angCam_v+angAux_v),
 	          0.0, 0.0, 0.0,
               0.0f, 1.0f, 0.0f);
 }
@@ -42,7 +42,7 @@ void rato_explorador(int botao, int estado, int x, int y){
 
 void mov_rato_explorador(int x, int y){
     float teste;
-    if(estado_botao){
+    if(estado_botao==1){
         if(x_tela!=x)
             angAux_h= (x_tela-x)*0.007;
         

@@ -77,10 +77,12 @@ void teclado_especial_fps(int tecla,int x, int y){
 void teclado_normal_fps(unsigned char tecla,int x, int y){
     switch (tecla) {
         case 'd':
-            py+=0.04;
+            px+=0.1*sin(angCamFPS_h-M_PI_2);
+            pz+=0.1*cos(angCamFPS_h-M_PI_2);
             break;
         case 'a':
-            py-=0.04;
+            px+=0.1*sin(angCamFPS_h+M_PI_2);
+            pz+=0.1*cos(angCamFPS_h+M_PI_2);
             break;
         case 'w':
             px+=0.1*sin(angCamFPS_h);
