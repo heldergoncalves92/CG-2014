@@ -20,15 +20,15 @@
  
 */
 
-void plano(float altura, float lado, int sep_h, int sep_v, float z_index, int ori, FILE* f){
+void plano(float altura, float lado, int camadas, int fatias, float z_index, int ori, FILE* f){
     int i;
-    float l_const=lado/sep_v, alt_const=altura/sep_h,alt_ori=-altura/2,lado_ori=-lado/2;
+    float l_const=lado/fatias, alt_const=altura/camadas,alt_ori=-altura/2,lado_ori=-lado/2;
     
     switch (ori) {
         case 1:
-            for(altura=alt_ori;sep_h>0;sep_h--){
+            for(altura=alt_ori;camadas>0;camadas--){
                 i=0;
-                for(lado=lado_ori;i<sep_v;i++){
+                for(lado=lado_ori;i<fatias;i++){
                     
                     fprintf(f,"%f %f %f\n",lado,altura, z_index);
                     fprintf(f,"%f %f %f\n",lado+l_const,altura, z_index);
@@ -43,9 +43,9 @@ void plano(float altura, float lado, int sep_h, int sep_v, float z_index, int or
             }
             break;
         case 2:
-            for(altura=alt_ori;sep_h>0;sep_h--){
+            for(altura=alt_ori;camadas>0;camadas--){
                 i=0;
-                for(lado=lado_ori;i<sep_v;i++){
+                for(lado=lado_ori;i<fatias;i++){
                     
                     fprintf(f,"%f %f %f\n",lado,altura, z_index);
                     fprintf(f,"%f %f %f\n",lado,altura+alt_const, z_index);
@@ -60,9 +60,9 @@ void plano(float altura, float lado, int sep_h, int sep_v, float z_index, int or
             }
             break;
         case 3:
-            for(altura=alt_ori;sep_h>0;sep_h--){
+            for(altura=alt_ori;camadas>0;camadas--){
                 i=0;
-                for(lado=lado_ori;i<sep_v;i++){
+                for(lado=lado_ori;i<fatias;i++){
                     
                     fprintf(f,"%f %f %f\n",z_index,altura, lado);
                     fprintf(f,"%f %f %f\n",z_index,altura+alt_const, lado);
@@ -77,9 +77,9 @@ void plano(float altura, float lado, int sep_h, int sep_v, float z_index, int or
             }
             break;
         case 4:
-            for(altura=alt_ori;sep_h>0;sep_h--){
+            for(altura=alt_ori;camadas>0;camadas--){
                 i=0;
-                for(lado=lado_ori;i<sep_v;i++){
+                for(lado=lado_ori;i<fatias;i++){
                     
                     fprintf(f,"%f %f %f\n",z_index,altura, lado);
                     fprintf(f,"%f %f %f\n",z_index,altura, lado+l_const);
@@ -94,9 +94,9 @@ void plano(float altura, float lado, int sep_h, int sep_v, float z_index, int or
             }
             break;
         case 5:
-            for(altura=alt_ori;sep_h>0;sep_h--){
+            for(altura=alt_ori;camadas>0;camadas--){
                 i=0;
-                for(lado=lado_ori;i<sep_v;i++){
+                for(lado=lado_ori;i<fatias;i++){
                     
                     fprintf(f,"%f %f %f\n",altura,z_index, lado);
                     fprintf(f,"%f %f %f\n",altura,z_index, lado+l_const);
@@ -111,9 +111,9 @@ void plano(float altura, float lado, int sep_h, int sep_v, float z_index, int or
             }
             break;
         case 6:
-            for(altura=alt_ori;sep_h>0;sep_h--){
+            for(altura=alt_ori;camadas>0;camadas--){
                 i=0;
-                for(lado=lado_ori;i<sep_v;i++){
+                for(lado=lado_ori;i<fatias;i++){
                     
                     fprintf(f,"%f %f %f\n",altura,z_index, lado);
                     fprintf(f,"%f %f %f\n",altura+alt_const,z_index, lado);

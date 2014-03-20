@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <math.h>
 
-void esfera(float raio, int sep_h, int sep_cir, FILE* f);
+void esfera(float raio, int camadas, int fatias, FILE* f);
 
 
 #endif

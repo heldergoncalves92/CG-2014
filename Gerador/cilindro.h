@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include "circulo.h"
 
-void cilindro(float raio,int lados,float alt,int sep_cir,int sep_h, FILE* f);
+void cilindro(float raio,int fatias,int camadas,float alt,int aneis, FILE* f);
 
 
 

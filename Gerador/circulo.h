@@ -13,7 +13,7 @@
 #include <math.h>
 
 //ORI --- 1 -> BASE && 0 -> TOPO
-void circulo(float raio, int lados, int sep, float alt, int ori, FILE* f);
+void circulo(float raio, int fatias, int aneis, float alt, int ori, FILE* f);
 
 
 #endif

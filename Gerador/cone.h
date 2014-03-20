@@ -11,6 +11,6 @@
 
 #include "circulo.h"
 
-void cone(float raio_base, float altura, int lados, int sep_circulo, int sep_h, FILE* f);
+void cone(float raio_base, float altura, int fatias, int aneis, int camadas, FILE* f);
 
 #endif

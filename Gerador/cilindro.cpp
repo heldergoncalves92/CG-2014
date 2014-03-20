@@ -10,18 +10,18 @@
 
 
 
-void cilindro(float raio,int lados,float alt,int sep_cir,int sep_h, FILE* f){
-    float angulo=(2*M_PI)/lados,x,y=0,l_aux,h_aux1,h_aux2=0;
+void cilindro(float raio,int fatias,int camadas,float alt,int aneis, FILE* f){
+    float angulo=(2*M_PI)/fatias,x,y=0,l_aux,h_aux1,h_aux2=0;
     
-    circulo(raio, lados, sep_cir, 0, 0,f);
-    circulo(raio, lados, sep_cir, alt, 1,f);
+    circulo(raio, fatias, aneis, 0, 0,f);
+    circulo(raio, fatias, aneis, alt, 1,f);
     
-    alt=alt/sep_h;
-    for(;sep_h>0;sep_h--){
+    alt=alt/camadas;
+    for(;camadas>0;camadas--){
         h_aux1=h_aux2;
         h_aux2+=alt;
         y=0;
-        for (l_aux=0; l_aux<=lados; l_aux++) {
+        for (l_aux=0; l_aux<=fatias; l_aux++) {
             x=y;
             y+=angulo;
             

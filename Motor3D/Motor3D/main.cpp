@@ -13,10 +13,9 @@
 //Inicializaçoes Principais
 TiXmlNode *cena=NULL;
 int tipo_camera=0;
-char ficheiro[]="test.xml";
 
 
-void changeSize(int w, int h) {
+void changeSize(int w, int h){
     
 	// Prevent a divide by zero, when window is too short
 	// (you cant make a window with zero width).
@@ -86,6 +85,20 @@ void front_menu(int op){
         case 3:
             glPolygonMode(GL_FRONT,GL_FILL);
             break;
+        case 4:
+            glutKeyboardFunc(teclado_normal_explorador);
+            glutSpecialFunc(teclado_especial_explorador);
+            glutMouseFunc(rato_explorador);
+            glutMotionFunc(mov_rato_explorador);
+            tipo_camera=1;
+            break;
+        case 5:
+            glutKeyboardFunc(teclado_normal_fps);
+            glutSpecialFunc(teclado_especial_fps);
+            glutMouseFunc(rato_fps);
+            glutMotionFunc(mov_rato_fps);
+            tipo_camera=2;
+            break;
         default:
             break;
     }
@@ -94,12 +107,18 @@ void front_menu(int op){
 
 int main(int argc, char* argv[]){
 
-    TiXmlDocument doc(ficheiro);
+    TiXmlDocument doc;
     TiXmlElement *root=NULL;
     TiXmlNode *node=NULL;
     TiXmlAttribute *attr=NULL;
     
-	if(doc.LoadFile()){
+    if(argc!=2){
+        printf("ERRO!! Número de argumentos errado, falta XML de input!\n");
+        return 1;
+    }
+        
+    
+	if(doc.LoadFile(argv[1])){
     
        root=doc.RootElement();
         cena=root->FirstChild("cena");
@@ -120,28 +139,33 @@ int main(int argc, char* argv[]){
             // funções do teclado e rato
             if((node=root->FirstChild("camera")) && (attr=node->ToElement()->FirstAttribute())){
                 if (strcmp(attr->Name(), "tipo")==0) {
-                    if(strcmp(attr->Value(), "explorador")==0){
-                        glutKeyboardFunc(teclado_normal_explorador);
-                        glutSpecialFunc(teclado_especial_explorador);
-                        glutMouseFunc(rato_explorador);
-                        glutMotionFunc(mov_rato_explorador);
-                        tipo_camera=1;
-                    }else
-                        if(strcmp(attr->Value(), "fps")==0){
-                            glutKeyboardFunc(teclado_normal_fps);
-                            glutSpecialFunc(teclado_especial_fps);
-                            glutMouseFunc(rato_fps);
-                            glutMotionFunc(mov_rato_fps);
-                            tipo_camera=2;
-                        }
+                    if(strcmp(attr->Value(), "fps")==0){
+                        glutKeyboardFunc(teclado_normal_fps);
+                        glutSpecialFunc(teclado_especial_fps);
+                        glutMouseFunc(rato_fps);
+                        glutMotionFunc(mov_rato_fps);
+                        tipo_camera=2;
+                    }
                 }
             }
+            
+            //Caso não esteja definida nenhuma camera, o modo explorador fica activo por defeito
+            if(tipo_camera==0){
+                glutKeyboardFunc(teclado_normal_explorador);
+                glutSpecialFunc(teclado_especial_explorador);
+                glutMouseFunc(rato_explorador);
+                glutMotionFunc(mov_rato_explorador);
+                tipo_camera=1;
+            }
+                
             
             //MENU
             glutCreateMenu(front_menu);
             glutAddMenuEntry("GL POINT",1);
             glutAddMenuEntry("GL LINE",2);
             glutAddMenuEntry("GL FILL",3);
+            glutAddMenuEntry("Modo Explorador",4);
+            glutAddMenuEntry("Modo FPS",5);
             
             glutAttachMenu(GLUT_RIGHT_BUTTON);
             

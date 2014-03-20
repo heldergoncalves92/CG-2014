@@ -9,14 +9,14 @@
 #include "paralelepipedo.h"
 
 
-void paralelepipedo(float altura, float lado_x, float lado_z, int sep_h, int sep_v, FILE* f){
+void paralelepipedo(float altura, float lado_x, float lado_z, int camadas, int fatias, FILE* f){
     
-    plano(altura, lado_x, sep_h, sep_v, lado_z/2, 1,f);
-    plano(altura, lado_x, sep_h, sep_v, -lado_z/2, 2,f);
+    plano(altura, lado_x, camadas, fatias, lado_z/2, 1,f);
+    plano(altura, lado_x, camadas, fatias, -lado_z/2, 2,f);
     
-    plano(altura, lado_z, sep_h, sep_v, lado_x/2, 3,f);
-    plano(altura, lado_z, sep_h, sep_v, -lado_x/2, 4,f);
+    plano(altura, lado_z, camadas, fatias, lado_x/2, 3,f);
+    plano(altura, lado_z, camadas, fatias, -lado_x/2, 4,f);
     
-    plano(lado_x, lado_z, sep_h, sep_v, altura/2, 5,f);
-    plano(lado_x, lado_z, sep_h, sep_v, -altura/2, 6,f);
+    plano(lado_x, lado_z, camadas, fatias, altura/2, 5,f);
+    plano(lado_x, lado_z, camadas, fatias, -altura/2, 6,f);
 }
