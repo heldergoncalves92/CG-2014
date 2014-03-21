@@ -18,8 +18,10 @@ void desenha_modelo(const char* filename){
             glVertex3f(cx, cy, cz);
         }
         glEnd();
-    }
-    fclose(f);
+        fclose(f);
+    }else
+        printf("ERRO! Não fez load do ficheiro '%s'!\n",filename);
+
 }
 
 void motor_XML(TiXmlNode* root){

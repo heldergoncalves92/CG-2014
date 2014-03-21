@@ -24,10 +24,10 @@ int main(int argc, char *argv[]){
 					fclose(f);
 
 				}else
-					printf("ERRO!! Parametros não estão correctos!\nEx: esfera -raio -camadas -fatias -output\n");
+					printf("ERRO!! Parametros não estão correctos!\nEx: esfera [raio] [camadas] [fatias] [output]\n");
 			}
 			else
-				printf("ERRO!! Número de argumentos errado\nEx: esfera -raio -camadas -fatias -output\n");
+				printf("ERRO!! Número de argumentos errado\nEx: esfera [raio] [camadas] [fatias] [output]\n");
 		}
 		else
 			if(strcmp(op,"cilindro")==0){
@@ -39,10 +39,10 @@ int main(int argc, char *argv[]){
 						fclose(f);
 
 					}else
-						printf("ERRO!! Parametros não estão correctos!\nEx: cilindro -raio -fatias -camadas -altura -aneis -output\n");
+						printf("ERRO!! Parametros não estão correctos!\nEx: cilindro [raio] [fatias] [camadas] [altura] [aneis] [output]\n");
 				}
 				else
-					printf("ERRO!! Número de argumentos errado\nEx: cilindro -raio -fatias -camadas -altura -aneis -output\n");
+					printf("ERRO!! Número de argumentos errado\nEx: cilindro [raio] [fatias] [camadas] [altura] [aneis] [output]\n");
 			}else
 				if(strcmp(op,"circulo")==0){
 					if(argc==7){
@@ -53,10 +53,10 @@ int main(int argc, char *argv[]){
 							fclose(f);
 
 						}else
-							printf("ERRO!! Parametros não estão correctos\nEx: circulo -raio -fatias -aneis -orientacao -output\n");
+							printf("ERRO!! Parametros não estão correctos\nEx: circulo [raio] [fatias] [aneis] [orientacao] [output]\n");
 					}
 					else
-						printf("ERRO!! Número de argumentos errado\nEx: circulo -raio -fatias -aneis -orientacao -output\n");
+						printf("ERRO!! Número de argumentos errado\nEx: circulo [raio] [fatias] [aneis] [orientacao] [output]\n");
 				}else
 					if(strcmp(op,"plano")==0){
 						if(argc==8){
@@ -67,10 +67,10 @@ int main(int argc, char *argv[]){
 								fclose(f);
 
 							}else
-								printf("ERRO!! Parametros não estão correctos!\nEx: plano -altura -lado -camadas -fatias -orientacao -output\n");
+								printf("ERRO!! Parametros não estão correctos!\nEx: plano [altura] [lado] [camadas] [fatias] [orientacao] [output]\n");
 						}
 						else
-							printf("ERRO!! Número de argumentos errado\nEx: plano -altura -lado -camadas -fatias -orientacao -output\n");
+							printf("ERRO!! Número de argumentos errado\nEx: plano [altura] [lado] [camadas] [fatias] [orientacao] [output]\n");
 					}
 					else
 						if(strcmp(op,"paralelepipedo")==0){
@@ -82,10 +82,10 @@ int main(int argc, char *argv[]){
 									fclose(f);
 
 								}else
-									printf("ERRO!! Parametros não estão correctos!\nEx: paralelepipedo -altura -lado_X -lado_Z -camadas -fatias -output\n");
+									printf("ERRO!! Parametros não estão correctos!\nEx: paralelepipedo [altura] [lado_X] [lado_Z] [camadas] [fatias] [output]\n");
 							}
 							else
-								printf("ERRO!! Número de argumentos errado\nEx: paralelepipedo -altura -lado_X -lado_Z -camadas -fatias -output\n");
+								printf("ERRO!! Número de argumentos errado\nEx: paralelepipedo [altura] [lado_X] [lado_Z] [camadas] [fatias] [output]\n");
 						}
 						else
 							if(strcmp(op,"cone")==0){
@@ -97,10 +97,10 @@ int main(int argc, char *argv[]){
 										fclose(f);
 
 									}else
-										printf("ERRO!! Parametros não estão correctos!\nEx: cone -raio_base -altura -fatias -aneis -camadas -output\n");
+										printf("ERRO!! Parametros não estão correctos!\nEx: cone [raio_base] [altura] [fatias] [aneis] [camadas] [output]\n");
 								}
 								else
-									printf("ERRO!! Número de argumentos errado\nEx: cone -raio_base -altura -fatias -aneis -camadas -output\n");
+									printf("ERRO!! Número de argumentos errado\nEx: cone [raio_base] [altura] [fatias] [aneis] [camadas] [output]\n");
 							}else
 								printf("ERRO!! Nenhuma 'tag' de desenho detectada!\nTem as seguintes opções:\n\t-> esfera\n\t-> circulo\n\t-> cilindro\n\t-> cone\n\t-> plano\n\t-> paralelepipedo\n");
 			
