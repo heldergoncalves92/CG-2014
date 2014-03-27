@@ -21,7 +21,7 @@ void cilindro(float raio,int fatias,int camadas,float alt,int aneis, FILE* f){
         h_aux1=h_aux2;
         h_aux2+=alt;
         y=0;
-        for (l_aux=0; l_aux<=fatias; l_aux++) {
+        for (l_aux=0; l_aux<fatias; l_aux++) {
             x=y;
             y+=angulo;
             

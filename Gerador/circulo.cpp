@@ -14,7 +14,7 @@ void circulo(float raio, int fatias,int aneis, float alt,int ori, FILE* f){
     float angulo=(2*M_PI)/fatias,x,y=0,l_aux, r_aux1,r_aux2;
     raio=raio/aneis;
     if(ori){
-        for(l_aux=0;l_aux<=fatias;l_aux++){
+        for(l_aux=0;l_aux<fatias;l_aux++){
         	x=y;
             y+=angulo;
             fprintf(f,"%d %f %d\n",0, alt, 0);
@@ -27,7 +27,7 @@ void circulo(float raio, int fatias,int aneis, float alt,int ori, FILE* f){
             r_aux1=r_aux2;
             r_aux2+=raio;
         
-           for(l_aux=0;l_aux<=fatias;l_aux++){
+           for(l_aux=0;l_aux<fatias;l_aux++){
                x=y;
                y+=angulo;
                 fprintf(f,"%f %f %f\n",r_aux1*sin(x), alt, r_aux1*cos(x));
@@ -40,7 +40,7 @@ void circulo(float raio, int fatias,int aneis, float alt,int ori, FILE* f){
             }
         }
     }else{
-        for(l_aux=0;l_aux<=fatias;l_aux++){
+        for(l_aux=0;l_aux<fatias;l_aux++){
         	x=y;
             y+=angulo;
             fprintf(f,"%d %f %d\n",0, alt, 0);
@@ -53,7 +53,7 @@ void circulo(float raio, int fatias,int aneis, float alt,int ori, FILE* f){
             r_aux1=r_aux2;
             r_aux2+=raio;
             
-            for(l_aux=0;l_aux<=fatias;l_aux++){
+            for(l_aux=0;l_aux<fatias;l_aux++){
                 x=y;
                 y+=angulo;
                 fprintf(f,"%f %f %f\n",r_aux1*sin(x), alt, r_aux1*cos(x));

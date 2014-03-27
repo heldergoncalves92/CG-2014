@@ -17,12 +17,12 @@ void esfera(float raio, int camadas, int fatias, FILE* f){
     h_aux2+=angulo_h;
     y=0;
     
-    for (l_aux=0; l_aux<=fatias; l_aux++) {
+    for (l_aux=0; l_aux<fatias; l_aux++) {
         x=y;
         y+=angulo_cir;
-        fprintf(f,"%f %f %f\n",sin(x)*cos(h_aux2), sin(h_aux2), cos(x)*cos(h_aux2));
-        fprintf(f,"%f %f %f\n",sin(y)*cos(h_aux2), sin(h_aux2), cos(y)*cos(h_aux2));
-        fprintf(f,"%f %f %f\n",sin(y)*cos(h_aux1), sin(h_aux1), cos(y)*cos(h_aux1));
+        fprintf(f,"%f %f %f\n",raio*sin(x)*cos(h_aux2), raio*sin(h_aux2), raio*cos(x)*cos(h_aux2));
+        fprintf(f,"%f %f %f\n",raio*sin(y)*cos(h_aux2), raio*sin(h_aux2), raio*cos(y)*cos(h_aux2));
+        fprintf(f,"%f %f %f\n",raio*sin(y)*cos(h_aux1), raio*sin(h_aux1), raio*cos(y)*cos(h_aux1));
     }
     
     for(lh_aux=1;lh_aux<camadas-1;lh_aux++){
@@ -30,28 +30,28 @@ void esfera(float raio, int camadas, int fatias, FILE* f){
         h_aux2+=angulo_h;
         y=0;
         
-        for (l_aux=0; l_aux<=fatias; l_aux++) {
+        for (l_aux=0; l_aux<fatias; l_aux++) {
             x=y;
             y+=angulo_cir;
-            fprintf(f,"%f %f %f\n",sin(x)*cos(h_aux1), sin(h_aux1), cos(x)*cos(h_aux1));
-            fprintf(f,"%f %f %f\n",sin(x)*cos(h_aux2), sin(h_aux2), cos(x)*cos(h_aux2));
-            fprintf(f,"%f %f %f\n",sin(y)*cos(h_aux1), sin(h_aux1), cos(y)*cos(h_aux1));
+            fprintf(f,"%f %f %f\n",raio*sin(x)*cos(h_aux1), raio*sin(h_aux1), raio*cos(x)*cos(h_aux1));
+            fprintf(f,"%f %f %f\n",raio*sin(x)*cos(h_aux2), raio*sin(h_aux2), raio*cos(x)*cos(h_aux2));
+            fprintf(f,"%f %f %f\n",raio*sin(y)*cos(h_aux1), raio*sin(h_aux1), raio*cos(y)*cos(h_aux1));
 
-            fprintf(f,"%f %f %f\n",sin(x)*cos(h_aux2), sin(h_aux2), cos(x)*cos(h_aux2));
-            fprintf(f,"%f %f %f\n",sin(y)*cos(h_aux2), sin(h_aux2), cos(y)*cos(h_aux2));
-            fprintf(f,"%f %f %f\n",sin(y)*cos(h_aux1), sin(h_aux1), cos(y)*cos(h_aux1));
+            fprintf(f,"%f %f %f\n",raio*sin(x)*cos(h_aux2), raio*sin(h_aux2), raio*cos(x)*cos(h_aux2));
+            fprintf(f,"%f %f %f\n",raio*sin(y)*cos(h_aux2), raio*sin(h_aux2), raio*cos(y)*cos(h_aux2));
+            fprintf(f,"%f %f %f\n",raio*sin(y)*cos(h_aux1), raio*sin(h_aux1), raio*cos(y)*cos(h_aux1));
         }
     }
     h_aux1=h_aux2;
     h_aux2+=angulo_h;
     y=0;
     
-    for (l_aux=0; l_aux<=fatias; l_aux++) {
+    for (l_aux=0; l_aux<fatias; l_aux++) {
         x=y;
         y+=angulo_cir;
-        fprintf(f,"%f %f %f\n",sin(x)*cos(h_aux1), sin(h_aux1), cos(x)*cos(h_aux1));
-        fprintf(f,"%f %f %f\n",sin(x)*cos(h_aux2), sin(h_aux2), cos(x)*cos(h_aux2));
-        fprintf(f,"%f %f %f\n",sin(y)*cos(h_aux1), sin(h_aux1), cos(y)*cos(h_aux1));
+        fprintf(f,"%f %f %f\n",raio*sin(x)*cos(h_aux1), raio*sin(h_aux1), raio*cos(x)*cos(h_aux1));
+        fprintf(f,"%f %f %f\n",raio*sin(x)*cos(h_aux2), raio*sin(h_aux2), raio*cos(x)*cos(h_aux2));
+        fprintf(f,"%f %f %f\n",raio*sin(y)*cos(h_aux1), raio*sin(h_aux1), raio*cos(y)*cos(h_aux1));
     }
    
 }
