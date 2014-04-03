@@ -76,7 +76,21 @@ void motor_XML(TiXmlNode* root){
                                             angulo=atof(attr->Value());
                         }
                         glRotatef(angulo, x, y, z);
-                    }
+                    }else
+                        if (strcmp(tag, "escala")==0) {
+                            x=y=z=0;
+                            for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                                if (strcmp(attr->Name(), "x")==0)
+                                    x=atof(attr->Value());
+                                else
+                                    if (strcmp(attr->Name(), "y")==0)
+                                        y=atof(attr->Value());
+                                    else
+                                        if (strcmp(attr->Name(), "z")==0)
+                                            z=atof(attr->Value());
+                            }
+                            glScalef(x, y, z);
+                        }
         
     }
 }
