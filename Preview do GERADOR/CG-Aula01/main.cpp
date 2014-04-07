@@ -72,7 +72,9 @@ void renderScene(void) {
     */
 
     //drawCirculo();
-    drawEsfera();
+ //   drawEsfera();
+    
+    anel(1, 0.75, 30, 2, 0);
     
    
 	// End of frame

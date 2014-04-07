@@ -82,7 +82,8 @@
 				3C2A5AF418CE27E000F81F61 /* Motor3D */,
 			);
 			name = Products;
-			sourceTree = "<group>";
+			path = Debug;
+			sourceTree = SOURCE_ROOT;
 		};
 		3C2A5AF618CE27E000F81F61 /* Motor3D */ = {
 			isa = PBXGroup;

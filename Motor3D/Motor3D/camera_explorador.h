@@ -11,8 +11,12 @@
 
 #include <math.h>
 #include <GLUT/glut.h>
+#include "tinyxml/tinyxml.h"
+
+
 
 void modo_explorador();
+void preDefinicoes_Explorador(TiXmlNode *doc);
 void rato_explorador(int botao, int estado, int x, int y);
 void mov_rato_explorador(int x, int y);
 void teclado_normal_explorador(unsigned char tecla,int x, int y);

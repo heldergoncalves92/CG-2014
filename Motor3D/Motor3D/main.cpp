@@ -15,6 +15,7 @@ TiXmlNode *cena=NULL;
 int tipo_camera=0;
 
 
+
 void changeSize(int w, int h){
     
 	// Prevent a divide by zero, when window is too short
@@ -111,6 +112,7 @@ int main(int argc, char* argv[]){
     TiXmlElement *root=NULL;
     TiXmlNode *node=NULL;
     TiXmlAttribute *attr=NULL;
+
     
    /* if(argc!=2){
         printf("ERRO!! Número de argumentos errado, falta XML de input!\n");
@@ -119,7 +121,7 @@ int main(int argc, char* argv[]){
         
     
 	//if(doc.LoadFile(argv[1])){
-    if(doc.LoadFile("test.xml")){
+    if(doc.LoadFile("sistema_solar.xml")){
     
        root=doc.RootElement();
         cena=root->FirstChild("cena");
@@ -146,7 +148,10 @@ int main(int argc, char* argv[]){
                         glutMouseFunc(rato_fps);
                         glutMotionFunc(mov_rato_fps);
                         tipo_camera=2;
-                    }
+                    }else
+                        if (strcmp(attr->Value(), "explorador")==0){
+                            preDefinicoes_Explorador(node);
+                        }
                 }
             }
             
@@ -157,6 +162,9 @@ int main(int argc, char* argv[]){
                 glutMouseFunc(rato_explorador);
                 glutMotionFunc(mov_rato_explorador);
                 tipo_camera=1;
+                
+                //Atribuir valores base
+                
             }
                 
             

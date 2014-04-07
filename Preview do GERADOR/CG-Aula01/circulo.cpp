@@ -15,13 +15,57 @@ float *vertexB;
 
 //ORI --- 1 -> BASE && 0 -> TOPO
 
-void circulo(float raio, int lados,int sep, float alt,int ori){
+void anel(float raio_fora, float raio_dentro,int fatias, int aneis, int ori){
+    float angulo=(2*M_PI)/fatias,x,y=0,l_aux,raio=(raio_fora-raio_dentro)/aneis;
+    
+    glBegin(GL_TRIANGLES);
+    if(ori){
+        for(;aneis>0;aneis--){
+            raio_dentro=raio_fora;
+            raio_fora+=raio;
+            
+            for(l_aux=0;l_aux<=fatias;l_aux++){
+                x=y;
+                y+=angulo;
+                glVertex3f(raio_dentro*sin(x), 0, raio_dentro*cos(x));
+                glVertex3f(raio_fora*sin(x), 0, raio_fora*cos(x));
+                glVertex3f(raio_dentro*sin(y), 0, raio_dentro*cos(y));
+                
+                glVertex3f(raio_dentro*sin(y), 0, raio_dentro*cos(y));
+                glVertex3f(raio_fora*sin(x), 0, raio_fora*cos(x));
+                glVertex3f(raio_fora*sin(y), 0, raio_fora*cos(y));
+            }
+        }
+    
+    }else{
+        for(;aneis>0;aneis--){
+            raio_dentro=raio_fora;
+            raio_fora+=raio;
+            
+            for(l_aux=0;l_aux<fatias;l_aux++){
+                x=y;
+                y+=angulo;
+                glVertex3f(raio_dentro*sin(x), 0, raio_dentro*cos(x));
+                glVertex3f(raio_dentro*sin(y), 0, raio_dentro*cos(y));
+                glVertex3f(raio_fora*sin(x), 0, raio_fora*cos(x));
+                
+                glVertex3f(raio_dentro*sin(y), 0, raio_dentro*cos(y));
+                glVertex3f(raio_fora*sin(y), 0, raio_fora*cos(y));
+                glVertex3f(raio_fora*sin(x), 0, raio_fora*cos(x));
+            }
+        }
+    }
+    glEnd();
+}
+
+
+void circulo(float raio, int lados,int aneis, float alt,int ori){
     float angulo=(2*M_PI)/lados,x,y=0,l_aux, r_aux1,r_aux2;
-    raio=raio/sep;
+    raio=raio/aneis;
     if(ori){
         glBegin(GL_TRIANGLES);
         
-        for(l_aux=0;l_aux<=lados;l_aux++){
+        for(l_aux=0;l_aux<lados;l_aux++){
         	x=y;
             y+=angulo;
             glVertex3f(0, alt, 0);
@@ -30,11 +74,11 @@ void circulo(float raio, int lados,int sep, float alt,int ori){
         }
         r_aux2=raio;
         y=0;
-        for(sep--;sep>0;sep--){
+        for(aneis--;aneis>0;aneis--){
             r_aux1=r_aux2;
             r_aux2+=raio;
             
-            for(l_aux=0;l_aux<=lados;l_aux++){
+            for(l_aux=0;l_aux<lados;l_aux++){
                 x=y;
                 y+=angulo;
                 glVertex3f(r_aux1*sin(x), alt, r_aux1*cos(x));
@@ -49,7 +93,7 @@ void circulo(float raio, int lados,int sep, float alt,int ori){
         glEnd();
     }else{
         glBegin(GL_TRIANGLES);
-        for(l_aux=0;l_aux<=lados;l_aux++){
+        for(l_aux=0;l_aux<lados;l_aux++){
         	x=y;
             y+=angulo;
             glVertex3f(0, alt, 0);
@@ -58,7 +102,7 @@ void circulo(float raio, int lados,int sep, float alt,int ori){
         }
         r_aux2=raio;
         y=0;
-        for(sep--;sep>0;sep--){
+        for(aneis--;aneis>0;aneis--){
             r_aux1=r_aux2;
             r_aux2+=raio;
             
@@ -78,15 +122,15 @@ void circulo(float raio, int lados,int sep, float alt,int ori){
     }
 }
 
-void circuloVBO(float raio, int lados,int sep, float alt,int ori){
+void circuloVBO(float raio, int lados,int aneis, float alt,int ori){
     
     float angulo=(2*M_PI)/lados,y=0,l_aux, r_aux;
     int i=0,v=0,j=0,avanco;
     
-    raio=raio/sep;
+    raio=raio/aneis;
     r_aux=raio;
-    n_pontos=(1+lados*sep)*3;
-    n_indices=(lados*(sep-1)*2+lados)*3;
+    n_pontos=(1+lados*aneis)*3;
+    n_indices=(lados*(aneis-1)*2+lados)*3;
     
     
     indices=(unsigned int*)malloc(n_indices*sizeof(unsigned int));
@@ -108,7 +152,7 @@ void circuloVBO(float raio, int lados,int sep, float alt,int ori){
         }
         indices[i-1]=1;
         
-        for(j++;j<sep;j++){
+        for(j++;j<aneis;j++){
             r_aux+=raio;
             y=0;
             for(l_aux=0;l_aux<lados;l_aux++){
@@ -143,7 +187,7 @@ void circuloVBO(float raio, int lados,int sep, float alt,int ori){
         }
         indices[i-2]=1;
         
-        for(j++;j<sep;j++){
+        for(j++;j<aneis;j++){
             r_aux+=raio;
             y=0;
             for(l_aux=0;l_aux<lados;l_aux++){

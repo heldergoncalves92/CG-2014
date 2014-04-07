@@ -9,7 +9,7 @@
 #include "camera_explorador.h"
 
 
-float raio=5,raioAux=0,angCam_h=0,angCam_v=0.5,angAux_h=0,angAux_v=0,x_tela,y_tela;
+float raio=180,raioAux=0,angCam_h=0,angCam_v=0.5,angAux_h=0,angAux_v=0,x_tela,y_tela,look[]={50,0,0},avanco=1;
 int estado_botao=0;
 
 
@@ -17,8 +17,8 @@ int estado_botao=0;
 
 void modo_explorador(){
     //Câmera em modo explorador
-	gluLookAt((raio+raioAux)*sin(angCam_h+angAux_h)*cos(angCam_v+angAux_v),(raio+raioAux)*sin(angCam_v+angAux_v),(raio+raioAux)*cos(angCam_h+angAux_h)*cos(angCam_v+angAux_v),
-	          0.0, 0.0, 0.0,
+	gluLookAt(look[0]+(raio+raioAux)*sin(angCam_h+angAux_h)*cos(angCam_v+angAux_v),look[1]+(raio+raioAux)*sin(angCam_v+angAux_v),look[2]+(raio+raioAux)*cos(angCam_h+angAux_h)*cos(angCam_v+angAux_v),
+	          look[0], look[1], look[2],
               0.0f, 1.0f, 0.0f);
 }
 
@@ -59,10 +59,10 @@ void mov_rato_explorador(int x, int y){
 void teclado_normal_explorador(unsigned char tecla,int x, int y){
     switch (tecla) {
         case 'a':
-            raio-=0.1;
+            raio-=avanco;
             break;
         case 'd':
-            raio+=0.1;
+            raio+=avanco;
             break;
             
         default:
@@ -93,4 +93,52 @@ void teclado_especial_explorador(int tecla,int x, int y){
             break;
     }
     glutPostRedisplay();
+}
+
+void preDefinicoes_Explorador(TiXmlNode *node){
+    
+    TiXmlAttribute *attr=NULL;
+    const char* tag;
+    
+    for (node = node->FirstChild(); node; node=node->NextSibling()) {
+        tag=node->Value();
+        if (strcmp(tag, "centro")==0) {
+            for(attr=node->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                if (strcmp(attr->Name(), "x")==0)
+                    look[0]=atof(attr->Value());
+                else
+                    if (strcmp(attr->Name(), "y")==0)
+                        look[1]=atof(attr->Value());
+                    else
+                        if (strcmp(attr->Name(), "z")==0)
+                            look[2]=atof(attr->Value());
+            }
+        }else
+            if (strcmp(tag, "zoom")==0) {
+                for(attr=node->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                    if (strcmp(attr->Name(), "raio")==0)
+                        raio=atof(attr->Value());
+                    else
+                        if (strcmp(attr->Name(), "avanco")==0)
+                            avanco=atof(attr->Value());
+                }
+            }else
+                if (strcmp(tag, "vista")==0) {
+                    for(attr=node->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                        if (strcmp(attr->Name(), "latitude")==0)
+                            angCam_h=atof(attr->Value());
+                        else
+                            if (strcmp(attr->Name(), "longitude")==0){
+                                angCam_v=atof(attr->Value());
+                                if(angCam_v>M_PI_2)
+                                    angCam_v=M_PI_2;
+                                else
+                                    if (angCam_v<-M_PI_2)
+                                        angCam_v=-M_PI_2;
+                            }
+                        
+                    }
+                }
+    }
+    
 }

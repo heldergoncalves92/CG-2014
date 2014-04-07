@@ -14,6 +14,7 @@
 
 //ORI --- 1 -> BASE && 0 -> TOPO
 void circulo(float raio, int fatias, int aneis, float alt, int ori, FILE* f);
+void anel(float raio_fora, float raio_dentro,int fatias, int aneis, int ori, FILE* f);
 
 
 #endif

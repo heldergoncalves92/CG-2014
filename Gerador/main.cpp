@@ -13,7 +13,7 @@ int main(int argc, char *argv[]){
 	FILE* f=NULL;
 
 	if(argc<2)
-		printf("ERRO!! Nenhuma 'tag' de desenho detectada!\nTem as seguintes opções:\n\t-> esfera\n\t-> circulo\n\t-> cilindro\n\t-> cone\n\t-> plano\n\t-> paralelepipedo\n");
+		printf("ERRO!! Nenhuma 'tag' de desenho detectada!\nTem as seguintes opções:\n\t-> esfera\n\t-> circulo\n\t-> cilindro\n\t-> anel\n\t-> cone\n\t-> plano\n\t-> paralelepipedo\n");
 	else
 		if(strcmp(op,"esfera")==0){
 			if(argc==6){
@@ -102,7 +102,22 @@ int main(int argc, char *argv[]){
 								else
 									printf("ERRO!! Número de argumentos errado\nEx: cone [raio_base] [altura] [fatias] [aneis] [camadas] [output]\n");
 							}else
-								printf("ERRO!! Nenhuma 'tag' de desenho detectada!\nTem as seguintes opções:\n\t-> esfera\n\t-> circulo\n\t-> cilindro\n\t-> cone\n\t-> plano\n\t-> paralelepipedo\n");
+								if(strcmp(op,"anel")==0){
+									if(argc==8){
+
+										if(sscanf(argv[2],"%f",&p1) && sscanf(argv[3],"%f",&p2) && sscanf(argv[4],"%d",&i1) && sscanf(argv[5],"%d",&i2) && sscanf(argv[6],"%d",&i3)){
+											f=fopen(argv[7],"w");
+											anel(p1,p2,i1,i2,i3,f);
+											fclose(f);
+
+										}else
+											printf("ERRO!! Parametros não estão correctos!\nEx: anel [raio_fora] [raio_dentro] [fatias] [aneis] [orientacao] [output]\n");
+									}
+									else
+										printf("ERRO!! Número de argumentos errado\nEx: anel [raio_fora] [raio_dentro] [fatias] [aneis] [orientacao] [output]\n");
+								}else
+
+									printf("ERRO!! Nenhuma 'tag' de desenho detectada!\nTem as seguintes opções:\n\t-> esfera\n\t-> circulo\n\t-> cilindro\n\t-> anel\n\t-> cone\n\t-> plano\n\t-> paralelepipedo\n");
 			
 
 }

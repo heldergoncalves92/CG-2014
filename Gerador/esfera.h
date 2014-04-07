@@ -15,4 +15,5 @@
 void esfera(float raio, int camadas, int fatias, FILE* f);
 
 
+
 #endif
