@@ -14,6 +14,4 @@
 void cilindro(float raio,int lados,float alt,int sep_cir,int sep_h);
 
 
-
-
 #endif

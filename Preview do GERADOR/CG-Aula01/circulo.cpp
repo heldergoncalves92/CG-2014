@@ -8,55 +8,7 @@
 
 #include "circulo.h"
 
-GLuint buffers[1];
-unsigned int  *indices;
-int n_indices,n_pontos;
-float *vertexB;
-
 //ORI --- 1 -> BASE && 0 -> TOPO
-
-void anel(float raio_fora, float raio_dentro,int fatias, int aneis, int ori){
-    float angulo=(2*M_PI)/fatias,x,y=0,l_aux,raio=(raio_fora-raio_dentro)/aneis;
-    
-    glBegin(GL_TRIANGLES);
-    if(ori){
-        for(;aneis>0;aneis--){
-            raio_dentro=raio_fora;
-            raio_fora+=raio;
-            
-            for(l_aux=0;l_aux<=fatias;l_aux++){
-                x=y;
-                y+=angulo;
-                glVertex3f(raio_dentro*sin(x), 0, raio_dentro*cos(x));
-                glVertex3f(raio_fora*sin(x), 0, raio_fora*cos(x));
-                glVertex3f(raio_dentro*sin(y), 0, raio_dentro*cos(y));
-                
-                glVertex3f(raio_dentro*sin(y), 0, raio_dentro*cos(y));
-                glVertex3f(raio_fora*sin(x), 0, raio_fora*cos(x));
-                glVertex3f(raio_fora*sin(y), 0, raio_fora*cos(y));
-            }
-        }
-    
-    }else{
-        for(;aneis>0;aneis--){
-            raio_dentro=raio_fora;
-            raio_fora+=raio;
-            
-            for(l_aux=0;l_aux<fatias;l_aux++){
-                x=y;
-                y+=angulo;
-                glVertex3f(raio_dentro*sin(x), 0, raio_dentro*cos(x));
-                glVertex3f(raio_dentro*sin(y), 0, raio_dentro*cos(y));
-                glVertex3f(raio_fora*sin(x), 0, raio_fora*cos(x));
-                
-                glVertex3f(raio_dentro*sin(y), 0, raio_dentro*cos(y));
-                glVertex3f(raio_fora*sin(y), 0, raio_fora*cos(y));
-                glVertex3f(raio_fora*sin(x), 0, raio_fora*cos(x));
-            }
-        }
-    }
-    glEnd();
-}
 
 
 void circulo(float raio, int lados,int aneis, float alt,int ori){
@@ -122,19 +74,19 @@ void circulo(float raio, int lados,int aneis, float alt,int ori){
     }
 }
 
-void circuloVBO(float raio, int lados,int aneis, float alt,int ori){
+Circulo::Circulo(float raio, int lados,int aneis, float alt,int ori){
     
     float angulo=(2*M_PI)/lados,y=0,l_aux, r_aux;
     int i=0,v=0,j=0,avanco;
     
     raio=raio/aneis;
     r_aux=raio;
-    n_pontos=(1+lados*aneis)*3;
+    int n_pontos=(1+lados*aneis)*3;
     n_indices=(lados*(aneis-1)*2+lados)*3;
     
     
-    indices=(unsigned int*)malloc(n_indices*sizeof(unsigned int));
-    vertexB=(float*)malloc(n_pontos*sizeof(float));
+    indices=(unsigned short*)malloc(n_indices*sizeof(unsigned short));
+    float *vertexB=(float*)malloc(n_pontos*sizeof(float));
     
     //Activar Buffers
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -222,11 +174,11 @@ void circuloVBO(float raio, int lados,int aneis, float alt,int ori){
     free(vertexB);
 }
 
-void drawCirculo(){
+void Circulo::desenha(){
     
     glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
     glVertexPointer(3,GL_FLOAT,0,0);
-    glDrawElements(GL_TRIANGLES, n_indices ,GL_UNSIGNED_INT, indices);
+    glDrawElements(GL_TRIANGLES, n_indices ,GL_UNSIGNED_SHORT, indices);
     
     
 }

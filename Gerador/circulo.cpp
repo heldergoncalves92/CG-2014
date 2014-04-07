@@ -12,7 +12,7 @@
 
 void anel(float raio_fora, float raio_dentro,int fatias, int aneis, int ori, FILE* f){
     float angulo=(2*M_PI)/fatias,x,y=0,l_aux,raio=(raio_fora-raio_dentro)/aneis,alt=0;
-    
+    raio_fora=raio_dentro;
     if(ori){
         for(;aneis>0;aneis--){
             raio_dentro=raio_fora;

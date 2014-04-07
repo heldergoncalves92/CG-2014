@@ -14,9 +14,19 @@
 #include <math.h>
 #include "circulo.h"
 
-void esfera(float raio, int sep_h, int sep_cir);
-void esferaVBO(float raio, int sep_h, int sep_cir);
-void drawEsfera();
 
+void esfera(float raio, int sep_h, int sep_cir);
+
+
+class Esfera{
+public:
+    Esfera(float raio, int sep_h, int sep_cir);
+    void desenha();
+    
+protected:
+    GLuint buffers[1];
+    int n_indices;
+    unsigned short *indices;
+};
 
 #endif

@@ -17,9 +17,17 @@
 
 
 void circulo(float raio, int lados, int sep, float alt,int ori);
-void anel(float raio_fora, float raio_dentro, int fatias, int aneis, int ori);
 
-void circuloVBO(float raio, int lados,int sep, float alt,int ori);
-void drawCirculo();
+
+class Circulo{
+public:
+    Circulo(float raio, int lados,int sep, float alt,int ori);
+    void desenha();
+    
+protected:
+    GLuint buffers[1];
+    int n_indices;
+    unsigned short *indices;
+};
 
 #endif

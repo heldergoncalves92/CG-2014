@@ -12,6 +12,7 @@
 #include "esfera.h"
 #include "plano.h"
 #include "cone.h"
+#include "anel.h"
 
 float raio=8,cam_h=0,cam_v=0.5,camh_x=0,camh_y=0, cir1=0,cir2=0;
 float x_tela, y_tela; //Variaveis para guardar posição da tela em que se carrega no rato
@@ -74,8 +75,10 @@ void renderScene(void) {
     //drawCirculo();
  //   drawEsfera();
     
-    anel(1, 0.75, 30, 2, 0);
     
+   Anel *an= new Anel(2, 0.55, 10, 2, 1);
+    an->desenha();
+ //anel(3, 0.55, 9, 2, 1);
    
 	// End of frame
 	
@@ -203,9 +206,6 @@ int main(int argc, char **argv) {
     glutAttachMenu(GLUT_RIGHT_BUTTON);
     
     glewInit();
-    
-    //circuloVBO(2, 30, 3,0,0);
-    esferaVBO(3, 20, 20);
     
     // alguns settings para OpenGL
 	glEnable(GL_DEPTH_TEST);

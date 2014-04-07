@@ -16,6 +16,7 @@
 		2C48F66918BF3D1800238944 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C48F66818BF3D1800238944 /* GLUT.framework */; };
 		2C48F66B18BF3D4200238944 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C48F66A18BF3D4200238944 /* OpenGL.framework */; };
 		2C94F09C18CE50CD001F3B5A /* cone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C94F09B18CE50CD001F3B5A /* cone.cpp */; };
+		2CC5BF7A18F322E2005A6BF0 /* anel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CC5BF7818F322E2005A6BF0 /* anel.cpp */; };
 		2CEC107418BFB95A00A2DE08 /* circulo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CEC107318BFB95A00A2DE08 /* circulo.cpp */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,8 @@
 		2C48F66A18BF3D4200238944 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		2C94F09A18CE5053001F3B5A /* cone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cone.h; sourceTree = "<group>"; };
 		2C94F09B18CE50CD001F3B5A /* cone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cone.cpp; sourceTree = "<group>"; };
+		2CC5BF7818F322E2005A6BF0 /* anel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = anel.cpp; sourceTree = "<group>"; };
+		2CC5BF7918F322E2005A6BF0 /* anel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = anel.h; sourceTree = "<group>"; };
 		2CEC107218BFB84700A2DE08 /* circulo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = circulo.h; sourceTree = "<group>"; };
 		2CEC107318BFB95A00A2DE08 /* circulo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = circulo.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -99,6 +102,8 @@
 				2C36DE8718C0BC7D0004B525 /* plano.cpp */,
 				2C94F09A18CE5053001F3B5A /* cone.h */,
 				2C94F09B18CE50CD001F3B5A /* cone.cpp */,
+				2CC5BF7818F322E2005A6BF0 /* anel.cpp */,
+				2CC5BF7918F322E2005A6BF0 /* anel.h */,
 			);
 			name = "CG-TESTES";
 			path = "CG-Aula01";
@@ -159,6 +164,7 @@
 				2C48F66018BF3C9E00238944 /* main.cpp in Sources */,
 				2C36DE8518BFE4AE0004B525 /* esfera.cpp in Sources */,
 				2C36DE8218BFD9A90004B525 /* cilindro.cpp in Sources */,
+				2CC5BF7A18F322E2005A6BF0 /* anel.cpp in Sources */,
 				2C94F09C18CE50CD001F3B5A /* cone.cpp in Sources */,
 				2CEC107418BFB95A00A2DE08 /* circulo.cpp in Sources */,
 			);

@@ -9,10 +9,6 @@
 #include "esfera.h"
 
 
-GLuint buffer_esf[1];
-unsigned int  *indices_esf;
-int n_indices_esf,n_pontos_esf;
-float *vertexB_esf;
 
 void esfera(float raio, int camadas, int fatias){
     float   angulo_cir=(2*M_PI)/fatias,
@@ -67,7 +63,7 @@ void esfera(float raio, int camadas, int fatias){
 }
 
 
-void esferaVBO(float raio, int camadas, int fatias){
+Esfera::Esfera(float raio, int camadas, int fatias){
     float   angulo_cir=(2*M_PI)/fatias,
     angulo_h=(M_PI)/camadas,y=0,l_aux,h_aux=M_PI_2;
     
@@ -76,26 +72,26 @@ void esferaVBO(float raio, int camadas, int fatias){
     //Activar Buffers
     glEnableClientState(GL_VERTEX_ARRAY);
     
-    n_pontos_esf=(2+fatias*(camadas-1))*3;
-    n_indices_esf=(fatias*(camadas-1)*2)*3;
+    int n_pontos=(2+fatias*(camadas-1))*3;
+    n_indices=(fatias*(camadas-1)*2)*3;
     
-    vertexB_esf=(float*)malloc(n_pontos_esf*sizeof(float));
-    indices_esf=(unsigned int*)malloc(n_indices_esf*sizeof(unsigned int));
+    float *vertexB=(float*)malloc(n_pontos*sizeof(float));
+    indices=(unsigned short*)malloc(n_indices*sizeof(unsigned short));
 
     h_aux+=angulo_h;
     
-    vertexB_esf[v++]=0;vertexB_esf[v++]=raio;vertexB_esf[v++]=0;
+    vertexB[v++]=0;vertexB[v++]=raio;vertexB[v++]=0;
     for (l_aux=0; l_aux<fatias; l_aux++) {
         
-        vertexB_esf[v++]=raio*sin(y)*cos(h_aux);vertexB_esf[v++]=raio*sin(h_aux);vertexB_esf[v++]=raio*cos(y)*cos(h_aux);
+        vertexB[v++]=raio*sin(y)*cos(h_aux);vertexB[v++]=raio*sin(h_aux);vertexB[v++]=raio*cos(y)*cos(h_aux);
         
-        indices_esf[i++]=0;
-        indices_esf[i++]=l_aux+1;
-        indices_esf[i++]=l_aux+2;
+        indices[i++]=0;
+        indices[i++]=l_aux+1;
+        indices[i++]=l_aux+2;
         
         y+=angulo_cir;
     }
-    indices_esf[i-1]=1;
+    indices[i-1]=1;
     
     for(j=1;j<camadas-1;j++){
         h_aux+=angulo_h;
@@ -103,45 +99,45 @@ void esferaVBO(float raio, int camadas, int fatias){
         for (l_aux=0; l_aux<fatias; l_aux++) {
             avanco=j*fatias+1;
             
-            vertexB_esf[v++]=raio*sin(y)*cos(h_aux);vertexB_esf[v++]=raio*sin(h_aux);vertexB_esf[v++]=raio*cos(y)*cos(h_aux);
+            vertexB[v++]=raio*sin(y)*cos(h_aux);vertexB[v++]=raio*sin(h_aux);vertexB[v++]=raio*cos(y)*cos(h_aux);
             
-            indices_esf[i++]=avanco-fatias+l_aux;
-            indices_esf[i++]=avanco+l_aux;
-            indices_esf[i++]=avanco-fatias+l_aux+1;
+            indices[i++]=avanco-fatias+l_aux;
+            indices[i++]=avanco+l_aux;
+            indices[i++]=avanco-fatias+l_aux+1;
             
-            indices_esf[i++]=avanco+l_aux;
-            indices_esf[i++]=avanco+l_aux+1;
-            indices_esf[i++]=avanco-fatias+l_aux+1;
+            indices[i++]=avanco+l_aux;
+            indices[i++]=avanco+l_aux+1;
+            indices[i++]=avanco-fatias+l_aux+1;
            
             y+=angulo_cir;
         }
-        indices_esf[i-4]=avanco-fatias;
-        indices_esf[i-2]=avanco;
-        indices_esf[i-1]=avanco-fatias;
+        indices[i-4]=avanco-fatias;
+        indices[i-2]=avanco;
+        indices[i-1]=avanco-fatias;
     }
     
-    vertexB_esf[v++]=0;vertexB_esf[v++]=-raio;vertexB_esf[v++]=0;
+    vertexB[v++]=0;vertexB[v++]=-raio;vertexB[v++]=0;
     for (l_aux=0; l_aux<fatias; l_aux++) {
         
-        indices_esf[i++]=avanco+l_aux;
-        indices_esf[i++]=avanco+fatias;
-        indices_esf[i++]=avanco+l_aux+1;
+        indices[i++]=avanco+l_aux;
+        indices[i++]=avanco+fatias;
+        indices[i++]=avanco+l_aux+1;
     }
-    indices_esf[i-1]=avanco;
+    indices[i-1]=avanco;
     
-    glGenBuffers(1, buffer_esf);
-    glBindBuffer(GL_ARRAY_BUFFER,buffer_esf[0]);
-    glBufferData(GL_ARRAY_BUFFER,n_pontos_esf*sizeof(float), vertexB_esf, GL_STATIC_DRAW);
+    glGenBuffers(1, buffers);
+    glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
+    glBufferData(GL_ARRAY_BUFFER,n_pontos*sizeof(float), vertexB, GL_STATIC_DRAW);
     
-//    printf("%d||%d -- %d||%d -- %d\n",n_indices_esf,i,n_pontos_esf,v,fatias);
+//    printf("%d||%d -- %d||%d -- %d\n",n_indices,i,n_pontos,v,fatias);
     
-    free(vertexB_esf);
+    free(vertexB);
 }
 
-void drawEsfera(){
+void Esfera::desenha(){
     
-    glBindBuffer(GL_ARRAY_BUFFER,buffer_esf[0]);
+    glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
     glVertexPointer(3,GL_FLOAT,0,0);
-    glDrawElements(GL_TRIANGLES, n_indices_esf ,GL_UNSIGNED_INT, indices_esf);
+    glDrawElements(GL_TRIANGLES, n_indices ,GL_UNSIGNED_SHORT, indices);
 }
 
