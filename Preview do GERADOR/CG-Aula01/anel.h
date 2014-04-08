@@ -24,7 +24,7 @@ public:
     
 protected:
     GLuint buffers[1];
-    int n_indices;
+    short n_indices;
     unsigned short *indices;
 };
 

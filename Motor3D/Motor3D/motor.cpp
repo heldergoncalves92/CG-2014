@@ -78,7 +78,7 @@ void motor_XML(TiXmlNode* root){
                         glRotatef(angulo, x, y, z);
                     }else
                         if (strcmp(tag, "escala")==0) {
-                            x=y=z=0;
+                            x=y=z=1;
                             for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){
                                 if (strcmp(attr->Name(), "x")==0)
                                     x=atof(attr->Value());

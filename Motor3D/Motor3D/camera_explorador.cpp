@@ -9,7 +9,7 @@
 #include "camera_explorador.h"
 
 
-float raio=180,raioAux=0,angCam_h=0,angCam_v=0.5,angAux_h=0,angAux_v=0,x_tela,y_tela,look[]={50,0,0},avanco=1;
+float raio=180,raioAux=0,angCam_h=0,angCam_v=0.5,angAux_h=0,angAux_v=0,x_tela,y_tela,look[]={20,0,0},avanco=5;
 int estado_botao=0;
 
 
@@ -55,7 +55,7 @@ void mov_rato_explorador(int x, int y){
     }
 }
 
-//Funçoes para o Rato
+//Funçoes para o teclado
 void teclado_normal_explorador(unsigned char tecla,int x, int y){
     switch (tecla) {
         case 'a':

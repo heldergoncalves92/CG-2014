@@ -75,9 +75,9 @@ void renderScene(void) {
     //drawCirculo();
  //   drawEsfera();
     
-    
-   Anel *an= new Anel(2, 0.55, 10, 2, 1);
-    an->desenha();
+    Cilindro an = Cilindro(2, 20, 2, 2, 3);
+    //Cone an= Cone(2, 2, 20, 3, 3);
+    an.desenha();
  //anel(3, 0.55, 9, 2, 1);
    
 	// End of frame

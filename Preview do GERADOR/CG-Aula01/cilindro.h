@@ -13,5 +13,15 @@
 
 void cilindro(float raio,int lados,float alt,int sep_cir,int sep_h);
 
+class Cilindro{
+public:
+    Cilindro(float raio,int fatias,float altura,int aneis,int camadas);
+    void desenha();
+    
+protected:
+    GLuint buffers[1];
+    unsigned short n_indices;
+    unsigned short *indices;
+};
 
 #endif

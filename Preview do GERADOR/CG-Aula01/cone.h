@@ -13,4 +13,15 @@
 
 void cone(float raio_base, float altura, int lados, int sep_circulo, int sep_h);
 
+
+class Cone{
+public:
+    Cone(float raio_base, float altura, int fatias, int aneis, int camadas);
+    void desenha();
+    
+protected:
+    GLuint buffers[1];
+    short n_indices;
+    unsigned short *indices;
+};
 #endif
