@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Duarte Nuno Ferreira Duarte. All rights reserved.
 //
 
-#include "motor.h"
+#include "motorXML.h"
 #include "camera_explorador.h"
 #include "camera_fps.h"
 
@@ -121,7 +121,7 @@ int main(int argc, char* argv[]){
         
     
 	//if(doc.LoadFile(argv[1])){
-    if(doc.LoadFile("sistema_solar.xml")){
+    if(doc.LoadFile("test.xml")){
     
        root=doc.RootElement();
         cena=root->FirstChild("cena");

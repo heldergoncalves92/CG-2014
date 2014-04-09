@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2C48576018D10A5D00D87F19 /* motor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C48575F18D10A5D00D87F19 /* motor.cpp */; };
+		2C48576018D10A5D00D87F19 /* motorXML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C48575F18D10A5D00D87F19 /* motorXML.cpp */; };
+		2C6E6AE918F5BEED00E11652 /* modelo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E6AE718F5BEED00E11652 /* modelo.cpp */; };
 		2C87D54718D347F9003DF930 /* camera_explorador.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C87D54618D347F9003DF930 /* camera_explorador.cpp */; };
+		2CC85CDA18F59B30002D4F0D /* Vbo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CC85CD818F59B30002D4F0D /* Vbo.cpp */; };
 		2CCFE06118D36B440000456E /* camera_fps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CCFE06018D36B440000456E /* camera_fps.cpp */; };
 		3C2A5AF818CE27E000F81F61 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C2A5AF718CE27E000F81F61 /* main.cpp */; };
 		3C2A5AFA18CE27E000F81F61 /* Motor3D.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3C2A5AF918CE27E000F81F61 /* Motor3D.1 */; };
@@ -34,10 +36,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2C48575E18D10A4800D87F19 /* motor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = motor.h; sourceTree = "<group>"; };
-		2C48575F18D10A5D00D87F19 /* motor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = motor.cpp; sourceTree = "<group>"; };
+		2C48575E18D10A4800D87F19 /* motorXML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = motorXML.h; sourceTree = "<group>"; };
+		2C48575F18D10A5D00D87F19 /* motorXML.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = motorXML.cpp; sourceTree = "<group>"; };
+		2C6E6AE718F5BEED00E11652 /* modelo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = modelo.cpp; sourceTree = "<group>"; };
+		2C6E6AE818F5BEED00E11652 /* modelo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modelo.h; sourceTree = "<group>"; };
 		2C87D54518D347C3003DF930 /* camera_explorador.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = camera_explorador.h; sourceTree = "<group>"; };
 		2C87D54618D347F9003DF930 /* camera_explorador.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera_explorador.cpp; sourceTree = "<group>"; };
+		2CC85CD818F59B30002D4F0D /* Vbo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vbo.cpp; sourceTree = "<group>"; };
+		2CC85CD918F59B30002D4F0D /* Vbo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vbo.h; sourceTree = "<group>"; };
 		2CCFE05F18D36AEF0000456E /* camera_fps.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = camera_fps.h; sourceTree = "<group>"; };
 		2CCFE06018D36B440000456E /* camera_fps.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera_fps.cpp; sourceTree = "<group>"; };
 		3C2A5AF418CE27E000F81F61 /* Motor3D */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Motor3D; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,13 +96,17 @@
 			children = (
 				3C2A5B0E18CE29B100F81F61 /* tinyxml */,
 				3C2A5AF718CE27E000F81F61 /* main.cpp */,
-				2C48575E18D10A4800D87F19 /* motor.h */,
+				2C48575E18D10A4800D87F19 /* motorXML.h */,
 				3C2A5AF918CE27E000F81F61 /* Motor3D.1 */,
-				2C48575F18D10A5D00D87F19 /* motor.cpp */,
+				2C48575F18D10A5D00D87F19 /* motorXML.cpp */,
 				2C87D54518D347C3003DF930 /* camera_explorador.h */,
 				2C87D54618D347F9003DF930 /* camera_explorador.cpp */,
 				2CCFE05F18D36AEF0000456E /* camera_fps.h */,
 				2CCFE06018D36B440000456E /* camera_fps.cpp */,
+				2CC85CD818F59B30002D4F0D /* Vbo.cpp */,
+				2CC85CD918F59B30002D4F0D /* Vbo.h */,
+				2C6E6AE718F5BEED00E11652 /* modelo.cpp */,
+				2C6E6AE818F5BEED00E11652 /* modelo.h */,
 			);
 			path = Motor3D;
 			sourceTree = "<group>";
@@ -165,14 +175,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C6E6AE918F5BEED00E11652 /* modelo.cpp in Sources */,
 				2CCFE06118D36B440000456E /* camera_fps.cpp in Sources */,
 				2C87D54718D347F9003DF930 /* camera_explorador.cpp in Sources */,
 				3C2A5B1718CE29B100F81F61 /* tinyxmlerror.cpp in Sources */,
 				3C2A5AF818CE27E000F81F61 /* main.cpp in Sources */,
 				3C2A5B1618CE29B100F81F61 /* tinyxml.cpp in Sources */,
 				3C2A5B1818CE29B100F81F61 /* tinyxmlparser.cpp in Sources */,
+				2CC85CDA18F59B30002D4F0D /* Vbo.cpp in Sources */,
 				3C2A5B1518CE29B100F81F61 /* tinystr.cpp in Sources */,
-				2C48576018D10A5D00D87F19 /* motor.cpp in Sources */,
+				2C48576018D10A5D00D87F19 /* motorXML.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
