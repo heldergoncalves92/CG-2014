@@ -12,13 +12,15 @@
 
 void anel(float raio_fora, float raio_dentro,int fatias, int aneis, int ori, FILE* f){
     float angulo=(2*M_PI)/fatias,x,y=0,l_aux,raio=(raio_fora-raio_dentro)/aneis,alt=0;
+    
+    fprintf(f,"%d\n",2*fatias*(aneis)*9);
     raio_fora=raio_dentro;
     if(ori){
         for(;aneis>0;aneis--){
             raio_dentro=raio_fora;
             raio_fora+=raio;
             
-            for(l_aux=0;l_aux<=fatias;l_aux++){
+            for(l_aux=0;l_aux<fatias;l_aux++){
                 x=y;
                 y+=angulo;
                 fprintf(f,"%f %f %f\n",raio_dentro*sin(x), alt, raio_dentro*cos(x));
@@ -52,6 +54,8 @@ void anel(float raio_fora, float raio_dentro,int fatias, int aneis, int ori, FIL
 
 void circulo(float raio, int fatias,int aneis, float alt,int ori, FILE* f){
     float angulo=(2*M_PI)/fatias,x,y=0,l_aux, r_aux1,r_aux2;
+
+    fprintf(f,"%d\n",(2*fatias*(aneis-1)+fatias)*9);
     raio=raio/aneis;
     if(ori){
         for(l_aux=0;l_aux<fatias;l_aux++){

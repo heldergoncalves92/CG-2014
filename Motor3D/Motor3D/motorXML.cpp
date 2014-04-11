@@ -59,7 +59,7 @@ void motor_XML(TiXmlNode* root){
         if (strcmp(tag, "modelo")==0) {
             attr=child->ToElement()->FirstAttribute();
             if (strcmp(attr->Name(), "ficheiro")==0) {
-                modelo=search(attr->Value(), lista_modelos);
+                modelo=search_Modelo(attr->Value(), lista_modelos);
                 if (modelo) {
                     desenha_modelo(modelo);
                 }else

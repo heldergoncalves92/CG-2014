@@ -63,7 +63,7 @@ int main(int argc, char *argv[]){
 
 							if(sscanf(argv[2],"%f",&p1)&&sscanf(argv[3],"%f",&p2)&&sscanf(argv[4],"%d",&i1)&&sscanf(argv[5],"%d",&i2)&&sscanf(argv[6],"%d",&i3)){
 								f=fopen(argv[7],"w");
-								plano(p1,p2,i1,i2,0,i3,f);
+								plano(p1,p2,i1,i2,0,i3,f,1);
 								fclose(f);
 
 							}else

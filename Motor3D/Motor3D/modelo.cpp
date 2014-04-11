@@ -18,20 +18,18 @@ Modelo addModelo(const char* nome, float *vertices, int n_pontos, Modelo lista){
     
     if (lista) {
         novo->next=lista;
-        lista=novo;
-        return lista;
+        return novo;
     }
     novo->next=NULL;
     return novo;
 }
 
 
-Modelo search(const char* nome, Modelo lista){
+Modelo search_Modelo(const char* nome, Modelo lista){
     
     while (lista) {
         if (strcmp(nome, lista->nome)==0)
             return lista;
-        
         lista=lista->next;
     }
     return NULL;

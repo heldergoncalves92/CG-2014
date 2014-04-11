@@ -17,6 +17,8 @@ void esfera(float raio, int camadas, int fatias, FILE* f){
     h_aux2+=angulo_h;
     y=0;
     
+    fprintf(f,"%d\n",2*fatias*(camadas-1)*9);
+
     for (l_aux=0; l_aux<fatias; l_aux++) {
         x=y;
         y+=angulo_cir;

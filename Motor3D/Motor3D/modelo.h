@@ -24,7 +24,7 @@ typedef struct smodelo{
 
 
 Modelo addModelo(const char* nome, float *vertices, int n_pontos, Modelo lista);
-Modelo search(const char* nome, Modelo lista);
+Modelo search_Modelo(const char* nome, Modelo lista);
 
 
 #endif /* defined(__Motor3D__modelo__) */

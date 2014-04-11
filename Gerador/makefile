@@ -1,4 +1,4 @@
-OPT_OR_DEBUG=-O2
+OPT_OR_DEBUG=-O2 -g
 CFLAGS=-Wall -Wextra -pedantic $(OPT_OR_DEBUG)
 OBJS=$(patsubst %.cpp,%.o,$(wildcard *.cpp))
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xml>
+    <camera tipo='explorador'>
+        <centro x='0' y='0' z='0'/>
+        <zoom raio='40' avanco='3'/>
+        <vista latitude='1' longitude='0.4'/>
+    </camera>
+    <cena>
+
+        <grupo>
+            <translacao y='-1'/>
+            <modelo ficheiro='anel1.3d'/>
+          
+        </grupo>
+    </cena>
+    <camera>
+    </camera>
+</xml>

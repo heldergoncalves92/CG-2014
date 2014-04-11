@@ -14,10 +14,11 @@
 
 //Estrutura para guardar uma VBO
 typedef struct sVbo{
-    GLuint buffers[1];
-    float *pontos;
+    const char* nome;
+    GLuint *buffers;
     unsigned short *indices;
     unsigned short n_indices;
+    struct sVbo *next;
     
 }*Vbo, NVbo;
 

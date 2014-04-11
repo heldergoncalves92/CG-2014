@@ -114,14 +114,13 @@ int main(int argc, char* argv[]){
     TiXmlAttribute *attr=NULL;
 
     
-   /* if(argc!=2){
+    if(argc!=2){
         printf("ERRO!! Número de argumentos errado, falta XML de input!\n");
         return 1;
-    }*/
+    }
         
-    
-	//if(doc.LoadFile(argv[1])){
-    if(doc.LoadFile("test.xml")){
+	if(doc.LoadFile(argv[1])){
+   
     
        root=doc.RootElement();
         cena=root->FirstChild("cena");
@@ -151,6 +150,11 @@ int main(int argc, char* argv[]){
                     }else
                         if (strcmp(attr->Value(), "explorador")==0){
                             preDefinicoes_Explorador(node);
+                            glutKeyboardFunc(teclado_normal_explorador);
+                            glutSpecialFunc(teclado_especial_explorador);
+                            glutMouseFunc(rato_explorador);
+                            glutMotionFunc(mov_rato_explorador);
+                            tipo_camera=1;
                         }
                 }
             }

@@ -20,9 +20,11 @@
  
 */
 
-void plano(float altura, float lado, int camadas, int fatias, float z_index, int ori, FILE* f){
+void plano(float altura, float lado, int camadas, int fatias, float z_index, int ori, FILE* f, int flag){
     int i;
     float l_const=lado/fatias, alt_const=altura/camadas,alt_ori=-altura/2,lado_ori=-lado/2;
+
+    if (flag==1) fprintf(f,"%d\n",2*camadas*fatias*9);
     
     switch (ori) {
         case 1:

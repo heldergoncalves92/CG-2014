@@ -12,6 +12,6 @@
 #include <stdio.h>
 #include <math.h>
 
-void plano(float altura, float lado, int camadas, int fatias, float z_index, int ori, FILE* f);
+void plano(float altura, float lado, int camadas, int fatias, float z_index, int ori, FILE* f, int flag);
 
 #endif
