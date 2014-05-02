@@ -13,7 +13,9 @@
 #include <stdio.h>
 #include "tinyxml/tinyxml.h"
 #include "modelo.h"
+#include "Vbo.h"
 
-void motor_XML(TiXmlNode *doc);
+//void motor_XML(TiXmlNode *doc);
+void motor_XML2(TiXmlNode *doc);
 
 #endif

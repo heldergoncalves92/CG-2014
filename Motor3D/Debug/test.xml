@@ -2,14 +2,14 @@
 <xml>
     <camera tipo='explorador'>
         <centro x='0' y='0' z='0'/>
-        <zoom raio='40' avanco='3'/>
+        <zoom raio='10' avanco='1'/>
         <vista latitude='1' longitude='0.4'/>
     </camera>
     <cena>
 
         <grupo>
-            <translacao y='-1'/>
-            <modelo ficheiro='anel1.3d'/>
+
+            <modelo ficheiro='cenas.vbo'/>
           
         </grupo>
     </cena>

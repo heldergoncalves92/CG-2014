@@ -5,7 +5,7 @@
         <centro x='50' />
         <vista latitude='1' longitude='0.15'/>
     </camera>
-    <cena>
+    <cena tipo='movel'>
         <grupo>
             <translacao x='0' y='0' z='0'/> SOL
             <grupo>

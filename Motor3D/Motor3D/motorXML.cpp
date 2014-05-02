@@ -9,6 +9,7 @@
 #include "motorXML.h"
 
 Modelo lista_modelos=NULL;
+Vbo lista_vbo=NULL;
 
 void desenha_modelo(Modelo modelo){
     int i;
@@ -82,6 +83,84 @@ void motor_XML(TiXmlNode* root){
                         else
                             if (strcmp(attr->Name(), "z")==0)
                                 z=atof(attr->Value());
+                    }
+                    glTranslatef(x, y, z);
+                }else
+                    if (strcmp(tag, "rotacao")==0) {
+                        angulo=x=y=z=0;
+                        for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                            if (strcmp(attr->Name(), "x")==0)
+                                x=atof(attr->Value());
+                            else
+                                if (strcmp(attr->Name(), "y")==0)
+                                    y=atof(attr->Value());
+                                else
+                                    if (strcmp(attr->Name(), "z")==0)
+                                        z=atof(attr->Value());
+                                    else
+                                        if (strcmp(attr->Name(), "angulo")==0)
+                                            angulo=atof(attr->Value());
+                        }
+                        glRotatef(angulo, x, y, z);
+                    }else
+                        if (strcmp(tag, "escala")==0) {
+                            x=y=z=1;
+                            for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                                if (strcmp(attr->Name(), "x")==0)
+                                    x=atof(attr->Value());
+                                else
+                                    if (strcmp(attr->Name(), "y")==0)
+                                        y=atof(attr->Value());
+                                    else
+                                        if (strcmp(attr->Name(), "z")==0)
+                                            z=atof(attr->Value());
+                            }
+                            glScalef(x, y, z);
+                        }
+        
+    }
+}
+
+
+void motor_XML2(TiXmlNode* root){
+    
+    TiXmlNode *child;
+    TiXmlAttribute * attr;
+    Vbo vbo;
+    const char* tag;
+    float x,y,z,angulo;
+    
+    
+    
+    for (child = root->FirstChild(); child; child=child->NextSibling()) {
+        tag=child->Value();
+        
+        if (strcmp(tag, "modelo")==0) {
+            attr=child->ToElement()->FirstAttribute();
+            if (strcmp(attr->Name(), "ficheiro")==0) {
+                vbo=search_Vbo(attr->Value(), lista_vbo);
+                if (vbo) {
+                    desenha_vbo(vbo);
+                }else
+                    ler_VBO(attr->Value(),&lista_vbo);
+            }
+        }else
+            if (strcmp(tag, "grupo")==0) {
+                glPushMatrix();
+                motor_XML2((child));
+                glPopMatrix();
+            }else
+                if (strcmp(tag, "translacao")==0) {
+                    x=y=z=0;
+                    for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                        if (strcmp(attr->Name(), "x")==0)
+                            x=atof(attr->Value());
+                        else
+                            if (strcmp(attr->Name(), "y")==0)
+                                y=atof(attr->Value());
+                            else
+                                if (strcmp(attr->Name(), "z")==0)
+                                    z=atof(attr->Value());
                     }
                     glTranslatef(x, y, z);
                 }else

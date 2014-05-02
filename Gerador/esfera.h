@@ -9,10 +9,11 @@
 #ifndef CG_FORMAS_PRIMARIAS_esfera_h
 #define CG_FORMAS_PRIMARIAS_esfera_h
 
-#include <stdio.h>
+#include <iostream>
 #include <math.h>
 
 void esfera(float raio, int camadas, int fatias, FILE* f);
+void esferaVBO(float raio, int camadas, int fatias,FILE* f);
 
 
 

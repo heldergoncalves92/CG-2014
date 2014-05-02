@@ -68,7 +68,7 @@ void renderScene(void) {
     
 	// pÙr instruÁıes de desenho aqui
 	
-    motor_XML(cena);
+    motor_XML2(cena);
     
 	// End of frame
 	glutSwapBuffers();
@@ -114,13 +114,14 @@ int main(int argc, char* argv[]){
     TiXmlAttribute *attr=NULL;
 
     
-    if(argc!=2){
+  /*  if(argc!=2){
         printf("ERRO!! Número de argumentos errado, falta XML de input!\n");
         return 1;
     }
         
 	if(doc.LoadFile(argv[1])){
-   
+   */
+    if(doc.LoadFile("test.xml")){
     
        root=doc.RootElement();
         cena=root->FirstChild("cena");
