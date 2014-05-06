@@ -20,9 +20,11 @@
 #include "catmull.h"
 #include "rotacoes.h"
 
+extern Rotacao *rotacoes, *rot_actual;
+extern Translacao *translacoes, *tra_actual;
+
+
 void motor_XML(TiXmlNode *doc);
-void motor_XML2(TiXmlNode *doc);
-void prepara_MotorXML2(TiXmlNode* root);
-void prepara_MotorXML_trans(TiXmlNode* root);
+void prepara_MotorXML(TiXmlNode* root);
 
 #endif

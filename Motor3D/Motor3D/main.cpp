@@ -15,6 +15,8 @@
 TiXmlNode *cena=NULL;
 int tipo_camera=0;
 
+Rotacao *rotacoes=NULL, *rot_actual=NULL;
+Translacao *translacoes=NULL, *tra_actual=NULL;
 
 
 void changeSize(int w, int h){
@@ -68,8 +70,10 @@ void renderScene(void) {
     
     
 	// pÙr instruÁıes de desenho aqui
-	
-    prepara_MotorXML2(cena);
+	rot_actual=rotacoes;
+    tra_actual=translacoes;
+    
+    motor_XML(cena);
     
 	// End of frame
 	glutSwapBuffers();
@@ -126,9 +130,9 @@ int main(int argc, char* argv[]){
         root=doc.RootElement();
         cena=root->FirstChild("cena");
         
-        
-        
         if (cena) {
+            
+            prepara_MotorXML(cena);
             // inicializaÁ„o
             glutInit(&argc, argv);
             glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
@@ -195,6 +199,8 @@ int main(int argc, char* argv[]){
             glClearColor(0.0f,0.0f,0.0f,0.0f);
             
             glPolygonMode(GL_FRONT, GL_LINE);
+            
+
             
             // entrar no ciclo do GLUT
             glutMainLoop();
