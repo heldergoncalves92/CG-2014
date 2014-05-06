@@ -9,6 +9,7 @@
 #include "motorXML.h"
 
 Modelo lista_modelos=NULL;
+<<<<<<< HEAD
 Rotacao *rotacoes=NULL, *rot_actual=NULL;
 Translacao *translacoes=NULL, *tra_actual=NULL;
 long currentTime=0;
@@ -48,6 +49,8 @@ void ler_modelo(const char* filename){
         printf("ERRO! Não fez load do ficheiro '%s'!\n",filename);
     
 }
+=======
+>>>>>>> FETCH_HEAD
 
 void motor_XML(TiXmlNode* root){
     
@@ -67,9 +70,11 @@ void motor_XML(TiXmlNode* root){
             if (strcmp(attr->Name(), "ficheiro")==0) {
                 modelo=search_Modelo(attr->Value(), lista_modelos);
                 if (modelo) {
-                    desenha_modelo(modelo);
+                   // desenha_modelo(modelo);
+                    modelo=NULL;
                 }else
-                    ler_modelo(attr->Value());
+                  //  ler_modelo(attr->Value());
+                                        modelo=NULL;
             }
         }else
             if (strcmp(tag, "grupo")==0) {
@@ -149,9 +154,26 @@ void motor_XML2(TiXmlNode* root){
             if (strcmp(attr->Name(), "ficheiro")==0) {
                 modelo=search_Modelo(attr->Value(), lista_modelos);
                 if (modelo) {
+<<<<<<< HEAD
                     desenha_modelo(modelo);
                 }else
                     ler_modelo(attr->Value());
+=======
+                    if(modelo->tipo==1)
+                        desenha_RTime(modelo->u.rTime);
+                    else
+                        desenha_vbo(modelo->u.vbo);
+                }else{
+                    std::regex e ("(.*)(.vbo)");
+                    if(std::regex_match(attr->Value(), e) )
+                        lista_modelos=ler_VBO(attr->Value(),lista_modelos);
+                    else{
+                        std::regex e ("(.*)(.3d)");
+                        if(std::regex_match(attr->Value(), e) )
+                             lista_modelos=ler_RTime(attr->Value(),lista_modelos);
+                    }
+                }
+>>>>>>> FETCH_HEAD
             }
         }else
             if (strcmp(tag, "grupo")==0) {
