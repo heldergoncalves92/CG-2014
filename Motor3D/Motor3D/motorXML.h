@@ -10,7 +10,9 @@
 #define Motor3D_motorXML_h
 
 #include <GLUT/glut.h>
-#include <stdio.h>
+#include <iostream>
+#include <string>
+#include <regex>
 #include "tinyxml/tinyxml.h"
 #include "modelo.h"
 #include "Vbo.h"

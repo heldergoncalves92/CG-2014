@@ -10,21 +10,47 @@
 #define __Motor3D__modelo__
 
 #include <iostream>
+#include <GLUT/glut.h>
 
 
+//Estrutura para as VBO -> '.vbo'
+typedef struct sVbo{
+    const char* nome;
+    GLuint *buffers;
+    unsigned short *indices;
+    int n_indices;
+    
+}*Vbo, NVbo;
 
-typedef struct smodelo{
+//Estrutura para os modelos -> '.3d'
+typedef struct sr_time{
     
     const char* nome;
     float* vertices;
     int n_pontos;
+    
+}*RTime, NRTime;
+
+
+typedef struct smodelo{
+    
+    short tipo;
+    union{
+        Vbo vbo;
+        RTime rTime;
+    }u;
     struct smodelo *next;
     
 }*Modelo, NModelo;
 
 
-Modelo addModelo(const char* nome, float *vertices, int n_pontos, Modelo lista);
+Modelo addRTime(const char* nome, float *vertices, int n_pontos, Modelo lista);
+Modelo addVbo(const char* nome, GLuint *buffers, int n_indices, unsigned short *indices, Modelo lista);
+Modelo ler_RTime(const char* filename, Modelo lista);
+Modelo ler_VBO(const char* filename, Modelo lista);
 Modelo search_Modelo(const char* nome, Modelo lista);
+void desenha_vbo(Vbo vbo);
+void desenha_RTime(RTime modelo);
 
 
 #endif /* defined(__Motor3D__modelo__) */

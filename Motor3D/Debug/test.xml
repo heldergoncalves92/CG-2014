@@ -3,14 +3,17 @@
     <camera tipo='explorador'>
         <centro x='0' y='0' z='0'/>
         <zoom raio='10' avanco='1'/>
-        <vista latitude='1' longitude='0.4'/>
+        <vista latitude='0' longitude='0.4'/>
     </camera>
     <cena>
 
         <grupo>
 
             <modelo ficheiro='cenas.vbo'/>
-          
+            <grupo>
+                <translacao x='4'/>
+                <modelo ficheiro='planeta.3d'/>
+            </grupo>
         </grupo>
     </cena>
     <camera>
