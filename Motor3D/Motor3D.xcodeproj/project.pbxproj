@@ -20,6 +20,8 @@
 		3C2A5B1618CE29B100F81F61 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C2A5B1118CE29B100F81F61 /* tinyxml.cpp */; };
 		3C2A5B1718CE29B100F81F61 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C2A5B1318CE29B100F81F61 /* tinyxmlerror.cpp */; };
 		3C2A5B1818CE29B100F81F61 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C2A5B1418CE29B100F81F61 /* tinyxmlparser.cpp */; };
+		3C56FE11190C0ECE005A4AF2 /* rotacoes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C56FE0F190C0ECE005A4AF2 /* rotacoes.cpp */; };
+		3CE84AFA1908144200D511E3 /* catmull.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE84AF81908144200D511E3 /* catmull.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -57,6 +59,10 @@
 		3C2A5B1218CE29B100F81F61 /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
 		3C2A5B1318CE29B100F81F61 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
 		3C2A5B1418CE29B100F81F61 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
+		3C56FE0F190C0ECE005A4AF2 /* rotacoes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rotacoes.cpp; sourceTree = "<group>"; };
+		3C56FE10190C0ECE005A4AF2 /* rotacoes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rotacoes.h; sourceTree = "<group>"; };
+		3CE84AF81908144200D511E3 /* catmull.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = catmull.cpp; sourceTree = "<group>"; };
+		3CE84AF91908144200D511E3 /* catmull.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = catmull.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +113,10 @@
 				2CC85CD918F59B30002D4F0D /* Vbo.h */,
 				2C6E6AE718F5BEED00E11652 /* modelo.cpp */,
 				2C6E6AE818F5BEED00E11652 /* modelo.h */,
+				3CE84AF81908144200D511E3 /* catmull.cpp */,
+				3CE84AF91908144200D511E3 /* catmull.h */,
+				3C56FE0F190C0ECE005A4AF2 /* rotacoes.cpp */,
+				3C56FE10190C0ECE005A4AF2 /* rotacoes.h */,
 			);
 			path = Motor3D;
 			sourceTree = "<group>";
@@ -176,6 +186,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C6E6AE918F5BEED00E11652 /* modelo.cpp in Sources */,
+				3C56FE11190C0ECE005A4AF2 /* rotacoes.cpp in Sources */,
+				3CE84AFA1908144200D511E3 /* catmull.cpp in Sources */,
 				2CCFE06118D36B440000456E /* camera_fps.cpp in Sources */,
 				2C87D54718D347F9003DF930 /* camera_explorador.cpp in Sources */,
 				3C2A5B1718CE29B100F81F61 /* tinyxmlerror.cpp in Sources */,
@@ -223,9 +235,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.9;
 			};
 			name = Debug;
 		};
@@ -255,8 +268,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				SDKROOT = macosx10.8;
+				LIBRARY_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx10.9;
 			};
 			name = Release;
 		};
@@ -265,7 +279,7 @@
 			buildSettings = {
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.8;
 			};
 			name = Debug;
 		};
@@ -274,7 +288,7 @@
 			buildSettings = {
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.8;
 			};
 			name = Release;
 		};

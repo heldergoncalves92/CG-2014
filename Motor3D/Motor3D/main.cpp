@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Duarte Nuno Ferreira Duarte. All rights reserved.
 //
 
+
 #include "motorXML.h"
 #include "camera_explorador.h"
 #include "camera_fps.h"
@@ -68,7 +69,8 @@ void renderScene(void) {
     
 	// pÙr instruÁıes de desenho aqui
 	
-    motor_XML(cena);
+    prepara_MotorXML2(cena);
+    //prepara_MotorXML_trans(cena);
     
 	// End of frame
 	glutSwapBuffers();
@@ -107,22 +109,22 @@ void front_menu(int op){
 }
 
 int main(int argc, char* argv[]){
-
+    
     TiXmlDocument doc;
     TiXmlElement *root=NULL;
     TiXmlNode *node=NULL;
     TiXmlAttribute *attr=NULL;
-
     
-    if(argc!=2){
-        printf("ERRO!! Número de argumentos errado, falta XML de input!\n");
-        return 1;
-    }
+    
+    //if(argc!=2){
+    //    printf("ERRO!! Número de argumentos errado, falta XML de input!\n");
+    //   return 1;
+    //}
+    
+	//if(doc.LoadFile(argv[1])){
+    if(doc.LoadFile("sistema_solar.xml")){
         
-	if(doc.LoadFile(argv[1])){
-   
-    
-       root=doc.RootElement();
+        root=doc.RootElement();
         cena=root->FirstChild("cena");
         
         if (cena) {
@@ -137,6 +139,7 @@ int main(int argc, char* argv[]){
             // pÙr registo de funÁıes aqui
             glutDisplayFunc(renderScene);
             glutReshapeFunc(changeSize);
+            glutIdleFunc(renderScene);
             
             // funções do teclado e rato
             if((node=root->FirstChild("camera")) && (attr=node->ToElement()->FirstAttribute())){
@@ -170,7 +173,7 @@ int main(int argc, char* argv[]){
                 //Atribuir valores base
                 
             }
-                
+            
             
             //MENU
             glutCreateMenu(front_menu);
@@ -182,6 +185,9 @@ int main(int argc, char* argv[]){
             
             glutAttachMenu(GLUT_RIGHT_BUTTON);
             
+            //Callback do GLEW - Tem de estar depois de todos os callbacks do GLUT
+            //glewInit();
+            
             // alguns settings para OpenGL
             glEnable(GL_DEPTH_TEST);
             glEnable(GL_CULL_FACE);
@@ -189,7 +195,7 @@ int main(int argc, char* argv[]){
             
             glPolygonMode(GL_FRONT, GL_LINE);
             
-            // entrar no ciclo do GLUT 
+            // entrar no ciclo do GLUT
             glutMainLoop();
             
         }
