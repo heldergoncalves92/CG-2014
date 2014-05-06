@@ -58,6 +58,35 @@ Anel::Anel(float raio_fora, float raio_dentro, int fatias, int aneis, int ori){
             indices[i-2]=avanco;
             indices[i-1]=avanco-fatias;
         }
+    }else{
+        for (j=0; j<fatias; j++) {
+            vertexB[v++]=raio_dentro*sin(y); vertexB[v++]=0; vertexB[v++]=raio_dentro*cos(y);
+            y+=angulo;
+        }
+        
+        for(j=1;j<=aneis;j++){
+            raio_dentro+=raio;
+            y=0;
+            for(l_aux=0;l_aux<fatias;l_aux++){
+                avanco=j*fatias;
+                
+                vertexB[v++]=raio_dentro*sin(y); vertexB[v++]=0; vertexB[v++]=raio_dentro*cos(y);
+                
+                indices[i++]=avanco-fatias+l_aux;
+                indices[i++]=avanco-fatias+l_aux+1;
+                indices[i++]=avanco+l_aux;
+                
+                indices[i++]=avanco+l_aux;
+                indices[i++]=avanco-fatias+l_aux+1;
+                indices[i++]=avanco+l_aux+1;
+                
+                y+=angulo;
+            }
+            indices[i-5]=avanco-fatias;
+            indices[i-1]=avanco;
+            indices[i-2]=avanco-fatias;
+        }
+
     }
     
     glGenBuffers(1, buffers);

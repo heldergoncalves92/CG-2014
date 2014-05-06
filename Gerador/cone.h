@@ -9,8 +9,10 @@
 #ifndef CG_FORMAS_PRIMARIAS_cone_h
 #define CG_FORMAS_PRIMARIAS_cone_h
 
-#include "circulo.h"
+#include <iostream>
+#include <math.h>
 
 void cone(float raio_base, float altura, int fatias, int aneis, int camadas, FILE* f);
+void coneVBO(float raio_base, float altura, int fatias, int aneis, int camadas, FILE *f);
 
 #endif

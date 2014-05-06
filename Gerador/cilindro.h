@@ -9,10 +9,12 @@
 #ifndef CG_FORMAS_PRIMARIAS_cilindro_h
 #define CG_FORMAS_PRIMARIAS_cilindro_h
 
-#include <stdio.h>
-#include "circulo.h"
+#include <iostream>
+#include <math.h>
 
-void cilindro(float raio,int fatias,int camadas,float alt,int aneis, FILE* f);
+
+void cilindro(float raio,int fatias, int camadas,float altura, int aneis, FILE* f);
+void cilindroVBO(float raio,int fatias, int camadas,float altura, int aneis, FILE* f);
 
 
 

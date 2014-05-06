@@ -17,9 +17,16 @@ typedef struct sVbo{
     const char* nome;
     GLuint *buffers;
     unsigned short *indices;
-    unsigned short n_indices;
+    int n_indices;
     struct sVbo *next;
     
 }*Vbo, NVbo;
+
+
+
+Vbo addVbo(const char* nome, GLuint *buffers, int n_indices, unsigned short *indices, Vbo lista);
+Vbo search_Vbo(const char* nome, Vbo lista);
+void ler_VBO(const char* filename, Vbo *lista_vbo);
+void desenha_vbo(Vbo vbo);
 
 #endif /* defined(__Motor3D__Vbo__) */
