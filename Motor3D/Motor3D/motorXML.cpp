@@ -9,7 +9,6 @@
 #include "motorXML.h"
 
 Modelo lista_modelos=NULL;
-<<<<<<< HEAD
 Rotacao *rotacoes=NULL, *rot_actual=NULL;
 Translacao *translacoes=NULL, *tra_actual=NULL;
 long currentTime=0;
@@ -17,40 +16,6 @@ int rot_flag=1,first;
 int tra_flag=1;
 
 
-
-void desenha_modelo(Modelo modelo){
-    int i;
-    float *vertices=modelo->vertices;
-    glBegin(GL_TRIANGLES);
-    for (i=0; i<modelo->n_pontos; i+=3) {
-        glVertex3f(vertices[i], vertices[i+1], vertices[i+2]);
-    }
-    glEnd();
-    
-}
-
-
-void ler_modelo(const char* filename){
-    int n_pontos,i=0;
-    float cx,cy,cz,*vertices;
-    FILE *f = fopen(filename, "r");
-    if(f){
-        fscanf(f, "%d\n", &n_pontos);
-        vertices=(float*)malloc(n_pontos*sizeof(float));
-        while (fscanf(f, "%f %f %f\n", &cx, &cy, &cz)!=EOF){
-            vertices[i++]=cx;
-            vertices[i++]=cy;
-            vertices[i++]=cz;
-        }
-        fclose(f);
-        lista_modelos=addModelo(filename, vertices, n_pontos, lista_modelos);
-        desenha_modelo(lista_modelos);
-    }else
-        printf("ERRO! Não fez load do ficheiro '%s'!\n",filename);
-    
-}
-=======
->>>>>>> FETCH_HEAD
 
 void motor_XML(TiXmlNode* root){
     
@@ -154,11 +119,7 @@ void motor_XML2(TiXmlNode* root){
             if (strcmp(attr->Name(), "ficheiro")==0) {
                 modelo=search_Modelo(attr->Value(), lista_modelos);
                 if (modelo) {
-<<<<<<< HEAD
-                    desenha_modelo(modelo);
-                }else
-                    ler_modelo(attr->Value());
-=======
+
                     if(modelo->tipo==1)
                         desenha_RTime(modelo->u.rTime);
                     else
@@ -173,7 +134,6 @@ void motor_XML2(TiXmlNode* root){
                              lista_modelos=ler_RTime(attr->Value(),lista_modelos);
                     }
                 }
->>>>>>> FETCH_HEAD
             }
         }else
             if (strcmp(tag, "grupo")==0) {
@@ -283,12 +243,16 @@ void motor_XML2(TiXmlNode* root){
 
 void prepara_MotorXML2(TiXmlNode* root){
     //if (tipo==0){
+    if(rot_flag){
+        
         motor_XML2(root);
-        rot_actual=rotacoes;
-        rot_flag=0;//}
-    //if(tipo==1){
-        motor_XML2(root);
-        tra_actual=translacoes;
+        rot_flag=0;
         tra_flag=0;
-        //}
+    }
+    
+    tra_actual=translacoes;
+    rot_actual=rotacoes;
+    motor_XML2(root);
+
+    
 }

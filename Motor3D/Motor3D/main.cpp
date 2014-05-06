@@ -70,7 +70,6 @@ void renderScene(void) {
 	// pÙr instruÁıes de desenho aqui
 	
     prepara_MotorXML2(cena);
-    //prepara_MotorXML_trans(cena);
     
 	// End of frame
 	glutSwapBuffers();
@@ -126,6 +125,8 @@ int main(int argc, char* argv[]){
         
         root=doc.RootElement();
         cena=root->FirstChild("cena");
+        
+        
         
         if (cena) {
             // inicializaÁ„o
