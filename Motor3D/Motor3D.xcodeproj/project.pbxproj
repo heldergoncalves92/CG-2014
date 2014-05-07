@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2C48576018D10A5D00D87F19 /* motorXML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C48575F18D10A5D00D87F19 /* motorXML.cpp */; };
 		2C6E6AE918F5BEED00E11652 /* modelo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E6AE718F5BEED00E11652 /* modelo.cpp */; };
+		2C8476F0191AA4FA00105AED /* libGLEW.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C8476EF191AA4FA00105AED /* libGLEW.dylib */; };
 		2C87D54718D347F9003DF930 /* camera_explorador.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C87D54618D347F9003DF930 /* camera_explorador.cpp */; };
 		2CCFE06118D36B440000456E /* camera_fps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CCFE06018D36B440000456E /* camera_fps.cpp */; };
 		3C2A5AF818CE27E000F81F61 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C2A5AF718CE27E000F81F61 /* main.cpp */; };
@@ -41,6 +42,7 @@
 		2C48575F18D10A5D00D87F19 /* motorXML.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = motorXML.cpp; sourceTree = "<group>"; };
 		2C6E6AE718F5BEED00E11652 /* modelo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = modelo.cpp; sourceTree = "<group>"; };
 		2C6E6AE818F5BEED00E11652 /* modelo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modelo.h; sourceTree = "<group>"; };
+		2C8476EF191AA4FA00105AED /* libGLEW.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libGLEW.dylib; sourceTree = DEVELOPER_DIR; };
 		2C87D54518D347C3003DF930 /* camera_explorador.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = camera_explorador.h; sourceTree = "<group>"; };
 		2C87D54618D347F9003DF930 /* camera_explorador.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera_explorador.cpp; sourceTree = "<group>"; };
 		2CCFE05F18D36AEF0000456E /* camera_fps.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = camera_fps.h; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C8476F0191AA4FA00105AED /* libGLEW.dylib in Frameworks */,
 				3C2A5B0318CE280900F81F61 /* GLUT.framework in Frameworks */,
 				3C2A5B0118CE280200F81F61 /* OpenGL.framework in Frameworks */,
 			);
@@ -78,6 +81,7 @@
 		3C2A5AEB18CE27E000F81F61 = {
 			isa = PBXGroup;
 			children = (
+				2C8476EF191AA4FA00105AED /* libGLEW.dylib */,
 				3C2A5B0218CE280900F81F61 /* GLUT.framework */,
 				3C2A5B0018CE280200F81F61 /* OpenGL.framework */,
 				3C2A5AF618CE27E000F81F61 /* Motor3D */,
@@ -271,7 +275,11 @@
 		3C2A5AFE18CE27E000F81F61 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx10.8;
 			};
@@ -280,7 +288,11 @@
 		3C2A5AFF18CE27E000F81F61 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx10.8;
 			};

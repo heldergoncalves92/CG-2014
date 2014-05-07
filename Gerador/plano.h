@@ -9,9 +9,10 @@
 #ifndef CG_FORMAS_PRIMARIAS_plano_h
 #define CG_FORMAS_PRIMARIAS_plano_h
 
-#include <stdio.h>
+#include <iostream>
 #include <math.h>
 
 void plano(float altura, float lado, int camadas, int fatias, float z_index, int ori, FILE* f, int flag);
+void planoVBO(float altura, float lado, int camadas, int fatias, float z_index, int ori, FILE *f);
 
 #endif

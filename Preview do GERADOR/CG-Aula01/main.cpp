@@ -62,23 +62,37 @@ void renderScene(void) {
     //cilindro(2, 18, 2 ,3,2);
     //esfera(2, 20, 20);
     //cone(1, 3, 20, 3, 3);
-    // paralelepipedo(2, 2, 4, 2, 4);
-    /*
-    plano(2, 4, 2, 4, 0, 1);
-    plano(2, 4, 2, 4, 0, 2);
-    plano(2, 4, 2, 4, 0, 3);
-    plano(2, 4, 2, 4, 0, 4);
-    plano(2, 4, 2, 4, 0, 5);
-    plano(2, 4, 2, 4, 0, 6);
-    */
+     //paralelepipedo(2, 2, 4, 2, 4);
+    
+  // plano(2, 4, 2, 4, 0, 1);
+    //plano(2, 4, 2, 4, 0, 2);
+    //plano(2, 4, 2, 4, 0, 3);
+   // plano(2, 4, 2, 4, 0, 4);
+   // plano(2, 4, 2, 4, 0, 5);
+    //plano(2, 4, 2, 4, 0, 6);
+    
 
     //drawCirculo();
  //   drawEsfera();
     
-    Anel an = Anel(3, 1, 20, 3, 0);
-    //Cone an= Cone(2, 2, 20, 3, 3);
+    Paralelepipedo an = Paralelepipedo(5, 7, 3, 1, 3, 4);
     an.desenha();
-
+    Plano an1= Plano(4, 3, 3, 3, 0, 1);
+    Plano an2= Plano(4, 3, 3, 3, 0, 2);
+    Plano an3= Plano(4, 3, 3, 3, 0, 3);
+    Plano an4= Plano(4, 3, 3, 3, 0, 4);
+    Plano an5= Plano(4, 3, 3, 3, 0, 5);
+    Plano an6= Plano(4, 3, 3, 3, 0, 6);
+    
+    //Cone an= Cone(2, 2, 20, 3, 3);
+   // an1.desenha();
+   // an2.desenha();
+   // an3.desenha();
+   // an4.desenha();
+   // an5.desenha();
+   // an6.desenha();
+    
+    
    
 	// End of frame
 	

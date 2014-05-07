@@ -11,6 +11,6 @@
 
 #include "plano.h"
 
-void paralelepipedo(float altura, float lado_x, float lado_z, int camadas, int fatias, FILE* f);
-
+void paralelepipedo(float altura, float lado_x, float lado_z, int camadas, int fatias_x, int fatias_z, FILE* f);
+void paralelepipedoVBO(float lado_y, float lado_x, float lado_z, int camadas, int fatias_x, int fatias_z, FILE *f);
 #endif

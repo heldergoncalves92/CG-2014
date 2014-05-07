@@ -71,11 +71,14 @@ int main(int argc, char *argv[]){
 						printf("ERRO!! Número de argumentos errado\nEx: circulo [raio] [fatias] [aneis] [orientacao] [output]\n");
 				}else
 					if(strcmp(op,"plano")==0){
-						if(argc==8){
+						if(argc==8 || argc==9){
 
 							if(sscanf(argv[2],"%f",&p1)&&sscanf(argv[3],"%f",&p2)&&sscanf(argv[4],"%d",&i1)&&sscanf(argv[5],"%d",&i2)&&sscanf(argv[6],"%d",&i3)){
 								f=fopen(argv[7],"w");
-								plano(p1,p2,i1,i2,0,i3,f,1);
+								if(argc==9 && strcmp(argv[8],"-vbo")==0)
+									planoVBO(p1,p2,i1,i2,0,i3,f);
+								else
+									plano(p1,p2,i1,i2,0,i3,f,1);
 								fclose(f);
 
 							}else
@@ -86,18 +89,21 @@ int main(int argc, char *argv[]){
 					}
 					else
 						if(strcmp(op,"paralelepipedo")==0){
-							if(argc==8){
+							if(argc==9 || argc==10){
 
-								if(sscanf(argv[2],"%f",&p1)&&sscanf(argv[3],"%f",&p2)&&sscanf(argv[4],"%f",&p3)&&sscanf(argv[5],"%d",&i1)&&sscanf(argv[6],"%d",&i2)){
-									f=fopen(argv[7],"w");
-									paralelepipedo(p1,p2,p3,i1,i2,f);
+								if(sscanf(argv[2],"%f",&p1)&&sscanf(argv[3],"%f",&p2)&&sscanf(argv[4],"%f",&p3)&&sscanf(argv[5],"%d",&i1)&&sscanf(argv[6],"%d",&i2)&&sscanf(argv[7],"%d",&i3)){
+									f=fopen(argv[8],"w");
+									if(argc==10 && strcmp(argv[9],"-vbo")==0)
+										paralelepipedoVBO(p1,p2,p3,i1,i2,i3,f);
+									else
+										paralelepipedo(p1,p2,p3,i1,i2,i3,f);
 									fclose(f);
 
 								}else
-									printf("ERRO!! Parametros não estão correctos!\nEx: paralelepipedo [altura] [lado_X] [lado_Z] [camadas] [fatias] [output]\n");
+									printf("ERRO!! Parametros não estão correctos!\nEx: paralelepipedo [altura] [lado_X] [lado_Z] [camadas] [fatias_x] [fatias_z] [output]\n");
 							}
 							else
-								printf("ERRO!! Número de argumentos errado\nEx: paralelepipedo [altura] [lado_X] [lado_Z] [camadas] [fatias] [output]\n");
+								printf("ERRO!! Número de argumentos errado\nEx: paralelepipedo [altura] [lado_X] [lado_Z] [camadas] [fatias_x] [fatias_z] [output]\n");
 						}
 						else
 							if(strcmp(op,"cone")==0){

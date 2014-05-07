@@ -125,14 +125,13 @@ int main(int argc, char* argv[]){
     //}
     
 	//if(doc.LoadFile(argv[1])){
-    if(doc.LoadFile("sistema_solar.xml")){
+    if(doc.LoadFile("test.xml")){
         
         root=doc.RootElement();
         cena=root->FirstChild("cena");
         
         if (cena) {
             
-            prepara_MotorXML(cena);
             // inicializaÁ„o
             glutInit(&argc, argv);
             glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
@@ -176,7 +175,7 @@ int main(int argc, char* argv[]){
                 tipo_camera=1;
                 
                 //Atribuir valores base
-                
+
             }
             
             
@@ -200,7 +199,7 @@ int main(int argc, char* argv[]){
             
             glPolygonMode(GL_FRONT, GL_LINE);
             
-
+            prepara_MotorXML(cena);
             
             // entrar no ciclo do GLUT
             glutMainLoop();

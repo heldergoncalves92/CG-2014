@@ -9,7 +9,6 @@
 #include "modelo.h"
 
 
-
 Modelo addVbo(const char* nome, GLuint *buffers, int n_indices, unsigned short *indices, Modelo lista){
     
     Modelo aux=(Modelo)malloc(sizeof(NModelo));
