@@ -19,9 +19,12 @@
 #include "modelo.h"
 #include "catmull.h"
 #include "rotacoes.h"
+#include "escala.h"
 
 extern Rotacao *rotacoes, *rot_actual;
 extern Translacao *translacoes, *tra_actual;
+extern Escala escalas, esc_actual;
+extern long currentTime;
 
 
 void motor_XML(TiXmlNode *doc);

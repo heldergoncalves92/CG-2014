@@ -12,15 +12,16 @@
 #include <iostream>
 #include <GLUT/glut.h>
 
-typedef struct rotacao{
+typedef struct sRotacao{
     int  periodo;
+    float angulo;
     float x;
     float y;
     float z;
-    struct rotacao *next;
+    struct sRotacao *next;
 }Rotacao;
 
-Rotacao *insereRotacao(float periodo, float x, float y, float z, Rotacao *rotacoes);
+Rotacao *insereRotacao(float periodo, float angulo, float x, float y, float z, Rotacao *rotacoes);
 Rotacao* do_rotacao(Rotacao* rot,long currentTime);
 
 #endif /* defined(__Motor3D__rotacoes__) */

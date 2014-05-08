@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2C48576018D10A5D00D87F19 /* motorXML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C48575F18D10A5D00D87F19 /* motorXML.cpp */; };
+		2C490CC8191BDE8700B9FFAB /* escala.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C490CC6191BDE8700B9FFAB /* escala.cpp */; };
 		2C6E6AE918F5BEED00E11652 /* modelo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E6AE718F5BEED00E11652 /* modelo.cpp */; };
 		2C8476F0191AA4FA00105AED /* libGLEW.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C8476EF191AA4FA00105AED /* libGLEW.dylib */; };
 		2C87D54718D347F9003DF930 /* camera_explorador.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C87D54618D347F9003DF930 /* camera_explorador.cpp */; };
@@ -40,6 +41,8 @@
 /* Begin PBXFileReference section */
 		2C48575E18D10A4800D87F19 /* motorXML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = motorXML.h; sourceTree = "<group>"; };
 		2C48575F18D10A5D00D87F19 /* motorXML.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = motorXML.cpp; sourceTree = "<group>"; };
+		2C490CC6191BDE8700B9FFAB /* escala.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = escala.cpp; sourceTree = "<group>"; };
+		2C490CC7191BDE8700B9FFAB /* escala.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = escala.h; sourceTree = "<group>"; };
 		2C6E6AE718F5BEED00E11652 /* modelo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = modelo.cpp; sourceTree = "<group>"; };
 		2C6E6AE818F5BEED00E11652 /* modelo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modelo.h; sourceTree = "<group>"; };
 		2C8476EF191AA4FA00105AED /* libGLEW.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libGLEW.dylib; sourceTree = DEVELOPER_DIR; };
@@ -116,6 +119,8 @@
 				3CE84AF91908144200D511E3 /* catmull.h */,
 				3C56FE0F190C0ECE005A4AF2 /* rotacoes.cpp */,
 				3C56FE10190C0ECE005A4AF2 /* rotacoes.h */,
+				2C490CC6191BDE8700B9FFAB /* escala.cpp */,
+				2C490CC7191BDE8700B9FFAB /* escala.h */,
 			);
 			path = Motor3D;
 			sourceTree = "<group>";
@@ -192,6 +197,7 @@
 				3C2A5B1718CE29B100F81F61 /* tinyxmlerror.cpp in Sources */,
 				3C2A5AF818CE27E000F81F61 /* main.cpp in Sources */,
 				3C2A5B1618CE29B100F81F61 /* tinyxml.cpp in Sources */,
+				2C490CC8191BDE8700B9FFAB /* escala.cpp in Sources */,
 				3C2A5B1818CE29B100F81F61 /* tinyxmlparser.cpp in Sources */,
 				3C2A5B1518CE29B100F81F61 /* tinystr.cpp in Sources */,
 				2C48576018D10A5D00D87F19 /* motorXML.cpp in Sources */,
@@ -279,7 +285,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx10.8;
 			};
@@ -292,7 +298,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx10.8;
 			};

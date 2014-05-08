@@ -9,13 +9,7 @@
 #include "motorXML.h"
 
 Modelo lista_modelos=NULL;
-//Rotacao *rotacoes=NULL, *rot_actual=NULL;
-//Translacao *translacoes=NULL, *tra_actual=NULL;
-long currentTime=0;
 int first;
-
-
-
 
 
 void motor_XML(TiXmlNode* root){
@@ -24,11 +18,8 @@ void motor_XML(TiXmlNode* root){
     TiXmlAttribute * attr;
     Modelo modelo;
     const char* tag;
-    float x,y,z,angulo;
+    float x,y,z;
     static float a = 0;
-
-    
-    currentTime = glutGet(GLUT_ELAPSED_TIME);
     
     for (child = root->FirstChild(); child; child=child->NextSibling()) {
         tag=child->Value();
@@ -52,9 +43,6 @@ void motor_XML(TiXmlNode* root){
             }else
                 if (strcmp(tag, "translacao")==0) {
                         tra_actual=do_translacao(tra_actual, a);
-                        if(!tra_actual){
-                            tra_actual=translacoes;
-                        }
                         a+=0.001;
                 }else
                     if (strcmp(tag, "translacaofixa")==0) {
@@ -73,42 +61,10 @@ void motor_XML(TiXmlNode* root){
                     }else
                         if (strcmp(tag, "rotacao")==0) {
                             rot_actual=do_rotacao(rot_actual,currentTime);
-                            if(!rot_actual)
-                                rot_actual=rotacoes;
+                            
                         }else
-                            if (strcmp(tag, "rotacaofixa")==0) {
-                                angulo=x=y=z=0;
-                                for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){
-                                    if (strcmp(attr->Name(), "x")==0)
-                                        x=atof(attr->Value());
-                                    else
-                                        if (strcmp(attr->Name(), "y")==0)
-                                            y=atof(attr->Value());
-                                        else
-                                            if (strcmp(attr->Name(), "z")==0)
-                                                z=atof(attr->Value());
-                                            else
-                                                if (strcmp(attr->Name(), "angulo")==0)
-                                                    angulo=atof(attr->Value());
-                                }
-                                glRotatef(angulo, x, y, z);
-                                rot_actual=rotacoes;
-                            }else
-                                if (strcmp(tag, "escala")==0) {
-                                    x=y=z=1;
-                                    for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){
-                                        if (strcmp(attr->Name(), "x")==0)
-                                            x=atof(attr->Value());
-                                        else
-                                            if (strcmp(attr->Name(), "y")==0)
-                                                y=atof(attr->Value());
-                                            else
-                                                if (strcmp(attr->Name(), "z")==0)
-                                                    z=atof(attr->Value());
-                                    }
-                                    glScalef(x, y, z);
-                                }
-        
+                            if (strcmp(tag, "escala")==0)
+                                   esc_actual=do_escala(esc_actual);
         
     }
 }
@@ -172,9 +128,29 @@ void prepara_MotorXML(TiXmlNode* root){
                                     else
                                         if (strcmp(attr->Name(), "tempo")==0)
                                             tempo=atof(attr->Value());
+                                        else
+                                            if (strcmp(attr->Name(), "angulo")==0)
+                                                angulo=atof(attr->Value());
                         }
-                        rotacoes=insereRotacao(tempo,x,y,z,rotacoes);
-                    }
+                        if(angulo)
+                            rotacoes=insereRotacao(0,angulo,x,y,z,rotacoes);
+                        else
+                            rotacoes=insereRotacao(tempo,0,x,y,z,rotacoes);
+                    }else
+                        if (strcmp(tag, "escala")==0) {
+                            x=y=z=1;
+                            for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                                if (strcmp(attr->Name(), "x")==0)
+                                    x=atof(attr->Value());
+                                else
+                                    if (strcmp(attr->Name(), "y")==0)
+                                        y=atof(attr->Value());
+                                    else
+                                        if (strcmp(attr->Name(), "z")==0)
+                                            z=atof(attr->Value());
+                            }
+                            escalas=insereEscala(x,y,z,escalas);
+                        }
     }
 }
 

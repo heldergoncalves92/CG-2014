@@ -17,6 +17,8 @@ int tipo_camera=0;
 
 Rotacao *rotacoes=NULL, *rot_actual=NULL;
 Translacao *translacoes=NULL, *tra_actual=NULL;
+Escala escalas=NULL, esc_actual=NULL;
+long currentTime=0;
 
 
 void changeSize(int w, int h){
@@ -70,8 +72,11 @@ void renderScene(void) {
     
     
 	// pÙr instruÁıes de desenho aqui
+    currentTime = glutGet(GLUT_ELAPSED_TIME);
+    
 	rot_actual=rotacoes;
     tra_actual=translacoes;
+    esc_actual=escalas;
     
     motor_XML(cena);
     
@@ -125,7 +130,7 @@ int main(int argc, char* argv[]){
     //}
     
 	//if(doc.LoadFile(argv[1])){
-    if(doc.LoadFile("test.xml")){
+    if(doc.LoadFile("sistema_solar.xml")){
         
         root=doc.RootElement();
         cena=root->FirstChild("cena");
