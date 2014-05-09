@@ -19,7 +19,7 @@ void motor_XML(TiXmlNode* root){
     Modelo modelo;
     const char* tag;
     float x,y,z;
-    static float a = 0;
+    //static float a = 0;
     
     for (child = root->FirstChild(); child; child=child->NextSibling()) {
         tag=child->Value();
@@ -42,9 +42,9 @@ void motor_XML(TiXmlNode* root){
                 glPopMatrix();
             }else
                 if (strcmp(tag, "translacao")==0) {
-                        tra_actual=do_translacao(tra_actual, a);
-                        a+=0.001;
-                }else
+                        tra_actual=do_translacao(tra_actual, currentTime);
+                        //a+=0.001;
+                /*}else
                     if (strcmp(tag, "translacaofixa")==0) {
                         x=y=z=0;
                         for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){
@@ -57,7 +57,7 @@ void motor_XML(TiXmlNode* root){
                                     if (strcmp(attr->Name(), "z")==0)
                                         z=atof(attr->Value());
                             }
-                        glTranslatef(x, y, z);
+                        glTranslatef(x, y, z);*/
                     }else
                         if (strcmp(tag, "rotacao")==0) {
                             rot_actual=do_rotacao(rot_actual,currentTime);
@@ -79,6 +79,7 @@ void prepara_MotorXML(TiXmlNode* root){
     Point *listaPontos=NULL;
     int numeroPontos=-1;
     float timeTrans=-1;
+    int flag;
     
     
     for (child = root->FirstChild(); child; child=child->NextSibling()) {
@@ -106,14 +107,34 @@ void prepara_MotorXML(TiXmlNode* root){
                 }
             }else
                 if (strcmp(tag, "translacao")==0) {
-                    for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next())
+                    x=y=z=0;
+                    flag=0;
+                    timeTrans=0;
+                    for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){
                         if (strcmp(attr->Name(), "tempo")==0)
                             timeTrans=atof(attr->Value());
+                        else
+                            if (strcmp(attr->Name(), "x")==0){
+                                x=atof(attr->Value());
+                                flag=1;}
+                            else
+                                if (strcmp(attr->Name(), "y")==0){
+                                        y=atof(attr->Value());
+                                        flag=1;}
+                                else
+                                    if (strcmp(attr->Name(), "z")==0){
+                                        z=atof(attr->Value());
+                                        flag=1;
+                                    }
+                    }
+                    if(flag==1)
+                        timeTrans=0;
                     listaPontos = NULL;
                     numeroPontos = -1;
                     numeroPontos = lerPontos(child, &listaPontos);
-                    translacoes=insereTranslacao(listaPontos,translacoes,numeroPontos, timeTrans);
-                }else
+                    translacoes=insereTranslacao(listaPontos,translacoes,numeroPontos, timeTrans, x, y, z);
+                }
+                else
                     if (strcmp(tag, "rotacao")==0) {
                         angulo=x=y=z=0;
                         for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){

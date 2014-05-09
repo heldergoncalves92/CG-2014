@@ -157,13 +157,18 @@ void renderCatmullRomCurve() {
     glEnd();
 }
 
-Translacao* insereTranslacao(Point *listaPontos, Translacao *translacoes, int numeroPontos, float tempo){
+Translacao* insereTranslacao(Point *listaPontos, Translacao *translacoes, int numeroPontos, float tempo, float x, float y, float z){
     Translacao *aux=NULL;
     Translacao *toEnd=NULL;
     aux=(Translacao*)malloc(sizeof(Translacao));
     aux->points=listaPontos;
     aux->point_count = numeroPontos;
     aux->tempo = tempo;
+    aux->a=0;
+    aux->lastTime=0;
+    aux->pX = x;
+    aux->pY = y;
+    aux->pZ = z;
     aux->next=NULL;
     if(translacoes==NULL){
         translacoes=aux;
@@ -175,21 +180,29 @@ Translacao* insereTranslacao(Point *listaPontos, Translacao *translacoes, int nu
     return translacoes;
 }
 
-Translacao* do_translacao(Translacao* trans, float a){
-    
-    global_point_count=trans->point_count;
-    globalPoints = trans->points;
+Translacao* do_translacao(Translacao* trans, long currentTime){
+    if (trans->tempo!=0){
+        global_point_count=trans->point_count;
+        globalPoints = trans->points;
 
-    //float res[3];
-    
-    
-    
-    //glPushMatrix();
-    getGlobalCatmullRomPoint(a/trans->tempo,trans->res);
-    renderCatmullRomCurve();
+        //float res[3];
+        if(trans->lastTime==0)
+            trans->lastTime=currentTime;
+        
+        else{
+            trans->a+=((currentTime-trans->lastTime)/(trans->tempo*1000));
+            trans->lastTime=currentTime;
+            //glPushMatrix();
+            getGlobalCatmullRomPoint((trans->a)/trans->tempo,trans->res);
+            renderCatmullRomCurve();
 
-    glTranslatef(trans->res[0],trans->res[1],trans->res[2]);
-    //glTranslatef(res[0],res[1],res[2]);
-    //glPopMatrix();
+            glTranslatef(trans->res[0],trans->res[1],trans->res[2]);
+            //glTranslatef(res[0],res[1],res[2]);
+            //glPopMatrix();
+        }
+    }
+    else {
+        glTranslatef(trans->pX,trans->pY,trans->pZ);
+    }
     return trans->next;
 }

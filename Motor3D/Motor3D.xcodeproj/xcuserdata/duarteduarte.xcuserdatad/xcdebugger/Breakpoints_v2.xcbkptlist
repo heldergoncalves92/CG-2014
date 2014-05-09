@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "110"
             endingLineNumber = "110"
-            landmarkName = "getCatmullRomPoint(float t, int *indices, float *res, Point *points)"
+            landmarkName = "getCatmullRomPointDERIVADA(float t, int *indices, float *res, Point *points)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -44,7 +44,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "18"
-            endingLineNumber = "18">
+            endingLineNumber = "18"
+            landmarkName = "lerPontos(TiXmlNode* root, Point **res)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -58,7 +60,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "19"
-            endingLineNumber = "19">
+            endingLineNumber = "19"
+            landmarkName = "lerPontos(TiXmlNode* root, Point **res)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -89,7 +93,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "66"
             endingLineNumber = "66"
-            landmarkName = "lerPontos(TiXmlNode* root, Point **res)"
+            landmarkName = "getAt(int index, Point *points, int k)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -148,11 +152,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Motor3D/catmull.h"
-            timestampString = "420571565.352208"
+            timestampString = "421357623.495868"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28">
+            startingLineNumber = "33"
+            endingLineNumber = "33">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -167,7 +171,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "65"
             endingLineNumber = "65"
-            landmarkName = "lerPontos(TiXmlNode* root, Point **res)"
+            landmarkName = "getAt(int index, Point *points, int k)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -183,7 +187,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "59"
             endingLineNumber = "59"
-            landmarkName = "lerPontos(TiXmlNode* root, Point **res)"
+            landmarkName = "getAt(int index, Point *points, int k)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -199,7 +203,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "58"
             endingLineNumber = "58"
-            landmarkName = "lerPontos(TiXmlNode* root, Point **res)"
+            landmarkName = "getAt(int index, Point *points, int k)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -231,7 +235,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "63"
             endingLineNumber = "63"
-            landmarkName = "lerPontos(TiXmlNode* root, Point **res)"
+            landmarkName = "getAt(int index, Point *points, int k)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -247,7 +251,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "62"
             endingLineNumber = "62"
-            landmarkName = "lerPontos(TiXmlNode* root, Point **res)"
+            landmarkName = "getAt(int index, Point *points, int k)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -258,12 +262,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Motor3D/catmull.cpp"
-            timestampString = "420500479.212718"
+            timestampString = "421357623.495868"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
-            landmarkName = "insereTranslacao(Point *listaPontos, Translacao *translacoes, int numeroPontos, float tempo)"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
+            landmarkName = "insereTranslacao(Point *listaPontos, Translacao *translacoes, int numeroPontos, float tempo, float x, float y, float z)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -274,86 +278,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Motor3D/catmull.cpp"
-            timestampString = "420571565.352208"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "186"
-            endingLineNumber = "186"
-            landmarkName = "insereTranslacao(Point *listaPontos, Translacao *translacoes, int numeroPontos, float tempo)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Motor3D/catmull.cpp"
-            timestampString = "420500479.212718"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Motor3D/catmull.cpp"
-            timestampString = "420571565.352208"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Motor3D/motorXML.cpp"
-            timestampString = "420588999.9894"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
-            landmarkName = "motor_XML2(TiXmlNode* root)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Motor3D/catmull.cpp"
-            timestampString = "420571565.352208"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Motor3D/catmull.cpp"
-            timestampString = "420571565.352208"
+            timestampString = "421357623.495868"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "191"
             endingLineNumber = "191"
-            landmarkName = "insereTranslacao(Point *listaPontos, Translacao *translacoes, int numeroPontos, float tempo)"
+            landmarkName = "do_translacao(Translacao* trans, long currentTime)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Motor3D/catmull.cpp"
+            timestampString = "420500479.212718"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
+            landmarkName = "insereTranslacao(Point *listaPontos, Translacao *translacoes, int numeroPontos, float tempo, float x, float y, float z)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Motor3D/catmull.cpp"
+            timestampString = "421358321.665558"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
+            landmarkName = "do_translacao(Translacao* trans, long currentTime)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -364,13 +326,57 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Motor3D/motorXML.cpp"
-            timestampString = "420588999.9894"
+            timestampString = "421358154.584878"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
-            landmarkName = "motor_XML2(TiXmlNode* root)"
+            startingLineNumber = "183"
+            endingLineNumber = "183">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Motor3D/catmull.cpp"
+            timestampString = "421358321.665558"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
+            landmarkName = "do_translacao(Translacao* trans, long currentTime)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Motor3D/catmull.cpp"
+            timestampString = "421358321.665558"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
+            landmarkName = "do_translacao(Translacao* trans, long currentTime)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Motor3D/motorXML.cpp"
+            timestampString = "421358154.584878"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "185"
+            endingLineNumber = "185">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -380,13 +386,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Motor3D/motorXML.cpp"
-            timestampString = "420762431.581166"
+            timestampString = "421358154.584878"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
-            landmarkName = "motor_XML2(TiXmlNode* root)"
-            landmarkType = "7">
+            startingLineNumber = "233"
+            endingLineNumber = "233">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -396,13 +400,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Motor3D/motorXML.cpp"
-            timestampString = "420762431.581166"
+            timestampString = "421358154.584878"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "225"
-            endingLineNumber = "225"
-            landmarkName = "motor_XML2(TiXmlNode* root)"
-            landmarkType = "7">
+            startingLineNumber = "246"
+            endingLineNumber = "246">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -22,12 +22,17 @@ typedef struct translacao{
     int point_count;
     Point *points;
     float tempo;
+    float a;
+    float lastTime;
+    float pX;
+    float pY;
+    float pZ;
     struct translacao *next;
 }Translacao;
 
 int lerPontos(TiXmlNode* root, Point **res);
-Translacao* insereTranslacao(Point *listaPontos, Translacao *translacoes, int numeroPontos, float tempo);
-Translacao* do_translacao(Translacao* rot, float a);
+Translacao* insereTranslacao(Point *listaPontos, Translacao *translacoes, int numeroPontos, float tempo, float x, float y, float z);
+Translacao* do_translacao(Translacao* rot, long currentTime);
 void getCatmullRomPointDERIVADA(float t, int *indices, float *res, Point *points);
 
 #endif /* defined(__Motor3D__catmull__) */
