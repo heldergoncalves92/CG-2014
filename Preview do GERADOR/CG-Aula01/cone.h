@@ -20,7 +20,7 @@ public:
     void desenha();
     
 protected:
-    GLuint buffers[1];
+    GLuint buffers[2];
     short n_indices;
     unsigned short *indices;
 };

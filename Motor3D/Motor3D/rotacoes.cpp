@@ -35,10 +35,10 @@ Rotacao *insereRotacao(float periodo, float angulo, float x, float y, float z, R
 }
 
 Rotacao* do_rotacao(Rotacao* rot,long currentTime){
-    if(rot->periodo!=0){
+    if(rot->periodo!=0)
         glRotatef(360*(currentTime%rot->periodo)/rot->periodo, rot->x, rot->y, rot->z);
-    } else {
-        glRotatef(rot->angulo, rot->x, rot->y, rot->z); //corrigir isto
-    }
+    else
+        glRotatef(rot->angulo, rot->x, rot->y, rot->z);
+    
     return rot->next;
 }

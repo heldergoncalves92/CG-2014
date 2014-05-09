@@ -16,6 +16,8 @@
 
 float raio=8,cam_h=0,cam_v=0.5,camh_x=0,camh_y=0, cir1=0,cir2=0;
 float x_tela, y_tela; //Variaveis para guardar posição da tela em que se carrega no rato
+float pos[4]={0,3,4,1},
+    amb[3]={0,0,0.5};
 
 int estado_botao=0;
 
@@ -49,48 +51,38 @@ void renderScene(void) {
     
 	// clear buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
+
 	// set the camera
 	glLoadIdentity();
-	//Câmera em modo explorador (Câmera move-se nas bordas de 1 esfera)
+    
+    //glLightfv(GL_LIGHT0, GL_POSITION, pos);
+    
+	
+    //Câmera em modo explorador (Câmera move-se nas bordas de 1 esfera)
 	gluLookAt(raio*sin(cam_h+camh_x)*cos(cam_v+camh_y),raio*sin(cam_v+camh_y),raio*cos(cam_h+camh_x)*cos(cam_v+camh_y),
 		      0.0,0.0,0.0,
 			  0.0f,1.0f,0.0f);
     // pÙr instruÁıes de desenho aqui
-    
-    //circulo(4, 20, 3,0,1);
-    //cilindro(2, 18, 2 ,3,2);
-    //esfera(2, 20, 20);
-    //cone(1, 3, 20, 3, 3);
-     //paralelepipedo(2, 2, 4, 2, 4);
-    
-  // plano(2, 4, 2, 4, 0, 1);
-    //plano(2, 4, 2, 4, 0, 2);
-    //plano(2, 4, 2, 4, 0, 3);
-   // plano(2, 4, 2, 4, 0, 4);
-   // plano(2, 4, 2, 4, 0, 5);
-    //plano(2, 4, 2, 4, 0, 6);
-    
-
-    //drawCirculo();
- //   drawEsfera();
-    
-    Paralelepipedo an = Paralelepipedo(5, 7, 3, 1, 3, 4);
+    glLightfv(GL_LIGHT0, GL_POSITION, pos);
+       glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
+   // Paralelepipedo an = Paralelepipedo(2, 4, 3, 1, 3, 4);
+    Esfera an= Esfera(2, 95, 95);
+    //Circulo an= Circulo(1, 15, 3, 0, 0);
+  // Cilindro an = Cilindro(1, 10, 2, 3, 3);
+    //Anel an= Anel(3, 1, 20, 3, 1);
+    //Cone an = Cone(1, 2, 20, 3, 4);
+    Plano an1= Plano(8, 8, 3, 3, -4, 1);
+     an1.desenha();
     an.desenha();
-    Plano an1= Plano(4, 3, 3, 3, 0, 1);
-    Plano an2= Plano(4, 3, 3, 3, 0, 2);
-    Plano an3= Plano(4, 3, 3, 3, 0, 3);
-    Plano an4= Plano(4, 3, 3, 3, 0, 4);
-    Plano an5= Plano(4, 3, 3, 3, 0, 5);
-    Plano an6= Plano(4, 3, 3, 3, 0, 6);
+   
     
     //Cone an= Cone(2, 2, 20, 3, 3);
-   // an1.desenha();
+   
    // an2.desenha();
    // an3.desenha();
-   // an4.desenha();
-   // an5.desenha();
-   // an6.desenha();
+    //an4.desenha();
+    //an5.desenha();
+    //an6.desenha();
     
     
    
@@ -102,10 +94,10 @@ void renderScene(void) {
 void teclado_normal(unsigned char tecla,int x, int y){
     switch (tecla) {
         case 'a':
-            raio-=4;
+            raio-=1;
             break;
         case 'd':
-            raio+=4;
+            raio+=1;
             break;
             
         default:
@@ -225,7 +217,11 @@ int main(int argc, char **argv) {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
-    glPolygonMode(GL_FRONT, GL_LINE);
+   // glPolygonMode(GL_FRONT, GL_LINE);
+    
+    //Luzes
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
     
     // entrar no ciclo do GLUT aqui
 	glutMainLoop();

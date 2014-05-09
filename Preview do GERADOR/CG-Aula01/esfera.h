@@ -24,9 +24,9 @@ public:
     void desenha();
     
 protected:
-    GLuint buffers[1];
+    GLuint buffers[2];
     int n_indices;
-    unsigned short *indices;
+    unsigned int *indices;
 };
 
 #endif
