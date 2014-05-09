@@ -18,8 +18,6 @@ void motor_XML(TiXmlNode* root){
     TiXmlAttribute * attr;
     Modelo modelo;
     const char* tag;
-    float x,y,z;
-    //static float a = 0;
     
     for (child = root->FirstChild(); child; child=child->NextSibling()) {
         tag=child->Value();

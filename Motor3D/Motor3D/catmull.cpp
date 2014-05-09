@@ -193,7 +193,7 @@ Translacao* do_translacao(Translacao* trans, long currentTime){
             trans->a+=((currentTime-trans->lastTime)/(trans->tempo*1000));
             trans->lastTime=currentTime;
             //glPushMatrix();
-            getGlobalCatmullRomPoint((trans->a)/trans->tempo,trans->res);
+            getGlobalCatmullRomPoint((trans->a),trans->res);
             renderCatmullRomCurve();
 
             glTranslatef(trans->res[0],trans->res[1],trans->res[2]);
