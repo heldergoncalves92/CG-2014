@@ -137,14 +137,15 @@ void plano(float altura, float lado, int camadas, int fatias, float z_index, int
 
 
 void planoVBO(float altura, float lado, int camadas, int fatias, float z_index, int ori, FILE *f){
-    int k=0,j=0,v=0, i=0, avanco;
+    int k=0,j=0,v=0, i=0,n=0, avanco;
     float l_const=lado/fatias, alt_const=altura/camadas,alt_ori=-altura/2,lado_ori=-lado/2;
     
     
     int n_pontos=(fatias+1)*(camadas+1)*3;
     int n_indices=(2*fatias*camadas)*3;
     
-    float *vertexB=(float*)malloc(n_pontos*sizeof(float));
+    float *vertexB=(float*)malloc(n_pontos*sizeof(float)),
+    *normalB=(float*)malloc(n_pontos*sizeof(float));
     int* indices=(int*)malloc(n_indices*sizeof(int));
     
     switch (ori) {
@@ -155,6 +156,7 @@ void planoVBO(float altura, float lado, int camadas, int fatias, float z_index, 
                 for(lado=lado_ori;k<=fatias;k++){
                     //Inserir Ponto
                     vertexB[v++]=lado;vertexB[v++]=altura;vertexB[v++]=z_index;
+                    normalB[n++]=0;normalB[n++]=0;normalB[n++]=1;
                     if(k!=fatias && j!=camadas){
                         indices[i++]=avanco+k;
                         indices[i++]=avanco+k+1;
@@ -163,6 +165,8 @@ void planoVBO(float altura, float lado, int camadas, int fatias, float z_index, 
                         indices[i++]=avanco+k+1;
                         indices[i++]=avanco+fatias+1+k+1;
                         indices[i++]=avanco+fatias+1+k;
+                        
+
                     }
                     lado+=l_const;
                 }
@@ -176,6 +180,7 @@ void planoVBO(float altura, float lado, int camadas, int fatias, float z_index, 
                 for(lado=lado_ori;k<=fatias;k++){
                     //Inserir Ponto
                     vertexB[v++]=lado;vertexB[v++]=altura;vertexB[v++]=z_index;
+                    normalB[n++]=0;normalB[n++]=0;normalB[n++]=-1;
                     if(k!=fatias && j!=camadas){
                         indices[i++]=avanco+k;
                         indices[i++]=avanco+fatias+1+k;
@@ -198,6 +203,7 @@ void planoVBO(float altura, float lado, int camadas, int fatias, float z_index, 
                 for(lado=lado_ori;k<=fatias;k++){
                     //Inserir Ponto
                     vertexB[v++]=z_index;vertexB[v++]=altura;vertexB[v++]=lado;
+                    normalB[n++]=1;normalB[n++]=0;normalB[n++]=0;
                     if(k!=fatias && j!=camadas){
                         indices[i++]=avanco+k;
                         indices[i++]=avanco+fatias+1+k;
@@ -219,6 +225,7 @@ void planoVBO(float altura, float lado, int camadas, int fatias, float z_index, 
                 for(lado=lado_ori;k<=fatias;k++){
                     //Inserir Ponto
                     vertexB[v++]=z_index;vertexB[v++]=altura;vertexB[v++]=lado;
+                    normalB[n++]=-1;normalB[n++]=0;normalB[n++]=0;
                     if(k!=fatias && j!=camadas){
                         indices[i++]=avanco+k;
                         indices[i++]=avanco+k+1;
@@ -240,6 +247,7 @@ void planoVBO(float altura, float lado, int camadas, int fatias, float z_index, 
                 for(lado=lado_ori;k<=fatias;k++){
                     //Inserir Ponto
                     vertexB[v++]=altura;vertexB[v++]=z_index;vertexB[v++]=lado;
+                    normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
                     if(k!=fatias && j!=camadas){
                         indices[i++]=avanco+k;
                         indices[i++]=avanco+k+1;
@@ -261,6 +269,7 @@ void planoVBO(float altura, float lado, int camadas, int fatias, float z_index, 
                 for(lado=lado_ori;k<=fatias;k++){
                     //Inserir Ponto
                     vertexB[v++]=altura;vertexB[v++]=z_index;vertexB[v++]=lado;
+                    normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
                     if(k!=fatias && j!=camadas){
                         indices[i++]=avanco+k;
                         indices[i++]=avanco+fatias+1+k;
@@ -276,8 +285,8 @@ void planoVBO(float altura, float lado, int camadas, int fatias, float z_index, 
             }
             break;
 
-        
     }
+
     
     //Imprimir os vertices e indices
     fprintf(f, "%d\n",n_pontos);
@@ -287,6 +296,9 @@ void planoVBO(float altura, float lado, int camadas, int fatias, float z_index, 
     fprintf(f, "%d\n",n_indices);
     for(i=0;i<n_indices;i+=3)
         fprintf(f, "%d %d %d\n",indices[i],indices[i+1],indices[i+2]); 
+
+    for(i=0;i<n_pontos;i+=3)
+        fprintf(f, "%f %f %f\n",normalB[i],normalB[i+1],normalB[i+2]);
 
 }
 

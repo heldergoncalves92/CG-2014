@@ -11,6 +11,8 @@
 
 #include <iostream>
 #include "tinyxml/tinyxml.h"
+#include <math.h>
+#include <GLUT/GLUT.h>
 
 typedef struct point {
     float coords[3] = {0.0f, 0.0f,0.0f};
@@ -18,6 +20,8 @@ typedef struct point {
 } Point;
 
 typedef struct translacao{
+    GLuint buffer[1];
+    short n_indices;
     float res[3];
     int point_count;
     Point *points;

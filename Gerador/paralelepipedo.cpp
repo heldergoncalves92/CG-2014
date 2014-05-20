@@ -26,7 +26,7 @@ void paralelepipedo(float altura, float lado_x, float lado_z, int camadas, int f
 }
 
 void paralelepipedoVBO(float lado_y, float lado_x, float lado_z, int camadas, int fatias_x, int fatias_z, FILE *f){
-    int     k=0,j=0,v=0, i=0, avanco=0;
+    int     k=0,j=0,v=0,n=0,i=0, avanco=0;
     float   change_x=lado_x/fatias_x,
             change_z=lado_z/fatias_z,
             change_y=lado_y/camadas,
@@ -38,7 +38,8 @@ void paralelepipedoVBO(float lado_y, float lado_x, float lado_z, int camadas, in
     int n_pontos=(2*(fatias_x+1)*(camadas+1) + 2*(fatias_z+1)*(camadas+1) + 2*(fatias_x+1)*(fatias_z+1))*3;
     int n_indices=(2*fatias_x*camadas + 2*fatias_z*camadas + 2* fatias_x*fatias_z)*3*2;
     
-    float *vertexB=(float*)malloc(n_pontos*sizeof(float));
+    float *vertexB=(float*)malloc(n_pontos*sizeof(float)),
+    *normalB=(float*)malloc(n_pontos*sizeof(float));
     int *indices=(int*)malloc(n_indices*sizeof(int));
     
     //1
@@ -48,6 +49,7 @@ void paralelepipedoVBO(float lado_y, float lado_x, float lado_z, int camadas, in
         for(lado_aux=begin_x;k<=fatias_x;k++){
             //Inserir Ponto
             vertexB[v++]=lado_aux;vertexB[v++]=altura_aux;vertexB[v++]=fabs(begin_z);
+            normalB[n++]=0;normalB[n++]=0;normalB[n++]=1;
             if(k!=fatias_x && j!=camadas){
                 indices[i++]=avanco+k;
                 indices[i++]=avanco+k+1;
@@ -70,6 +72,7 @@ void paralelepipedoVBO(float lado_y, float lado_x, float lado_z, int camadas, in
         for(lado_aux=begin_x;k<=fatias_x;k++){
             //Inserir Ponto
             vertexB[v++]=lado_aux;vertexB[v++]=altura_aux;vertexB[v++]=begin_z;
+            normalB[n++]=0;normalB[n++]=0;normalB[n++]=-1;
             if(k!=fatias_x && j!=camadas){
                 indices[i++]=avanco+k;
                 indices[i++]=avanco+fatias_x+1+k;
@@ -92,6 +95,7 @@ void paralelepipedoVBO(float lado_y, float lado_x, float lado_z, int camadas, in
         for(lado_aux=begin_z;k<=fatias_z;k++){
             //Inserir Ponto
             vertexB[v++]=fabs(begin_x);vertexB[v++]=altura_aux;vertexB[v++]=lado_aux;
+            normalB[n++]=1;normalB[n++]=0;normalB[n++]=0;
             if(k!=fatias_z && j!=camadas){
                 indices[i++]=avanco+k;
                 indices[i++]=avanco+fatias_z+1+k;
@@ -114,6 +118,7 @@ void paralelepipedoVBO(float lado_y, float lado_x, float lado_z, int camadas, in
         for(lado_aux=begin_z;k<=fatias_z;k++){
             //Inserir Ponto
             vertexB[v++]=begin_x;vertexB[v++]=altura_aux;vertexB[v++]=lado_aux;
+            normalB[n++]=-1;normalB[n++]=0;normalB[n++]=0;
             if(k!=fatias_z && j!=camadas){
                 indices[i++]=avanco+k;
                 indices[i++]=avanco+k+1;
@@ -137,6 +142,7 @@ void paralelepipedoVBO(float lado_y, float lado_x, float lado_z, int camadas, in
         for(lado_aux=begin_z;k<=fatias_z;k++){
             //Inserir Ponto
             vertexB[v++]=altura_aux;vertexB[v++]=fabsf(begin_y);vertexB[v++]=lado_aux;
+            normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
             if(k!=fatias_z && j!=fatias_x){
                 indices[i++]=avanco+k;
                 indices[i++]=avanco+k+1;
@@ -160,6 +166,7 @@ void paralelepipedoVBO(float lado_y, float lado_x, float lado_z, int camadas, in
         for(lado_aux=begin_z;k<=fatias_z;k++){
             //Inserir Ponto
             vertexB[v++]=altura_aux;vertexB[v++]=begin_y;vertexB[v++]=lado_aux;
+            normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
             if(k!=fatias_z && j!=fatias_x){
                 indices[i++]=avanco+k;
                 indices[i++]=avanco+fatias_z+1+k;
@@ -175,6 +182,7 @@ void paralelepipedoVBO(float lado_y, float lado_x, float lado_z, int camadas, in
         altura_aux+=change_x;
     }
 
+
     //Imprimir os vertices e indices
     fprintf(f, "%d\n",n_pontos);
     for(i=0;i<n_pontos;i+=3)
@@ -183,6 +191,9 @@ void paralelepipedoVBO(float lado_y, float lado_x, float lado_z, int camadas, in
     fprintf(f, "%d\n",n_indices);
     for(i=0;i<n_indices;i+=3)
         fprintf(f, "%d %d %d\n",indices[i],indices[i+1],indices[i+2]); 
+
+    for(i=0;i<n_pontos;i+=3)
+        fprintf(f, "%f %f %f\n",normalB[i],normalB[i+1],normalB[i+2]);
 
 }
 

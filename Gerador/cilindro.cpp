@@ -96,7 +96,7 @@ void cilindro(float raio,int fatias,int camadas,float altura,int aneis, FILE* f)
 
 void cilindroVBO(float raio,int fatias,int camadas,float altura,int aneis, FILE* f){
     float angulo=(2*M_PI)/fatias,y=0,l_aux, r_aux,alt_aux=altura;
-    int i=0,v=0,j=0,avanco;
+    int i=0,v=0,j=0,n=0,avanco;
     
     altura/=camadas;
     raio=raio/aneis;
@@ -106,52 +106,66 @@ void cilindroVBO(float raio,int fatias,int camadas,float altura,int aneis, FILE*
     
     
     int *indices=(int*)malloc(n_indices*sizeof(int));
-    float *vertexB=(float*)malloc(n_pontos*sizeof(float));
+    float *vertexB=(float*)malloc(n_pontos*sizeof(float)),
+    *normalB=(float*)malloc(n_pontos*sizeof(float));
     
     
-        //Circulo do topo
-        vertexB[v++]=0;vertexB[v++]=alt_aux;vertexB[v++]=0;
-        for(l_aux=0;l_aux<fatias;l_aux++){
-            
-            vertexB[v++]=r_aux*sin(y);vertexB[v++]=alt_aux;vertexB[v++]=r_aux*cos(y);
-            
-            indices[i++]=0;
-            indices[i++]=l_aux+1;
-            indices[i++]=l_aux+2;
-            y+=angulo;
-        }
-        indices[i-1]=1;
-        
-        for(j++;j<aneis;j++){
-            r_aux+=raio;
-            y=0;
-            for(l_aux=0;l_aux<fatias;l_aux++){
-                avanco=j*fatias+1;
-                
-                vertexB[v++]=r_aux*sin(y); vertexB[v++]=alt_aux; vertexB[v++]=r_aux*cos(y);
-                
-                indices[i++]=avanco-fatias+l_aux;
-                indices[i++]=avanco+l_aux;
-                indices[i++]=avanco-fatias+l_aux+1;
-                
-                indices[i++]=avanco+l_aux;
-                indices[i++]=avanco+l_aux+1;
-                indices[i++]=avanco-fatias+l_aux+1;
-                
-                y+=angulo;
-            }
-            indices[i-4]=avanco-fatias;
-            indices[i-2]=avanco;
-            indices[i-1]=avanco-fatias;
-        }
-    //Corpo
-    for(;camadas>0;camadas--){
+     //Corpo
+    for(j=0;j<=camadas;j++){
         y=0;
-        alt_aux-=altura;
+
         for(l_aux=0;l_aux<fatias;l_aux++){
-            avanco=j*fatias+1;
             
             vertexB[v++]=r_aux*sin(y); vertexB[v++]=alt_aux; vertexB[v++]=r_aux*cos(y);
+            normalB[n++]=sin(y);normalB[n++]=0;normalB[n++]=cos(y);
+            
+            if(j!=camadas){
+                indices[i++]=avanco+l_aux;
+                indices[i++]=avanco+fatias+l_aux;
+                indices[i++]=avanco+l_aux+1;
+                
+                indices[i++]=avanco+fatias+l_aux;
+                indices[i++]=avanco+fatias+l_aux+1;
+                indices[i++]=avanco+l_aux+1;
+            }
+            y+=angulo;
+        }
+        if(j!=camadas){
+            indices[i-4]=avanco;
+            indices[i-2]=avanco+fatias;
+            indices[i-1]=avanco;
+        }
+        avanco+=fatias;
+        alt_aux-=altura/camadas;
+    }
+    
+    //Circulo do topo
+    r_aux=raio/aneis;
+    
+    vertexB[v++]=0;vertexB[v++]=altura;vertexB[v++]=0;
+    normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
+
+    for(l_aux=0;l_aux<fatias;l_aux++){
+        
+        vertexB[v++]=r_aux*sin(y);vertexB[v++]=altura;vertexB[v++]=r_aux*cos(y);
+        normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
+        
+        indices[i++]=avanco;
+        indices[i++]=avanco+l_aux+1;
+        indices[i++]=avanco+l_aux+2;
+        y+=angulo;
+    }
+    indices[i-1]=avanco+1;
+    avanco+=fatias+1;
+    
+    
+    for(j=1;j<aneis;j++){
+        r_aux+=raio/aneis;
+        y=0;
+        for(l_aux=0;l_aux<fatias;l_aux++){
+            
+            vertexB[v++]=r_aux*sin(y); vertexB[v++]=altura; vertexB[v++]=r_aux*cos(y);
+            normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
             
             indices[i++]=avanco-fatias+l_aux;
             indices[i++]=avanco+l_aux;
@@ -166,43 +180,53 @@ void cilindroVBO(float raio,int fatias,int camadas,float altura,int aneis, FILE*
         indices[i-4]=avanco-fatias;
         indices[i-2]=avanco;
         indices[i-1]=avanco-fatias;
-        j++;
+        avanco+=fatias;
     }
     
-        //Circulo da base
+    //Circulo da base
+    r_aux=raio/aneis;
     
-        for(;aneis>1;aneis--){
-            r_aux-=raio;
-            y=0;
-            for(l_aux=0;l_aux<fatias;l_aux++){
-                avanco=j*fatias+1;
-                
-                vertexB[v++]=r_aux*sin(y); vertexB[v++]=0; vertexB[v++]=r_aux*cos(y);
-                
-                indices[i++]=avanco-fatias+l_aux;
-                indices[i++]=avanco+l_aux;
-                indices[i++]=avanco-fatias+l_aux+1;
-                
-                indices[i++]=avanco+l_aux;
-                indices[i++]=avanco+l_aux+1;
-                indices[i++]=avanco-fatias+l_aux+1;
-                
-                y+=angulo;
-            }
-            indices[i-4]=avanco-fatias;
-            indices[i-2]=avanco;
-            indices[i-1]=avanco-fatias;
-            j++;
-        }
-   
     vertexB[v++]=0;vertexB[v++]=0;vertexB[v++]=0;
+    normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
+    
     for(l_aux=0;l_aux<fatias;l_aux++){
         
-        indices[i++]=avanco+fatias;
+        vertexB[v++]=r_aux*sin(y);vertexB[v++]=0;vertexB[v++]=r_aux*cos(y);
+        normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
+        
+        indices[i++]=avanco;
+        indices[i++]=avanco+l_aux+2;
         indices[i++]=avanco+l_aux+1;
-        indices[i++]=avanco+l_aux;
+        y+=angulo;
     }
-    indices[i-2]=avanco;
+    indices[i-2]=avanco+1;
+    avanco+=fatias+1;
+    
+    
+    for(j=1;j<aneis;j++){
+        r_aux+=raio/aneis;
+        y=0;
+        for(l_aux=0;l_aux<fatias;l_aux++){
+            
+            vertexB[v++]=r_aux*sin(y); vertexB[v++]=0; vertexB[v++]=r_aux*cos(y);
+            normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
+            
+            indices[i++]=avanco-fatias+l_aux;
+            indices[i++]=avanco-fatias+l_aux+1;
+            indices[i++]=avanco+l_aux;
+            
+            indices[i++]=avanco+l_aux;
+            indices[i++]=avanco-fatias+l_aux+1;
+            indices[i++]=avanco+l_aux+1;
+            
+            y+=angulo;
+        }
+        indices[i-5]=avanco-fatias;
+        indices[i-1]=avanco;
+        indices[i-2]=avanco-fatias;
+        avanco+=fatias;
+    }
+
     
     //Imprimir os vertices e indices
     fprintf(f, "%d\n",n_pontos);
@@ -213,6 +237,8 @@ void cilindroVBO(float raio,int fatias,int camadas,float altura,int aneis, FILE*
     for(i=0;i<n_indices;i+=3)
         fprintf(f, "%d %d %d\n",indices[i],indices[i+1],indices[i+2]);
     
+    for(i=0;i<n_pontos;i+=3)
+        fprintf(f, "%f %f %f\n",normalB[i],normalB[i+1],normalB[i+2]);
 
 }
 

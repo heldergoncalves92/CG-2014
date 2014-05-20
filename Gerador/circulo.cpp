@@ -75,7 +75,7 @@ void circulo(float raio, int fatias,int aneis, float altura,int ori, FILE* f){
 void circuloVBO(float raio, int lados,int aneis, float altura,int ori, FILE *f){
     
     float angulo=(2*M_PI)/lados,y=0,l_aux, r_aux;
-    int i=0,v=0,j=0,avanco;
+    int i=0,v=0,n=0,j=0,avanco;
     
     raio=raio/aneis;
     r_aux=raio;
@@ -83,13 +83,16 @@ void circuloVBO(float raio, int lados,int aneis, float altura,int ori, FILE *f){
     int n_indices=(lados*(aneis-1)*2+lados)*3;
     
     int *indices=(int*)malloc(n_indices*sizeof(int));
-    float *vertexB=(float*)malloc(n_pontos*sizeof(float));
+    float *vertexB=(float*)malloc(n_pontos*sizeof(float)),
+    *normalB=(float*)malloc(n_pontos*sizeof(float));
 
     if(ori){
         vertexB[v++]=0;vertexB[v++]=altura;vertexB[v++]=0;
+        normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
         for(l_aux=0;l_aux<lados;l_aux++){
             
             vertexB[v++]=r_aux*sin(y);vertexB[v++]=altura;vertexB[v++]=r_aux*cos(y);
+            normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
             
             indices[i++]=0;
             indices[i++]=l_aux+1;
@@ -105,6 +108,7 @@ void circuloVBO(float raio, int lados,int aneis, float altura,int ori, FILE *f){
                 avanco=j*lados+1;
                 
                 vertexB[v++]=r_aux*sin(y); vertexB[v++]=altura; vertexB[v++]=r_aux*cos(y);
+                normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
                 
                 indices[i++]=avanco-lados+l_aux;
                 indices[i++]=avanco+l_aux;
@@ -122,9 +126,11 @@ void circuloVBO(float raio, int lados,int aneis, float altura,int ori, FILE *f){
         }
     }else{
         vertexB[v++]=0;vertexB[v++]=altura;vertexB[v++]=0;
+        normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
         for(l_aux=0;l_aux<lados;l_aux++){
             
             vertexB[v++]=r_aux*sin(y);vertexB[v++]=altura;vertexB[v++]=r_aux*cos(y);
+            normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
             
             indices[i++]=0;
             indices[i++]=l_aux+2;
@@ -140,6 +146,7 @@ void circuloVBO(float raio, int lados,int aneis, float altura,int ori, FILE *f){
                 avanco=j*lados+1;
                 
                 vertexB[v++]=r_aux*sin(y); vertexB[v++]=altura; vertexB[v++]=r_aux*cos(y);
+                normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
                 
                 indices[i++]=avanco-lados+l_aux;
                 indices[i++]=avanco-lados+l_aux+1;
@@ -166,5 +173,9 @@ void circuloVBO(float raio, int lados,int aneis, float altura,int ori, FILE *f){
     fprintf(f, "%d\n",n_indices);
     for(i=0;i<n_indices;i+=3)
         fprintf(f, "%d %d %d\n",indices[i],indices[i+1],indices[i+2]);
+
+    for(i=0;i<n_pontos;i+=3)
+        fprintf(f, "%f %f %f\n",normalB[i],normalB[i+1],normalB[i+2]);
+
 }
 

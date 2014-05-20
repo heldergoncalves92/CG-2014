@@ -18,8 +18,12 @@ int tipo_camera=0;
 Rotacao *rotacoes=NULL, *rot_actual=NULL;
 Translacao *translacoes=NULL, *tra_actual=NULL;
 Escala escalas=NULL, esc_actual=NULL;
-long currentTime=0;
+long currentTime=0,test;
 
+//LUZES
+float pos[4]={0,17,0,1},pos1[4]={0,-17,0,1},pos2[4]={17,0,0,1},pos3[4]={-17,0,0,1},
+diff[3]={1,1,1},
+amb[3]={0.03,0.09,0.09};
 
 void changeSize(int w, int h){
     
@@ -50,9 +54,6 @@ void changeSize(int w, int h){
 
 void renderScene(void) {
     
-	//LL *lista = listaPontos;
-	//lista = lista->next;
-    
 	// clear buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
@@ -72,14 +73,33 @@ void renderScene(void) {
     
     
 	// pÙr instruÁıes de desenho aqui
-    currentTime = glutGet(GLUT_ELAPSED_TIME);
+   
+    //LUZES
+    glLightfv(GL_LIGHT0, GL_POSITION,pos);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, diff);
+    
+    glLightfv(GL_LIGHT1, GL_POSITION,pos1);
+    glLightfv(GL_LIGHT1, GL_AMBIENT, amb);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, diff);
+    
+    glLightfv(GL_LIGHT2, GL_POSITION,pos2);
+    glLightfv(GL_LIGHT2, GL_AMBIENT, amb);
+    glLightfv(GL_LIGHT2, GL_DIFFUSE, diff);
+    
+    glLightfv(GL_LIGHT3, GL_POSITION,pos3);
+    glLightfv(GL_LIGHT3, GL_AMBIENT, amb);
+    glLightfv(GL_LIGHT3, GL_DIFFUSE, diff);
+    
     
 	rot_actual=rotacoes;
     tra_actual=translacoes;
     esc_actual=escalas;
-    
+    test=currentTime;
     motor_XML(cena);
+    currentTime = glutGet(GLUT_ELAPSED_TIME);
     
+    printf("Diferença: %lo\n",currentTime-test);
 	// End of frame
 	glutSwapBuffers();
 }
@@ -124,12 +144,13 @@ int main(int argc, char* argv[]){
     TiXmlAttribute *attr=NULL;
     
     
-    if(argc!=2){
-        printf("ERRO!! Número de argumentos errado, falta XML de input!\n");
-        return 1;
-    }
+    //if(argc!=2){
+    //    printf("ERRO!! Número de argumentos errado, falta XML de input!\n");
+    //    return 1;
+    //}
     
-	if(doc.LoadFile(argv[1])){
+	//if(doc.LoadFile(argv[1])){
+    if(doc.LoadFile("sistema_solar.xml")){
         
         root=doc.RootElement();
         cena=root->FirstChild("cena");
@@ -147,7 +168,7 @@ int main(int argc, char* argv[]){
             // pÙr registo de funÁıes aqui
             glutDisplayFunc(renderScene);
             glutReshapeFunc(changeSize);
-            glutIdleFunc(renderScene);
+            //glutIdleFunc(renderScene);
             
             // funções do teclado e rato
             if((node=root->FirstChild("camera")) && (attr=node->ToElement()->FirstAttribute())){
@@ -201,10 +222,16 @@ int main(int argc, char* argv[]){
             glEnable(GL_CULL_FACE);
             glClearColor(0.0f,0.0f,0.0f,0.0f);
             
-            glPolygonMode(GL_FRONT, GL_LINE);
+            //glPolygonMode(GL_FRONT, GL_LINE);
             
             prepara_MotorXML(cena);
             
+            //Luzes
+            glEnable(GL_LIGHTING);
+            glEnable(GL_LIGHT0);
+            glEnable(GL_LIGHT1);
+            glEnable(GL_LIGHT2);
+            glEnable(GL_LIGHT3);
             // entrar no ciclo do GLUT
             glutMainLoop();
             

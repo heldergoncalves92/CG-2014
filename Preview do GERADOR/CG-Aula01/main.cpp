@@ -16,7 +16,7 @@
 
 float raio=8,cam_h=0,cam_v=0.5,camh_x=0,camh_y=0, cir1=0,cir2=0;
 float x_tela, y_tela; //Variaveis para guardar posição da tela em que se carrega no rato
-float pos[4]={0,3,4,1},
+float pos[4]={0,7,5,1},
     amb[3]={0,0,0.5};
 
 int estado_botao=0;
@@ -66,13 +66,17 @@ void renderScene(void) {
     glLightfv(GL_LIGHT0, GL_POSITION, pos);
        glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
    // Paralelepipedo an = Paralelepipedo(2, 4, 3, 1, 3, 4);
-    Esfera an= Esfera(2, 95, 95);
+   // Esfera an= Esfera(2, 30, 30);
     //Circulo an= Circulo(1, 15, 3, 0, 0);
   // Cilindro an = Cilindro(1, 10, 2, 3, 3);
     //Anel an= Anel(3, 1, 20, 3, 1);
-    //Cone an = Cone(1, 2, 20, 3, 4);
-    Plano an1= Plano(8, 8, 3, 3, -4, 1);
-     an1.desenha();
+    Cone an = Cone(1, 2, 20, 5, 10);
+    //Plano an1= Plano(8, 8, 3, 3, -4, 1);
+    //Plano an= Plano(8, 8, 3, 3, -4, 3);
+   
+    
+    
+   // an1.desenha();
     an.desenha();
    
     

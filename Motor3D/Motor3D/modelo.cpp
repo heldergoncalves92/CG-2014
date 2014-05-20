@@ -32,6 +32,9 @@ Modelo addVbo(const char* nome, GLuint *buffers, int n_indices, unsigned short *
 void desenha_vbo(Vbo vbo){
     glBindBuffer(GL_ARRAY_BUFFER,vbo->buffers[0]);
     glVertexPointer(3,GL_FLOAT,0,0);
+    glBindBuffer(GL_ARRAY_BUFFER,vbo->buffers[1]);
+    glNormalPointer(GL_FLOAT,0,0);
+    
     glDrawElements(GL_TRIANGLES, vbo->n_indices ,GL_UNSIGNED_SHORT, vbo->indices);
 }
 
@@ -40,7 +43,7 @@ Modelo ler_VBO(const char* filename, Modelo lista){
     //Inicializações
     int n_pontos,n_indices,i=0;
     unsigned short *indices, sx,sy,sz;
-    float cx,cy,cz,*vertices;
+    float cx,cy,cz,*vertices=NULL,*normais=NULL;
     FILE *f = fopen(filename, "r");
     GLuint *buffers=NULL;
     
@@ -50,6 +53,7 @@ Modelo ler_VBO(const char* filename, Modelo lista){
         //Lê o número total de pontos e aloca memória
         fscanf(f, "%d\n", &n_pontos);
         vertices=(float*)malloc(n_pontos*sizeof(float));
+        normais=(float*)malloc(n_pontos*sizeof(float));
         
         //Lê todos os pontos que estão no ficheiro
         while (i<n_pontos){
@@ -58,33 +62,53 @@ Modelo ler_VBO(const char* filename, Modelo lista){
             vertices[i++]=cy;
             vertices[i++]=cz;
         }
-        
         i=0;
         //Lê o número total de indices e aloca memória
         fscanf(f, "%d\n", &n_indices);
         indices=(unsigned short*)malloc(n_indices*sizeof(unsigned short));
         
         //Lê todos os indices que estão no ficheiro
-        while (fscanf(f, "%hu %hu %hu\n", &sx, &sy, &sz)!=EOF){
+        while (i<n_indices){
+            fscanf(f, "%hu %hu %hu\n", &sx, &sy, &sz);
             indices[i++]=sx;
             indices[i++]=sy;
             indices[i++]=sz;
+        }
+
+        //Lê as Normais que estão no ficheiro
+        
+        if (fscanf(f, "%f %f %f\n", &cx, &cy, &cz)!=EOF) {
+            i=0;
+            normais[i++]=cx;
+            normais[i++]=cy;
+            normais[i++]=cz;
+            while (i<n_pontos){
+                fscanf(f, "%f %f %f\n", &cx, &cy, &cz);
+                normais[i++]=cx;
+                normais[i++]=cy;
+                normais[i++]=cz;
+            }
+            i=-1;
         }
         
         fclose(f);
         
         //Activar Buffers
         glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_NORMAL_ARRAY);
         
         //Aloca memória para os buffers
-        buffers=(GLuint*)malloc(1*sizeof(GLuint));
+        buffers=(GLuint*)malloc(2*sizeof(GLuint));
         
         //Guarda pontos na memória da gráfica
-        glGenBuffers(1, buffers);
+        glGenBuffers(2, buffers);
         glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
         glBufferData(GL_ARRAY_BUFFER,n_pontos*sizeof(float), vertices, GL_STATIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER,buffers[1]);
+        glBufferData(GL_ARRAY_BUFFER,n_pontos*sizeof(float), normais, GL_STATIC_DRAW);
         
         free(vertices);
+        free(normais);
         
         //Adiciona a VBO à estrutura e desenha a mesmawa
         return addVbo(filename, buffers, n_indices, indices, lista);

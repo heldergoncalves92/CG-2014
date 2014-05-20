@@ -7,11 +7,11 @@
 //
 
 #include "catmull.h"
-#include <math.h>
-#include <GLUT/GLUT.h>
+
 
 Point *globalPoints=NULL;
 int global_point_count=0;
+
 
 int lerPontos(TiXmlNode* root, Point **res){
     TiXmlNode *child;
@@ -146,15 +146,31 @@ void getGlobalCatmullRomPoint(float gt, float *res) {
 	getCatmullRomPoint(t, indices, res, globalPoints);
 }
 
-void renderCatmullRomCurve() {
-    int i;
-    float res[3];
-    glBegin(GL_LINE_LOOP);
+
+void renderCatmullRomCurve(Translacao* t) {
+    int i,v=0;
+    float res[3], *vertexB=(float*)malloc(6000*sizeof(float));
+ 
+    //Activar buffer
+    glEnableClientState(GL_VERTEX_ARRAY);
+    
     for(i=0;i<2000;i++){
         getGlobalCatmullRomPoint(i/2000.0f,res);
-        glVertex3fv(res);
+        vertexB[v++]=res[0];vertexB[v++]=res[1];vertexB[v++]=res[2];
     }
-    glEnd();
+    
+    glGenBuffers(1, t->buffer);
+    glBindBuffer(GL_ARRAY_BUFFER,t->buffer[0]);
+    glBufferData(GL_ARRAY_BUFFER,6000*sizeof(float), vertexB, GL_STATIC_DRAW);
+
+    free(vertexB);
+}
+
+void do_line(Translacao* t){
+    
+    glBindBuffer(GL_ARRAY_BUFFER,t->buffer[0]);
+    glVertexPointer(3,GL_FLOAT,0,0);
+    glDrawArrays(GL_LINE_LOOP, 0, 2000);
 }
 
 Translacao* insereTranslacao(Point *listaPontos, Translacao *translacoes, int numeroPontos, float tempo, float x, float y, float z){
@@ -170,6 +186,11 @@ Translacao* insereTranslacao(Point *listaPontos, Translacao *translacoes, int nu
     aux->pY = y;
     aux->pZ = z;
     aux->next=NULL;
+    
+    global_point_count=aux->point_count;
+    globalPoints = aux->points;
+    renderCatmullRomCurve(aux);
+    
     if(translacoes==NULL){
         translacoes=aux;
     } else {
@@ -194,7 +215,7 @@ Translacao* do_translacao(Translacao* trans, long currentTime){
             trans->lastTime=currentTime;
             //glPushMatrix();
             getGlobalCatmullRomPoint((trans->a),trans->res);
-            renderCatmullRomCurve();
+            do_line(trans);
 
             glTranslatef(trans->res[0],trans->res[1],trans->res[2]);
             //glTranslatef(res[0],res[1],res[2]);

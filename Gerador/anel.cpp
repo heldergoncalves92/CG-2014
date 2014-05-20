@@ -55,19 +55,21 @@ void anel(float raio_fora, float raio_dentro,int fatias, int aneis, int ori, FIL
 void anelVBO(float raio_fora, float raio_dentro, int fatias, int aneis, int ori, FILE* f){
     
     float angulo=(2*M_PI)/fatias,y=0,l_aux,raio=(raio_fora-raio_dentro)/aneis;
-    int i=0,v=0,j,avanco;
+    int i=0,v=0,n=0,j,avanco;
     
     int n_pontos=(fatias*(aneis+1))*3;
     int n_indices=6*fatias*aneis;
     
     int *indices=(int*)malloc(n_indices*sizeof(int));
-    float *vertexB=(float*)malloc(n_pontos*sizeof(float));
+    float   *vertexB=(float*)malloc(n_pontos*sizeof(float)),
+            *normalB=(float*)malloc(n_pontos*sizeof(float));
     
     
     if(ori){
         
         for (j=0; j<fatias; j++) {
             vertexB[v++]=raio_dentro*sin(y); vertexB[v++]=0; vertexB[v++]=raio_dentro*cos(y);
+            normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
             y+=angulo;
         }
         
@@ -78,7 +80,8 @@ void anelVBO(float raio_fora, float raio_dentro, int fatias, int aneis, int ori,
                 avanco=j*fatias;
                 
                 vertexB[v++]=raio_dentro*sin(y); vertexB[v++]=0; vertexB[v++]=raio_dentro*cos(y);
-                
+                normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
+
                 indices[i++]=avanco-fatias+l_aux;
                 indices[i++]=avanco+l_aux;
                 indices[i++]=avanco-fatias+l_aux+1;
@@ -96,6 +99,7 @@ void anelVBO(float raio_fora, float raio_dentro, int fatias, int aneis, int ori,
     }else{
         for (j=0; j<fatias; j++) {
             vertexB[v++]=raio_dentro*sin(y); vertexB[v++]=0; vertexB[v++]=raio_dentro*cos(y);
+            normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
             y+=angulo;
         }
         
@@ -106,6 +110,7 @@ void anelVBO(float raio_fora, float raio_dentro, int fatias, int aneis, int ori,
                 avanco=j*fatias;
                 
                 vertexB[v++]=raio_dentro*sin(y); vertexB[v++]=0; vertexB[v++]=raio_dentro*cos(y);
+                normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
                 
                 indices[i++]=avanco-fatias+l_aux;
                 indices[i++]=avanco-fatias+l_aux+1;
@@ -123,15 +128,18 @@ void anelVBO(float raio_fora, float raio_dentro, int fatias, int aneis, int ori,
         }
     }
  
-    //Imprimir os vertices e indices
+   //Imprimir os vertices e indices
     fprintf(f, "%d\n",n_pontos);
     for(i=0;i<n_pontos;i+=3)
         fprintf(f, "%f %f %f\n",vertexB[i],vertexB[i+1],vertexB[i+2]);
 
     fprintf(f, "%d\n",n_indices);
     for(i=0;i<n_indices;i+=3)
-        fprintf(f, "%d %d %d\n",indices[i],indices[i+1],indices[i+2]);
-    
+        fprintf(f, "%d %d %d\n",indices[i],indices[i+1],indices[i+2]);   
+
+    for(i=0;i<n_pontos;i+=3)
+        fprintf(f, "%f %f %f\n",normalB[i],normalB[i+1],normalB[i+2]);
+
 }
 
 

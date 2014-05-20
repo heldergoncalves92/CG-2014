@@ -9,12 +9,12 @@
 #include "patch.h"
 
 
-float* getPoints(int *patchs, int n_patch, float *vertices, int n_vertices, int detail){
+float* getPoints(int *patchs, int n_patch, float *vertices, int n_vertices, int detail, float *normais){
    
     float Ax,Ay,Az,Bx,By,Bz,Cx,Cy,Cz,Dx,Dy,Dz,Ex,Ey,Ez,Fx,Fy,Fz,Gx,Gy,Gz,Hx,Hy,Hz,Ix,Iy,Iz,Jx,Jy,Jz,Kx,Ky,Kz,Lx,Ly,Lz,Mx,My,Mz,Nx,Ny,Nz,Ox,Oy,Oz,Px,Py,Pz;
 	float change = 1.0 / detail, *points=(float*)malloc(n_patch*(3*(detail+1)*(detail+1))*sizeof(float));
-	float a,b,c,d;
-	int v=0,i,j,k;
+	float a,b,c,d, Xta,Yta,Zta, Xtc,Ytc,Ztc, Xn,Yn,Zn, modulo;
+	int v=0,n=0,i,j,k;
     
 	
                           
@@ -75,7 +75,77 @@ float* getPoints(int *patchs, int n_patch, float *vertices, int n_vertices, int 
                             + Mz*b*b*b*c*c*c   + Nz*3*b*b*b*c*c*d
                             + Oz*3*b*b*b*c*d*d + Pz*b*b*b*d*d*d;
                 
+
+                //Agora os calculos para o Normal
+
+                //Calculamos a tangente
+                Xta = Ax*3*a*a*c*c*c        + Bx*9*a*a*c*c*d
+                    + Cx*9*a*a*c*d*d        + Dx*3*a*a*d*d*d
+                    + Ex*3*(2*a-3*a*a)*c*c*c   + Fx*9*(2*a-3*a*a)*c*c*d
+                    + Gx*9*(2*a-3*a*a)*c*d*d   + Hx*3*(2*a-3*a*a)*d*d*d
+                    + Ix*3*(1-4*a+3*a*a)*c*c*c + Jx*9*(1-4*a+3*a*a)*c*c*d
+                    + Kx*9*(1-4*a+3*a*a)*c*d*d + Lx*3*(1-4*a+3*a*a)*d*d*d
+                    + Mx*3*(2*a-1-a*a)*c*c*c   + Nx*9*(2*a-1-a*a)*c*c*d
+                    + Ox*9*(2*a-1-a*a)*c*d*d   + Px*3*(2*a-1-a*a)*d*d*d;
+
+                Yta = Ay*3*a*a*c*c*c        + By*9*a*a*c*c*d
+                    + Cy*9*a*a*c*d*d        + Dy*3*a*a*d*d*d
+                    + Ey*3*(2*a-3*a*a)*c*c*c   + Fy*9*(2*a-3*a*a)*c*c*d
+                    + Gy*9*(2*a-3*a*a)*c*d*d   + Hy*3*(2*a-3*a*a)*d*d*d
+                    + Iy*3*(1-4*a+3*a*a)*c*c*c + Jy*9*(1-4*a+3*a*a)*c*c*d
+                    + Ky*9*(1-4*a+3*a*a)*c*d*d + Ly*3*(1-4*a+3*a*a)*d*d*d
+                    + My*3*(2*a-1-a*a)*c*c*c   + Ny*9*(2*a-1-a*a)*c*c*d
+                    + Oy*9*(2*a-1-a*a)*c*d*d   + Py*3*(2*a-1-a*a)*d*d*d;
+
+                Zta = Az*3*a*a*c*c*c        + Bz*9*a*a*c*c*d
+                    + Cz*9*a*a*c*d*d        + Dz*3*a*a*d*d*d
+                    + Ez*3*(2*a-3*a*a)*c*c*c   + Fz*9*(2*a-3*a*a)*c*c*d
+                    + Gz*9*(2*a-3*a*a)*c*d*d   + Hz*3*(2*a-3*a*a)*d*d*d
+                    + Iz*3*(1-4*a+3*a*a)*c*c*c + Jz*9*(1-4*a+3*a*a)*c*c*d
+                    + Kz*9*(1-4*a+3*a*a)*c*d*d + Lz*3*(1-4*a+3*a*a)*d*d*d
+                    + Mz*3*(2*a-1-a*a)*c*c*c   + Nz*9*(2*a-1-a*a)*c*c*d
+                    + Oz*9*(2*a-1-a*a)*c*d*d   + Pz*3*(2*a-1-a*a)*d*d*d;
+
+                Xtc = Ax*3*a*a*a*c*c        + Bx*3*a*a*a*(2*c-3*c*c)
+                    + Cx*3*a*a*a*(1-4*c+3*c*c) + Dx*3*a*a*a*(-1+2*c-c*c)
+                    + Ex*9*a*a*b*c*c        + Fx*9*a*a*b*(2*c-3*c*c)
+                    + Gx*9*a*a*b*(1-4*c+3*c*c) + Hx*9*a*a*b*(-1+2*c-c*c)
+                    + Ix*9*a*b*b*c*c        + Jx*9*a*b*b*(2*c-3*c*c)
+                    + Kx*9*a*b*b*(1-4*c+3*c*c) + Lx*9*a*b*b*(-1+2*c-c*c)
+                    + Mx*3*b*b*b*c*c        + Nx*3*b*b*b*(2*c-3*c*c)
+                    + Ox*3*b*b*b*(1-4*c+3*c*c) + Px*3*b*b*b*(-1+2*c-c*c);
+
+                Ytc = Ay*3*a*a*a*c*c        + By*3*a*a*a*(2*c-3*c*c)
+                    + Cy*3*a*a*a*(1-4*c+3*c*c) + Dy*3*a*a*a*(-1+2*c-c*c)
+                    + Ey*9*a*a*b*c*c        + Fy*9*a*a*b*(2*c-3*c*c)
+                    + Gy*9*a*a*b*(1-4*c+3*c*c) + Hy*9*a*a*b*(-1+2*c-c*c)
+                    + Iy*9*a*b*b*c*c        + Jy*9*a*b*b*(2*c-3*c*c)
+                    + Ky*9*a*b*b*(1-4*c+3*c*c) + Ly*9*a*b*b*(-1+2*c-c*c)
+                    + My*3*b*b*b*c*c        + Ny*3*b*b*b*(2*c-3*c*c)
+                    + Oy*3*b*b*b*(1-4*c+3*c*c) + Py*3*b*b*b*(-1+2*c-c*c);
+
+                Ztc = Az*3*a*a*a*c*c        + Bz*3*a*a*a*(2*c-3*c*c)
+                    + Cz*3*a*a*a*(1-4*c+3*c*c) + Dz*3*a*a*a*(-1+2*c-c*c)
+                    + Ez*9*a*a*b*c*c        + Fz*9*a*a*b*(2*c-3*c*c)
+                    + Gz*9*a*a*b*(1-4*c+3*c*c) + Hz*9*a*a*b*(-1+2*c-c*c)
+                    + Iz*9*a*b*b*c*c        + Jz*9*a*b*b*(2*c-3*c*c)
+                    + Kz*9*a*b*b*(1-4*c+3*c*c) + Lz*9*a*b*b*(-1+2*c-c*c)
+                    + Mz*3*b*b*b*c*c        + Nz*3*b*b*b*(2*c-3*c*c)
+                    + Oz*3*b*b*b*(1-4*c+3*c*c) + Pz*3*b*b*b*(-1+2*c-c*c);
                 
+                // Cross the tangent vectors, put the result to the normal vector array
+                // Note: I simplified -((Xta*Ztc)-(Xtc*Zta)) to (Xtc*Zta) - (Xta*Ztc)
+                Xn = (Yta*Ztc) - (Ytc*Zta);
+                Yn = (Xtc*Zta) - (Xta*Ztc);
+                Zn = (Xta*Ytc) - (Xtc*Yta);          
+
+                modulo= sqrtf(powf(Xn, 2) + powf(Yn, 2)+ powf(Zn, 2));
+                
+                //Vector Unitário
+                normais[n++]=-Xn/modulo;
+                normais[n++]=-Yn/modulo;
+                normais[n++]=-Zn/modulo;
+
                 //change the c-variable within the inner loop
                 c += change;
                 d  = 1.0 - c;
@@ -97,9 +167,8 @@ float* getPoints(int *patchs, int n_patch, float *vertices, int n_vertices, int 
 
 void read_Patch(FILE *f_patch, FILE *f, int detail){
     
-	int i=0,j=0,v=0,avanco,k,n_patch,n_vertices, *patchs=NULL;
-	float *vertices=NULL,*points=NULL,x,y,z;
-    
+	int i=0,j=0,v=0,avanco,k,n_patch,n_vertices,n_indices, *patchs=NULL;
+	float *vertices=NULL,*points=NULL,*normais=NULL,x,y,z;
     
 	fscanf(f_patch,"%d\n",&n_patch);
 	patchs=(int*)malloc(16*n_patch*sizeof(int));
@@ -122,7 +191,9 @@ void read_Patch(FILE *f_patch, FILE *f, int detail){
 		vertices[v++]=y;
 		vertices[v++]=z;
 	}
-	points=getPoints(patchs,n_patch,vertices,n_vertices,detail);
+
+    normais=(float*)malloc(n_patch*(3*(detail+1)*(detail+1))*sizeof(float));
+	points=getPoints(patchs,n_patch,vertices,n_vertices,detail, normais);
     
     
     
@@ -134,8 +205,8 @@ void read_Patch(FILE *f_patch, FILE *f, int detail){
     
     
     //Imprimir Indices
-    n_vertices=n_patch * detail * detail *3*2;
-    fprintf(f, "%d\n",n_vertices);
+    n_indices=n_patch * detail * detail *3*2;
+    fprintf(f, "%d\n",n_indices);
     
     avanco=(detail+1)*(detail+1);
     
@@ -151,6 +222,10 @@ void read_Patch(FILE *f_patch, FILE *f, int detail){
         }
         
     }
+
+    //Imprimir Normais
+    for(i=0;i<n_vertices;i+=3)
+       fprintf(f, "%f %f %f\n",normais[i],normais[i+1],normais[i+2]);
 }
 
 
