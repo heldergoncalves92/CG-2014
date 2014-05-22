@@ -8,6 +8,26 @@
 
 #include "modelo.h"
 
+PropModel initPropModel(){
+    PropModel aux=(PropModel)malloc(sizeof(NPropModel));
+    aux->modelo=NULL;
+    aux->texID=0;
+    aux->next=NULL;
+    
+    return aux;
+}
+
+PropModel addPropModel(PropModel novo, PropModel lista){
+    PropModel aux=lista;
+    if(!lista)
+        return novo;
+    
+    while (aux->next)
+        aux=aux->next;
+    aux->next=novo;
+    
+    return lista;
+}
 
 Modelo addVbo(const char* nome, GLuint *buffers, int n_indices, unsigned short *indices, Modelo lista){
     

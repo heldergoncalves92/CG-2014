@@ -41,21 +41,6 @@ void motor_XML(TiXmlNode* root){
             }else
                 if (strcmp(tag, "translacao")==0) {
                         tra_actual=do_translacao(tra_actual, currentTime);
-                        //a+=0.001;
-                /*}else
-                    if (strcmp(tag, "translacaofixa")==0) {
-                        x=y=z=0;
-                        for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){
-                            if (strcmp(attr->Name(), "x")==0)
-                                x=atof(attr->Value());
-                            else
-                                if (strcmp(attr->Name(), "y")==0)
-                                    y=atof(attr->Value());
-                                else
-                                    if (strcmp(attr->Name(), "z")==0)
-                                        z=atof(attr->Value());
-                            }
-                        glTranslatef(x, y, z);*/
                     }else
                         if (strcmp(tag, "rotacao")==0) {
                             rot_actual=do_rotacao(rot_actual,currentTime);
@@ -72,6 +57,7 @@ void prepara_MotorXML(TiXmlNode* root){
     TiXmlNode *child;
     TiXmlAttribute * attr;
     Modelo modelo;
+    PropModel propModel=NULL;
     const char* tag;
     float x,y,z,angulo,tempo;
     Point *listaPontos=NULL;
@@ -86,21 +72,38 @@ void prepara_MotorXML(TiXmlNode* root){
             prepara_MotorXML((child));
         }else
             if (strcmp(tag, "modelo")==0) {
-                attr=child->ToElement()->FirstAttribute();
-                if (strcmp(attr->Name(), "ficheiro")==0) {
-                    modelo=search_Modelo(attr->Value(), lista_modelos);
-                    if (!modelo) {
-                        
-                        std::regex e ("(.*)(.vbo)");
-                        if(std::regex_match(attr->Value(), e) )
-                            lista_modelos=ler_VBO(attr->Value(),lista_modelos);
-                        else{
-                            std::regex e ("(.*)(.3d)");
-                            if(std::regex_match(attr->Value(), e) )
-                                lista_modelos=ler_RTime(attr->Value(),lista_modelos);
-                            else
-                                printf("ERRO! Ficheiro '%s' inexistente\n", attr->Value());
+                if (strcmp(tag, "modelo")==0) {
+                    propModel=initPropModel();
+                    for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                        if (strcmp(attr->Name(), "ficheiro")==0) {
+                            modelo=search_Modelo(attr->Value(), lista_modelos);
+                            if (!modelo) {
+                                
+                                std::regex e ("(.*)(.vbo)");
+                                if(std::regex_match(attr->Value(), e) ){
+                                    lista_modelos=ler_VBO(attr->Value(),lista_modelos);
+                                    propModel->modelo=lista_modelos;
+                                }
+                                else{
+                                    std::regex e ("(.*)(.3d)");
+                                    if(std::regex_match(attr->Value(), e) ){
+                                        lista_modelos=ler_RTime(attr->Value(),lista_modelos);
+                                        propModel->modelo=lista_modelos;
+                                    }
+                                    else
+                                        printf("ERRO! Ficheiro '%s' inexistente\n", attr->Value());
+                                }
+                            }else
+                                propModel->modelo=modelo;
+                            
+                        }else if (strcmp(attr->Name(), "textura")==0) {
+                            //carregar textura
+                            flag=0;
                         }
+                        
+                        //Adicionar PropModel
+                        l_PropModel=addPropModel(propModel, l_PropModel);
+                        
                     }
                 }
             }else

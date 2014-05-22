@@ -18,12 +18,13 @@ int tipo_camera=0;
 Rotacao *rotacoes=NULL, *rot_actual=NULL;
 Translacao *translacoes=NULL, *tra_actual=NULL;
 Escala escalas=NULL, esc_actual=NULL;
+PropModel l_PropModel=NULL, prop_actual=NULL;
 long currentTime=0,test;
 
 //LUZES
 float pos[4]={0,17,0,1},pos1[4]={0,-17,0,1},pos2[4]={17,0,0,1},pos3[4]={-17,0,0,1},
 diff[3]={1,1,1},
-amb[3]={0.03,0.09,0.09};
+amb[3]={0.06,0.18,0.18};
 
 void changeSize(int w, int h){
     
@@ -73,33 +74,34 @@ void renderScene(void) {
     
     
 	// pÙr instruÁıes de desenho aqui
-   
     //LUZES
     glLightfv(GL_LIGHT0, GL_POSITION,pos);
     glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diff);
     
     glLightfv(GL_LIGHT1, GL_POSITION,pos1);
-    glLightfv(GL_LIGHT1, GL_AMBIENT, amb);
     glLightfv(GL_LIGHT1, GL_DIFFUSE, diff);
     
     glLightfv(GL_LIGHT2, GL_POSITION,pos2);
-    glLightfv(GL_LIGHT2, GL_AMBIENT, amb);
     glLightfv(GL_LIGHT2, GL_DIFFUSE, diff);
     
     glLightfv(GL_LIGHT3, GL_POSITION,pos3);
-    glLightfv(GL_LIGHT3, GL_AMBIENT, amb);
     glLightfv(GL_LIGHT3, GL_DIFFUSE, diff);
-    
+
     
 	rot_actual=rotacoes;
     tra_actual=translacoes;
     esc_actual=escalas;
-    test=currentTime;
-    motor_XML(cena);
-    currentTime = glutGet(GLUT_ELAPSED_TIME);
+    prop_actual=l_PropModel;
     
-    printf("Diferença: %lo\n",currentTime-test);
+    //test=currentTime;
+    currentTime = glutGet(GLUT_ELAPSED_TIME);
+    //printf("Diferença: %lo\n",currentTime-test);
+    
+    motor_XML(cena);
+    
+    
+    
 	// End of frame
 	glutSwapBuffers();
 }
@@ -130,6 +132,12 @@ void front_menu(int op){
             glutMotionFunc(mov_rato_fps);
             tipo_camera=2;
             break;
+        case 6:
+             glEnable(GL_LIGHTING);
+            break;
+        case 7:
+            glDisable(GL_LIGHTING);
+            break;
         default:
             break;
     }
@@ -142,6 +150,8 @@ int main(int argc, char* argv[]){
     TiXmlElement *root=NULL;
     TiXmlNode *node=NULL;
     TiXmlAttribute *attr=NULL;
+    int M_Visual, M_Camera, M_Luzes;
+    
     
     
     //if(argc!=2){
@@ -161,19 +171,20 @@ int main(int argc, char* argv[]){
             glutInit(&argc, argv);
             glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
             glutInitWindowPosition(100, 100);
-            glutInitWindowSize(800, 800);
+            glutInitWindowSize(1100, 800);
             glutCreateWindow("BananaCorp®");
             
             
             // pÙr registo de funÁıes aqui
             glutDisplayFunc(renderScene);
             glutReshapeFunc(changeSize);
-            //glutIdleFunc(renderScene);
+            glutIdleFunc(renderScene);
             
             // funções do teclado e rato
             if((node=root->FirstChild("camera")) && (attr=node->ToElement()->FirstAttribute())){
                 if (strcmp(attr->Name(), "tipo")==0) {
                     if(strcmp(attr->Value(), "fps")==0){
+                        preDefinicoes_FPS(node);
                         glutKeyboardFunc(teclado_normal_fps);
                         glutSpecialFunc(teclado_especial_fps);
                         glutMouseFunc(rato_fps);
@@ -198,19 +209,34 @@ int main(int argc, char* argv[]){
                 glutMouseFunc(rato_explorador);
                 glutMotionFunc(mov_rato_explorador);
                 tipo_camera=1;
-                
-                //Atribuir valores base
-
             }
+            
+            if((node=root->FirstChild("luzes"))){
+                
+            }
+            
+            //Carregar todas as estruturas para correr o Motor3D
+            prepara_MotorXML(cena);
             
             
             //MENU
-            glutCreateMenu(front_menu);
+            M_Visual=glutCreateMenu(front_menu);
             glutAddMenuEntry("GL POINT",1);
             glutAddMenuEntry("GL LINE",2);
             glutAddMenuEntry("GL FILL",3);
+            
+            M_Camera=glutCreateMenu(front_menu);
             glutAddMenuEntry("Modo Explorador",4);
             glutAddMenuEntry("Modo FPS",5);
+            
+            M_Luzes=glutCreateMenu(front_menu);
+            glutAddMenuEntry("Ligar",6);
+            glutAddMenuEntry("Desligar",7);
+            
+            glutCreateMenu(front_menu);
+            glutAddSubMenu("Visualização",M_Visual);
+            glutAddSubMenu("Camera",M_Camera);
+            glutAddSubMenu("Luz",M_Luzes);
             
             glutAttachMenu(GLUT_RIGHT_BUTTON);
             
@@ -222,16 +248,15 @@ int main(int argc, char* argv[]){
             glEnable(GL_CULL_FACE);
             glClearColor(0.0f,0.0f,0.0f,0.0f);
             
-            //glPolygonMode(GL_FRONT, GL_LINE);
-            
-            prepara_MotorXML(cena);
-            
             //Luzes
             glEnable(GL_LIGHTING);
             glEnable(GL_LIGHT0);
             glEnable(GL_LIGHT1);
             glEnable(GL_LIGHT2);
             glEnable(GL_LIGHT3);
+            
+            
+
             // entrar no ciclo do GLUT
             glutMainLoop();
             
@@ -243,7 +268,6 @@ int main(int argc, char* argv[]){
         printf("Falhou!! Não fez load do ficheiro!\n");
     
 	return 0;
-    
 }
 
 

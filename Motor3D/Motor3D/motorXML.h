@@ -24,6 +24,7 @@
 extern Rotacao *rotacoes, *rot_actual;
 extern Translacao *translacoes, *tra_actual;
 extern Escala escalas, esc_actual;
+extern PropModel l_PropModel, prop_actual;
 extern long currentTime;
 
 

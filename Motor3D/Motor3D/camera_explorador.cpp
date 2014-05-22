@@ -125,16 +125,16 @@ void preDefinicoes_Explorador(TiXmlNode *node){
             }else
                 if (strcmp(tag, "vista")==0) {
                     for(attr=node->ToElement()->FirstAttribute();attr;attr=attr->Next()){
-                        if (strcmp(attr->Name(), "latitude")==0)
+                        if (strcmp(attr->Name(), "longitude")==0)
                             angCam_h=atof(attr->Value());
                         else
-                            if (strcmp(attr->Name(), "longitude")==0){
+                            if (strcmp(attr->Name(), "latitude")==0){
                                 angCam_v=atof(attr->Value());
                                 if(angCam_v>M_PI_2)
-                                    angCam_v=M_PI_2;
+                                    angCam_v=M_PI_2-0.05;
                                 else
                                     if (angCam_v<-M_PI_2)
-                                        angCam_v=-M_PI_2;
+                                        angCam_v=-M_PI_2+0.05;
                             }
                         
                     }

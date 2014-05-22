@@ -63,21 +63,24 @@ void renderScene(void) {
 		      0.0,0.0,0.0,
 			  0.0f,1.0f,0.0f);
     // pÙr instruÁıes de desenho aqui
-    glLightfv(GL_LIGHT0, GL_POSITION, pos);
-       glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
+   // glLightfv(GL_LIGHT0, GL_POSITION, pos);
+     //  glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
+    
+    plano(3, 5, 4, 3, 0, 1);
+    
    // Paralelepipedo an = Paralelepipedo(2, 4, 3, 1, 3, 4);
    // Esfera an= Esfera(2, 30, 30);
     //Circulo an= Circulo(1, 15, 3, 0, 0);
   // Cilindro an = Cilindro(1, 10, 2, 3, 3);
     //Anel an= Anel(3, 1, 20, 3, 1);
-    Cone an = Cone(1, 2, 20, 5, 10);
+   // Cone an = Cone(1, 2, 20, 5, 10);
     //Plano an1= Plano(8, 8, 3, 3, -4, 1);
     //Plano an= Plano(8, 8, 3, 3, -4, 3);
    
     
     
    // an1.desenha();
-    an.desenha();
+   // an.desenha();
    
     
     //Cone an= Cone(2, 2, 20, 3, 3);
@@ -224,7 +227,7 @@ int main(int argc, char **argv) {
    // glPolygonMode(GL_FRONT, GL_LINE);
     
     //Luzes
-    glEnable(GL_LIGHTING);
+    //glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     
     // entrar no ciclo do GLUT aqui

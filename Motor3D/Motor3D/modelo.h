@@ -43,7 +43,17 @@ typedef struct smodelo{
     
 }*Modelo, NModelo;
 
+typedef struct sPropModel{
+    Modelo modelo;
+    unsigned int texID;
+    struct sPropModel *next;
+    
+}*PropModel, NPropModel;
 
+
+
+PropModel initPropModel();
+PropModel addPropModel(PropModel novo, PropModel lista);
 Modelo addRTime(const char* nome, float *vertices, int n_pontos, Modelo lista);
 Modelo addVbo(const char* nome, GLuint *buffers, int n_indices, unsigned short *indices, Modelo lista);
 Modelo ler_RTime(const char* filename, Modelo lista);

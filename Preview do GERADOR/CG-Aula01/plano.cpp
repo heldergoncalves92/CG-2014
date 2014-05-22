@@ -31,7 +31,7 @@ void plano(float altura, float lado, int sep_h, int sep_v, float z_index, int or
             for(altura=alt_ori;sep_h>0;sep_h--){
                 i=0;
                 for(lado=lado_ori;i<sep_v;i++){
-                    glColor3f(1, 0, 0);
+               //     glColor3f(1, 0, 0);
                     glVertex3f(lado,altura, z_index);
                     glVertex3f(lado+l_const,altura, z_index);
                     glVertex3f(lado,altura+alt_const, z_index);

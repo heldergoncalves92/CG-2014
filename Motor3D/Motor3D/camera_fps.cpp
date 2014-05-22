@@ -8,7 +8,7 @@
 
 #include "camera_fps.h"
 
-float px=0,py=2,pz=5, angCamFPS_h=M_PI, angCamFPS_v=-0.2, x_telaFPS,y_telaFPS;
+float px=0,py=0,pz=0, angCamFPS_h=0, angCamFPS_v=0, x_telaFPS,y_telaFPS,velocidade_FPS=1;
 
 void modo_fps(){
     
@@ -36,6 +36,8 @@ void mov_rato_fps(int x, int y){
             y_telaFPS=y;
         }
     }
+    
+  //  printf("H: %f -- V: %f -- %f,%f,%f\n",angCamFPS_h,angCamFPS_v,px,py,pz);
     glutPostRedisplay();
 
 }
@@ -77,20 +79,22 @@ void teclado_especial_fps(int tecla,int x, int y){
 void teclado_normal_fps(unsigned char tecla,int x, int y){
     switch (tecla) {
         case 'd':
-            px+=0.7*sin(angCamFPS_h-M_PI_2);
-            pz+=0.7*cos(angCamFPS_h-M_PI_2);
+            px+=velocidade_FPS*sin(angCamFPS_h-M_PI_2);
+            pz+=velocidade_FPS*cos(angCamFPS_h-M_PI_2);
             break;
         case 'a':
-            px+=0.7*sin(angCamFPS_h+M_PI_2);
-            pz+=0.7*cos(angCamFPS_h+M_PI_2);
+            px+=velocidade_FPS*sin(angCamFPS_h+M_PI_2);
+            pz+=velocidade_FPS*cos(angCamFPS_h+M_PI_2);
             break;
         case 'w':
-            px+=0.7*sin(angCamFPS_h);
-            pz+=0.7*cos(angCamFPS_h);
+            px+=velocidade_FPS*sin(angCamFPS_h);
+            pz+=velocidade_FPS*cos(angCamFPS_h);
+            py+=velocidade_FPS*sin(angCamFPS_v);
             break;
         case 's':
-            px-=0.7*sin(angCamFPS_h);
-            pz-=0.7*cos(angCamFPS_h);
+            px-=velocidade_FPS*sin(angCamFPS_h);
+            pz-=velocidade_FPS*cos(angCamFPS_h);
+            py-=velocidade_FPS*sin(angCamFPS_v);
             break;
         
             
@@ -99,4 +103,50 @@ void teclado_normal_fps(unsigned char tecla,int x, int y){
     }
     glutPostRedisplay();
 
+}
+
+
+void preDefinicoes_FPS(TiXmlNode *node){
+    
+    TiXmlAttribute *attr=NULL;
+    const char* tag;
+    
+    for (node = node->FirstChild(); node; node=node->NextSibling()) {
+        tag=node->Value();
+        if (strcmp(tag, "centro")==0) {
+            for(attr=node->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                if (strcmp(attr->Name(), "x")==0)
+                    px=atof(attr->Value());
+                else
+                    if (strcmp(attr->Name(), "y")==0)
+                        py=atof(attr->Value());
+                    else
+                        if (strcmp(attr->Name(), "z")==0)
+                            pz=atof(attr->Value());
+            }
+        }else
+            if (strcmp(tag, "velocidade")==0) {
+                for(attr=node->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                    if (strcmp(attr->Name(), "avanco")==0)
+                        velocidade_FPS=atof(attr->Value());
+                }
+            }else
+                if (strcmp(tag, "vista")==0) {
+                    for(attr=node->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                        if (strcmp(attr->Name(), "longitude")==0)
+                            angCamFPS_h=atof(attr->Value());
+                        else
+                            if (strcmp(attr->Name(), "latitude")==0){
+                                angCamFPS_v=atof(attr->Value());
+                                if(angCamFPS_v>M_PI_2)
+                                    angCamFPS_v=M_PI_2;
+                                else
+                                    if (angCamFPS_v<-M_PI_2)
+                                        angCamFPS_v=-M_PI_2;
+                            }
+                        
+                    }
+                }
+    }
+    
 }
