@@ -10,9 +10,11 @@
 
 //ORI --- 1 -> BASE && 0 -> TOPO
 
+// Anel para o modo imediato
 void anel(float raio_fora, float raio_dentro,int fatias, int aneis, int ori, FILE* f){
     float angulo=(2*M_PI)/fatias,x,y=0,l_aux,raio=(raio_fora-raio_dentro)/aneis,alt=0;
     
+    //Imprime o número de pontos que vão ser utilizados
     fprintf(f,"%d\n",2*fatias*(aneis)*9);
     raio_fora=raio_dentro;
     if(ori){
@@ -52,6 +54,7 @@ void anel(float raio_fora, float raio_dentro,int fatias, int aneis, int ori, FIL
     }
 }
 
+// Anel para as vbo's
 void anelVBO(float raio_fora, float raio_dentro, int fatias, int aneis, int ori, FILE* f){
     
     float angulo=(2*M_PI)/fatias,y=0,l_aux,raio=(raio_fora-raio_dentro)/aneis;
@@ -60,19 +63,21 @@ void anelVBO(float raio_fora, float raio_dentro, int fatias, int aneis, int ori,
     int n_pontos=(fatias*(aneis+1))*3;
     int n_indices=6*fatias*aneis;
     
+    //Alocação de memória para os respectivos arrays
     int *indices=(int*)malloc(n_indices*sizeof(int));
     float   *vertexB=(float*)malloc(n_pontos*sizeof(float)),
             *normalB=(float*)malloc(n_pontos*sizeof(float));
     
     
     if(ori){
-        
+        //Pontos interiores
         for (j=0; j<fatias; j++) {
             vertexB[v++]=raio_dentro*sin(y); vertexB[v++]=0; vertexB[v++]=raio_dentro*cos(y);
             normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
             y+=angulo;
         }
         
+        //Pontos dos aneis exteriores
         for(j=1;j<=aneis;j++){
             raio_dentro+=raio;
             y=0;
@@ -97,12 +102,14 @@ void anelVBO(float raio_fora, float raio_dentro, int fatias, int aneis, int ori,
             indices[i-1]=avanco-fatias;
         }
     }else{
+        //Pontos interiores
         for (j=0; j<fatias; j++) {
             vertexB[v++]=raio_dentro*sin(y); vertexB[v++]=0; vertexB[v++]=raio_dentro*cos(y);
             normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
             y+=angulo;
         }
         
+        //Pontos dos aneis exteriores
         for(j=1;j<=aneis;j++){
             raio_dentro+=raio;
             y=0;
@@ -128,7 +135,7 @@ void anelVBO(float raio_fora, float raio_dentro, int fatias, int aneis, int ori,
         }
     }
  
-   //Imprimir os vertices e indices
+   //Imprimir os vertices, indices e normais
     fprintf(f, "%d\n",n_pontos);
     for(i=0;i<n_pontos;i+=3)
         fprintf(f, "%f %f %f\n",vertexB[i],vertexB[i+1],vertexB[i+2]);

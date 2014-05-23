@@ -11,6 +11,7 @@
 		2C36DE8518BFE4AE0004B525 /* esfera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C36DE8418BFE4AE0004B525 /* esfera.cpp */; };
 		2C36DE8818C0BC7D0004B525 /* plano.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C36DE8718C0BC7D0004B525 /* plano.cpp */; };
 		2C3E3D7D18DDDD1C006FC96C /* libGLEW.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3E3D7C18DDDD1C006FC96C /* libGLEW.dylib */; };
+		2C433624192E75F500B94DF3 /* libIL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C433623192E75F500B94DF3 /* libIL.dylib */; };
 		2C48F66018BF3C9E00238944 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C48F65F18BF3C9E00238944 /* main.cpp */; };
 		2C48F66218BF3C9E00238944 /* CG_Aula01.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2C48F66118BF3C9E00238944 /* CG_Aula01.1 */; };
 		2C48F66918BF3D1800238944 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C48F66818BF3D1800238944 /* GLUT.framework */; };
@@ -41,6 +42,7 @@
 		2C36DE8618C0BBD90004B525 /* plano.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = plano.h; sourceTree = "<group>"; };
 		2C36DE8718C0BC7D0004B525 /* plano.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = plano.cpp; sourceTree = "<group>"; };
 		2C3E3D7C18DDDD1C006FC96C /* libGLEW.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libGLEW.dylib; sourceTree = DEVELOPER_DIR; };
+		2C433623192E75F500B94DF3 /* libIL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libIL.dylib; path = usr/lib/system/libIL.dylib; sourceTree = SDKROOT; };
 		2C48F65C18BF3C9E00238944 /* CG-TESTES */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "CG-TESTES"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C48F65F18BF3C9E00238944 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		2C48F66118BF3C9E00238944 /* CG_Aula01.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = CG_Aula01.1; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C433624192E75F500B94DF3 /* libIL.dylib in Frameworks */,
 				2C3E3D7D18DDDD1C006FC96C /* libGLEW.dylib in Frameworks */,
 				2C48F66B18BF3D4200238944 /* OpenGL.framework in Frameworks */,
 				2C48F66918BF3D1800238944 /* GLUT.framework in Frameworks */,
@@ -71,6 +74,7 @@
 		2C48F65318BF3C9E00238944 = {
 			isa = PBXGroup;
 			children = (
+				2C433623192E75F500B94DF3 /* libIL.dylib */,
 				2C3E3D7C18DDDD1C006FC96C /* libGLEW.dylib */,
 				2C48F66A18BF3D4200238944 /* OpenGL.framework */,
 				2C48F66818BF3D1800238944 /* GLUT.framework */,
@@ -247,6 +251,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/Cellar/devil/1.7.8_1/include/IL/,
 					/usr/local/Cellar/glew/1.10.0/include/,
 				);
 				LIBRARY_SEARCH_PATHS = (
@@ -265,6 +270,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/Cellar/devil/1.7.8_1/include/IL/,
 					/usr/local/Cellar/glew/1.10.0/include/,
 				);
 				LIBRARY_SEARCH_PATHS = (

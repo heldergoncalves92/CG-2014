@@ -13,6 +13,7 @@
 #include "plano.h"
 #include "cone.h"
 #include "anel.h"
+#include <il.h>
 
 float raio=8,cam_h=0,cam_v=0.5,camh_x=0,camh_y=0, cir1=0,cir2=0;
 float x_tela, y_tela; //Variaveis para guardar posição da tela em que se carrega no rato
@@ -20,6 +21,8 @@ float pos[4]={0,7,5,1},
     amb[3]={0,0,0.5};
 
 int estado_botao=0;
+unsigned int texID;
+
 
 void changeSize(int w, int h) {
     
@@ -66,10 +69,10 @@ void renderScene(void) {
    // glLightfv(GL_LIGHT0, GL_POSITION, pos);
      //  glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
     
-    plano(3, 5, 4, 3, 0, 1);
+    //plano(3, 5, 4, 3, 0, 1);
     
    // Paralelepipedo an = Paralelepipedo(2, 4, 3, 1, 3, 4);
-   // Esfera an= Esfera(2, 30, 30);
+    Esfera an= Esfera(2, 30, 30);
     //Circulo an= Circulo(1, 15, 3, 0, 0);
   // Cilindro an = Cilindro(1, 10, 2, 3, 3);
     //Anel an= Anel(3, 1, 20, 3, 1);
@@ -80,7 +83,7 @@ void renderScene(void) {
     
     
    // an1.desenha();
-   // an.desenha();
+    an.desenha();
    
     
     //Cone an= Cone(2, 2, 20, 3, 3);
@@ -187,6 +190,34 @@ void mov_rato(int x, int y){
     }
 }
 
+void loadTexture() {
+    
+	unsigned int t,tw,th;
+	unsigned char *texData;
+    
+	ilInit();
+	ilEnable(IL_ORIGIN_SET);
+	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
+	ilGenImages(1,&t);
+	ilBindImage(t);
+	ilLoadImage((ILstring)"12.jpg");
+	tw = ilGetInteger(IL_IMAGE_WIDTH);
+	th = ilGetInteger(IL_IMAGE_HEIGHT);
+	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+	texData = ilGetData();
+    
+	glGenTextures(1,&texID);
+	
+	glBindTexture(GL_TEXTURE_2D,texID);
+	glTexParameteri(GL_TEXTURE_2D,	GL_TEXTURE_WRAP_S,		GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D,	GL_TEXTURE_WRAP_T,		GL_REPEAT);
+    
+	glTexParameteri(GL_TEXTURE_2D,	GL_TEXTURE_MAG_FILTER,   	GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,	GL_TEXTURE_MIN_FILTER,    	GL_LINEAR);
+    
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
+    
+}
 
 
 int main(int argc, char **argv) {
@@ -219,15 +250,16 @@ int main(int argc, char **argv) {
     glutAttachMenu(GLUT_RIGHT_BUTTON);
     
     glewInit();
-    
+    loadTexture();
     // alguns settings para OpenGL
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+    glEnable(GL_TEXTURE_2D);
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
    // glPolygonMode(GL_FRONT, GL_LINE);
     
     //Luzes
-    //glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     
     // entrar no ciclo do GLUT aqui
