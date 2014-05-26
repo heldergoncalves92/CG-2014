@@ -72,7 +72,7 @@ void renderScene(void) {
     //plano(3, 5, 4, 3, 0, 1);
     
    // Paralelepipedo an = Paralelepipedo(2, 4, 3, 1, 3, 4);
-    Esfera an= Esfera(2, 30, 30);
+    Esfera an= Esfera(2, 40, 40);
     //Circulo an= Circulo(1, 15, 3, 0, 0);
   // Cilindro an = Cilindro(1, 10, 2, 3, 3);
     //Anel an= Anel(3, 1, 20, 3, 1);
@@ -200,7 +200,7 @@ void loadTexture() {
 	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
 	ilGenImages(1,&t);
 	ilBindImage(t);
-	ilLoadImage((ILstring)"12.jpg");
+	ilLoadImage((ILstring)"terra.jpg");
 	tw = ilGetInteger(IL_IMAGE_WIDTH);
 	th = ilGetInteger(IL_IMAGE_HEIGHT);
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
@@ -259,7 +259,7 @@ int main(int argc, char **argv) {
    // glPolygonMode(GL_FRONT, GL_LINE);
     
     //Luzes
-    glEnable(GL_LIGHTING);
+  //  glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     
     // entrar no ciclo do GLUT aqui

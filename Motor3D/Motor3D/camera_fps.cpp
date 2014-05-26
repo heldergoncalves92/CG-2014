@@ -38,7 +38,7 @@ void mov_rato_fps(int x, int y){
     }
     
   //  printf("H: %f -- V: %f -- %f,%f,%f\n",angCamFPS_h,angCamFPS_v,px,py,pz);
-    glutPostRedisplay();
+   // glutPostRedisplay();
 
 }
 
@@ -73,7 +73,7 @@ void teclado_especial_fps(int tecla,int x, int y){
         default:
             break;
     }
-    glutPostRedisplay();
+   // glutPostRedisplay();
 }
 
 void teclado_normal_fps(unsigned char tecla,int x, int y){
@@ -101,7 +101,7 @@ void teclado_normal_fps(unsigned char tecla,int x, int y){
         default:
             break;
     }
-    glutPostRedisplay();
+ //   glutPostRedisplay();
 
 }
 

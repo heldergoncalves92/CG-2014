@@ -171,6 +171,7 @@ void do_line(Translacao* t){
     glBindBuffer(GL_ARRAY_BUFFER,t->buffer[0]);
     glVertexPointer(3,GL_FLOAT,0,0);
     glDrawArrays(GL_LINE_LOOP, 0, 2000);
+    
 }
 
 Translacao* insereTranslacao(Point *listaPontos, Translacao *translacoes, int numeroPontos, float tempo, float x, float y, float z){

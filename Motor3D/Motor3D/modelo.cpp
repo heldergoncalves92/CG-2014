@@ -49,21 +49,32 @@ Modelo addVbo(const char* nome, GLuint *buffers, int n_indices, unsigned short *
 }
 
 
-void desenha_vbo(Vbo vbo){
+void desenha_vbo(Vbo vbo, unsigned int texID){
+    
+    //Bind da Textura
+    glBindTexture(GL_TEXTURE_2D,texID);
+    
+    //Associação dos Buffers
     glBindBuffer(GL_ARRAY_BUFFER,vbo->buffers[0]);
     glVertexPointer(3,GL_FLOAT,0,0);
     glBindBuffer(GL_ARRAY_BUFFER,vbo->buffers[1]);
     glNormalPointer(GL_FLOAT,0,0);
+    glBindBuffer(GL_ARRAY_BUFFER,vbo->buffers[2]);
+    glTexCoordPointer(2, GL_FLOAT,0,0);
     
+    //Desenhar com indices
     glDrawElements(GL_TRIANGLES, vbo->n_indices ,GL_UNSIGNED_SHORT, vbo->indices);
+    
+    //Para nehuma textura estar seleccionada
+    glBindTexture(GL_TEXTURE_2D,0);
 }
 
 Modelo ler_VBO(const char* filename, Modelo lista){
     
     //Inicializações
-    int n_pontos,n_indices,i=0;
+    int n_pontos,n_indices, tex_pontos,i=0;
     unsigned short *indices, sx,sy,sz;
-    float cx,cy,cz,*vertices=NULL,*normais=NULL;
+    float cx,cy,cz,*vertices=NULL,*normais=NULL,*texB=NULL;
     FILE *f = fopen(filename, "r");
     GLuint *buffers=NULL;
     
@@ -72,8 +83,10 @@ Modelo ler_VBO(const char* filename, Modelo lista){
         
         //Lê o número total de pontos e aloca memória
         fscanf(f, "%d\n", &n_pontos);
+        tex_pontos=(2*n_pontos)/3;
         vertices=(float*)malloc(n_pontos*sizeof(float));
         normais=(float*)malloc(n_pontos*sizeof(float));
+        texB=(float*)malloc(tex_pontos*sizeof(float));
         
         //Lê todos os pontos que estão no ficheiro
         while (i<n_pontos){
@@ -96,7 +109,6 @@ Modelo ler_VBO(const char* filename, Modelo lista){
         }
 
         //Lê as Normais que estão no ficheiro
-        
         if (fscanf(f, "%f %f %f\n", &cx, &cy, &cz)!=EOF) {
             i=0;
             normais[i++]=cx;
@@ -108,17 +120,25 @@ Modelo ler_VBO(const char* filename, Modelo lista){
                 normais[i++]=cy;
                 normais[i++]=cz;
             }
-            i=-1;
         }
+        
+        //Lê as Coordenadas de textura que estão no ficheiro
+        if (fscanf(f, "%f %f\n", &cx, &cy)!=EOF) {
+            i=0;
+            texB[i++]=cx;
+            texB[i++]=cy;
+            while (i<tex_pontos){
+                fscanf(f, "%f %f\n", &cx, &cy);
+                texB[i++]=cx;
+                texB[i++]=cy;
+            }
+        }
+
         
         fclose(f);
         
-        //Activar Buffers
-        glEnableClientState(GL_VERTEX_ARRAY);
-        glEnableClientState(GL_NORMAL_ARRAY);
-        
         //Aloca memória para os buffers
-        buffers=(GLuint*)malloc(2*sizeof(GLuint));
+        buffers=(GLuint*)malloc(3*sizeof(GLuint));
         
         //Guarda pontos na memória da gráfica
         glGenBuffers(2, buffers);
@@ -126,9 +146,12 @@ Modelo ler_VBO(const char* filename, Modelo lista){
         glBufferData(GL_ARRAY_BUFFER,n_pontos*sizeof(float), vertices, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER,buffers[1]);
         glBufferData(GL_ARRAY_BUFFER,n_pontos*sizeof(float), normais, GL_STATIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER,buffers[2]);
+        glBufferData(GL_ARRAY_BUFFER,tex_pontos*sizeof(float), texB, GL_STATIC_DRAW);
         
         free(vertices);
         free(normais);
+        free(texB);
         
         //Adiciona a VBO à estrutura e desenha a mesmawa
         return addVbo(filename, buffers, n_indices, indices, lista);

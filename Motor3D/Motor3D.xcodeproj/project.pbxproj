@@ -12,6 +12,8 @@
 		2C6E6AE918F5BEED00E11652 /* modelo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E6AE718F5BEED00E11652 /* modelo.cpp */; };
 		2C8476F0191AA4FA00105AED /* libGLEW.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C8476EF191AA4FA00105AED /* libGLEW.dylib */; };
 		2C87D54718D347F9003DF930 /* camera_explorador.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C87D54618D347F9003DF930 /* camera_explorador.cpp */; };
+		2CBA9C33193377CE0030821D /* libIL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CBA9C32193377CE0030821D /* libIL.dylib */; };
+		2CBA9C361933B32C0030821D /* luzes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CBA9C341933B32C0030821D /* luzes.cpp */; };
 		2CCFE06118D36B440000456E /* camera_fps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CCFE06018D36B440000456E /* camera_fps.cpp */; };
 		3C2A5AF818CE27E000F81F61 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C2A5AF718CE27E000F81F61 /* main.cpp */; };
 		3C2A5AFA18CE27E000F81F61 /* Motor3D.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3C2A5AF918CE27E000F81F61 /* Motor3D.1 */; };
@@ -48,6 +50,9 @@
 		2C8476EF191AA4FA00105AED /* libGLEW.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libGLEW.dylib; sourceTree = DEVELOPER_DIR; };
 		2C87D54518D347C3003DF930 /* camera_explorador.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = camera_explorador.h; sourceTree = "<group>"; };
 		2C87D54618D347F9003DF930 /* camera_explorador.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera_explorador.cpp; sourceTree = "<group>"; };
+		2CBA9C32193377CE0030821D /* libIL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libIL.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libIL.dylib; sourceTree = DEVELOPER_DIR; };
+		2CBA9C341933B32C0030821D /* luzes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = luzes.cpp; sourceTree = "<group>"; };
+		2CBA9C351933B32C0030821D /* luzes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luzes.h; sourceTree = "<group>"; };
 		2CCFE05F18D36AEF0000456E /* camera_fps.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = camera_fps.h; sourceTree = "<group>"; };
 		2CCFE06018D36B440000456E /* camera_fps.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera_fps.cpp; sourceTree = "<group>"; };
 		3C2A5AF418CE27E000F81F61 /* Motor3D */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Motor3D; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CBA9C33193377CE0030821D /* libIL.dylib in Frameworks */,
 				2C8476F0191AA4FA00105AED /* libGLEW.dylib in Frameworks */,
 				3C2A5B0318CE280900F81F61 /* GLUT.framework in Frameworks */,
 				3C2A5B0118CE280200F81F61 /* OpenGL.framework in Frameworks */,
@@ -84,6 +90,7 @@
 		3C2A5AEB18CE27E000F81F61 = {
 			isa = PBXGroup;
 			children = (
+				2CBA9C32193377CE0030821D /* libIL.dylib */,
 				2C8476EF191AA4FA00105AED /* libGLEW.dylib */,
 				3C2A5B0218CE280900F81F61 /* GLUT.framework */,
 				3C2A5B0018CE280200F81F61 /* OpenGL.framework */,
@@ -121,6 +128,8 @@
 				3C56FE10190C0ECE005A4AF2 /* rotacoes.h */,
 				2C490CC6191BDE8700B9FFAB /* escala.cpp */,
 				2C490CC7191BDE8700B9FFAB /* escala.h */,
+				2CBA9C341933B32C0030821D /* luzes.cpp */,
+				2CBA9C351933B32C0030821D /* luzes.h */,
 			);
 			path = Motor3D;
 			sourceTree = "<group>";
@@ -201,6 +210,7 @@
 				3C2A5B1818CE29B100F81F61 /* tinyxmlparser.cpp in Sources */,
 				3C2A5B1518CE29B100F81F61 /* tinystr.cpp in Sources */,
 				2C48576018D10A5D00D87F19 /* motorXML.cpp in Sources */,
+				2CBA9C361933B32C0030821D /* luzes.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +292,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = ./Debug;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/Cellar/glew/1.10.0/include/GL/,
+					/usr/local/Cellar/devil/1.7.8_1/include/IL/,
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
@@ -296,6 +312,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = build;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/Cellar/glew/1.10.0/include/GL/,
+					/usr/local/Cellar/devil/1.7.8_1/include/IL/,
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",

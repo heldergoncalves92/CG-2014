@@ -59,7 +59,7 @@ Modelo addVbo(const char* nome, GLuint *buffers, int n_indices, unsigned short *
 Modelo ler_RTime(const char* filename, Modelo lista);
 Modelo ler_VBO(const char* filename, Modelo lista);
 Modelo search_Modelo(const char* nome, Modelo lista);
-void desenha_vbo(Vbo vbo);
+void desenha_vbo(Vbo vbo, unsigned int texID);
 void desenha_RTime(RTime modelo);
 
 

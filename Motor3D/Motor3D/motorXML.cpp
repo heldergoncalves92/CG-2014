@@ -15,7 +15,7 @@ int first;
 void motor_XML(TiXmlNode* root){
     
     TiXmlNode *child;
-    TiXmlAttribute * attr;
+   // TiXmlAttribute * attr;
     Modelo modelo;
     const char* tag;
     
@@ -23,16 +23,15 @@ void motor_XML(TiXmlNode* root){
         tag=child->Value();
         
         if (strcmp(tag, "modelo")==0) {
-            attr=child->ToElement()->FirstAttribute();
-            if (strcmp(attr->Name(), "ficheiro")==0) {
-                modelo=search_Modelo(attr->Value(), lista_modelos);
-                if (modelo) {
-                    if(modelo->tipo==1)
-                        desenha_RTime(modelo->u.rTime);
-                    else
-                        desenha_vbo(modelo->u.vbo);
-                }
+            modelo=prop_actual->modelo;
+            if (modelo) {
+                if(modelo->tipo==1)
+                    desenha_RTime(modelo->u.rTime);
+                else
+                    desenha_vbo(modelo->u.vbo, prop_actual->texID);
             }
+            //Actualiza para propModel actual
+            prop_actual=prop_actual->next;
         }else
             if (strcmp(tag, "grupo")==0) {
                 glPushMatrix();
@@ -64,6 +63,9 @@ void prepara_MotorXML(TiXmlNode* root){
     int numeroPontos=-1;
     float timeTrans=-1;
     int flag;
+    
+    unsigned int t,tw,th;
+	unsigned char *texData;
     
     
     for (child = root->FirstChild(); child; child=child->NextSibling()) {
@@ -98,13 +100,32 @@ void prepara_MotorXML(TiXmlNode* root){
                             
                         }else if (strcmp(attr->Name(), "textura")==0) {
                             //carregar textura
-                            flag=0;
+                            ilInit();
+                            ilEnable(IL_ORIGIN_SET);
+                            ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
+                            ilGenImages(1,&t);
+                            ilBindImage(t);
+                            ilLoadImage((ILstring)attr->Value());
+                            tw = ilGetInteger(IL_IMAGE_WIDTH);
+                            th = ilGetInteger(IL_IMAGE_HEIGHT);
+                            ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+                            texData = ilGetData();
+                            
+                            glGenTextures(1,&propModel->texID);
+                            
+                            glBindTexture(GL_TEXTURE_2D,propModel->texID);
+                            glTexParameteri(GL_TEXTURE_2D,	GL_TEXTURE_WRAP_S,		GL_REPEAT);
+                            glTexParameteri(GL_TEXTURE_2D,	GL_TEXTURE_WRAP_T,		GL_REPEAT);
+                            
+                            glTexParameteri(GL_TEXTURE_2D,	GL_TEXTURE_MAG_FILTER,   	GL_LINEAR);
+                            glTexParameteri(GL_TEXTURE_2D,	GL_TEXTURE_MIN_FILTER,    	GL_LINEAR);
+                            
+                            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
+                            
                         }
-                        
-                        //Adicionar PropModel
-                        l_PropModel=addPropModel(propModel, l_PropModel);
-                        
                     }
+                    //Adicionar PropModel
+                    l_PropModel=addPropModel(propModel, l_PropModel);
                 }
             }else
                 if (strcmp(tag, "translacao")==0) {
