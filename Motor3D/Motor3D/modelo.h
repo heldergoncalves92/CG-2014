@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <GLUT/glut.h>
+#include "material.h"
 
 
 //Estrutura para as VBO -> '.vbo'
@@ -45,7 +46,9 @@ typedef struct smodelo{
 
 typedef struct sPropModel{
     Modelo modelo;
+    Material materiais;
     unsigned int texID;
+    
     struct sPropModel *next;
     
 }*PropModel, NPropModel;

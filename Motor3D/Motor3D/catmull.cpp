@@ -11,7 +11,7 @@
 
 Point *globalPoints=NULL;
 int global_point_count=0;
-
+float white[3]={1,1,1}, neutro[3]={0,0,0};
 
 int lerPontos(TiXmlNode* root, Point **res){
     TiXmlNode *child;
@@ -168,10 +168,11 @@ void renderCatmullRomCurve(Translacao* t) {
 
 void do_line(Translacao* t){
     
+    glMaterialfv(GL_FRONT, GL_EMISSION, white);
     glBindBuffer(GL_ARRAY_BUFFER,t->buffer[0]);
     glVertexPointer(3,GL_FLOAT,0,0);
     glDrawArrays(GL_LINE_LOOP, 0, 2000);
-    
+    glMaterialfv(GL_FRONT, GL_EMISSION, neutro);
 }
 
 Translacao* insereTranslacao(Point *listaPontos, Translacao *translacoes, int numeroPontos, float tempo, float x, float y, float z){

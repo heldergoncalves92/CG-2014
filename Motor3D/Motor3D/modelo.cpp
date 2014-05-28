@@ -11,6 +11,7 @@
 PropModel initPropModel(){
     PropModel aux=(PropModel)malloc(sizeof(NPropModel));
     aux->modelo=NULL;
+    aux->materiais=NULL;
     aux->texID=0;
     aux->next=NULL;
     
@@ -84,6 +85,7 @@ Modelo ler_VBO(const char* filename, Modelo lista){
         //Lê o número total de pontos e aloca memória
         fscanf(f, "%d\n", &n_pontos);
         tex_pontos=(2*n_pontos)/3;
+        
         vertices=(float*)malloc(n_pontos*sizeof(float));
         normais=(float*)malloc(n_pontos*sizeof(float));
         texB=(float*)malloc(tex_pontos*sizeof(float));
@@ -141,7 +143,7 @@ Modelo ler_VBO(const char* filename, Modelo lista){
         buffers=(GLuint*)malloc(3*sizeof(GLuint));
         
         //Guarda pontos na memória da gráfica
-        glGenBuffers(2, buffers);
+        glGenBuffers(3, buffers);
         glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
         glBufferData(GL_ARRAY_BUFFER,n_pontos*sizeof(float), vertices, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER,buffers[1]);

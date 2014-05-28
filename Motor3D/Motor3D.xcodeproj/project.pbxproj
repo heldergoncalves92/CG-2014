@@ -14,6 +14,7 @@
 		2C87D54718D347F9003DF930 /* camera_explorador.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C87D54618D347F9003DF930 /* camera_explorador.cpp */; };
 		2CBA9C33193377CE0030821D /* libIL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CBA9C32193377CE0030821D /* libIL.dylib */; };
 		2CBA9C361933B32C0030821D /* luzes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CBA9C341933B32C0030821D /* luzes.cpp */; };
+		2CCA882619352E2C009840F9 /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA882419352E2C009840F9 /* material.cpp */; };
 		2CCFE06118D36B440000456E /* camera_fps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CCFE06018D36B440000456E /* camera_fps.cpp */; };
 		3C2A5AF818CE27E000F81F61 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C2A5AF718CE27E000F81F61 /* main.cpp */; };
 		3C2A5AFA18CE27E000F81F61 /* Motor3D.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3C2A5AF918CE27E000F81F61 /* Motor3D.1 */; };
@@ -53,6 +54,8 @@
 		2CBA9C32193377CE0030821D /* libIL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libIL.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libIL.dylib; sourceTree = DEVELOPER_DIR; };
 		2CBA9C341933B32C0030821D /* luzes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = luzes.cpp; sourceTree = "<group>"; };
 		2CBA9C351933B32C0030821D /* luzes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luzes.h; sourceTree = "<group>"; };
+		2CCA882419352E2C009840F9 /* material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = material.cpp; sourceTree = "<group>"; };
+		2CCA882519352E2C009840F9 /* material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = material.h; sourceTree = "<group>"; };
 		2CCFE05F18D36AEF0000456E /* camera_fps.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = camera_fps.h; sourceTree = "<group>"; };
 		2CCFE06018D36B440000456E /* camera_fps.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera_fps.cpp; sourceTree = "<group>"; };
 		3C2A5AF418CE27E000F81F61 /* Motor3D */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Motor3D; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,6 +133,8 @@
 				2C490CC7191BDE8700B9FFAB /* escala.h */,
 				2CBA9C341933B32C0030821D /* luzes.cpp */,
 				2CBA9C351933B32C0030821D /* luzes.h */,
+				2CCA882419352E2C009840F9 /* material.cpp */,
+				2CCA882519352E2C009840F9 /* material.h */,
 			);
 			path = Motor3D;
 			sourceTree = "<group>";
@@ -200,6 +205,7 @@
 			files = (
 				2C6E6AE918F5BEED00E11652 /* modelo.cpp in Sources */,
 				3C56FE11190C0ECE005A4AF2 /* rotacoes.cpp in Sources */,
+				2CCA882619352E2C009840F9 /* material.cpp in Sources */,
 				3CE84AFA1908144200D511E3 /* catmull.cpp in Sources */,
 				2CCFE06118D36B440000456E /* camera_fps.cpp in Sources */,
 				2C87D54718D347F9003DF930 /* camera_explorador.cpp in Sources */,

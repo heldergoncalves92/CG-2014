@@ -32,7 +32,7 @@ void preparaLuzes(TiXmlNode* root){
     const char *tag;
     Luz luz=NULL;
     
-    for (root=root->FirstChild(); root; root=root->NextSibling()) {
+    for (root=root->FirstChild(); root && n_luzes<8 ; root=root->NextSibling()) {
         
         if (strcmp("luz", root->Value())==0) {
             
@@ -139,7 +139,6 @@ void preparaLuzes(TiXmlNode* root){
 
 void defineLuzes(){
     Luz aux=luzes;
-
     while (aux) {
         glLightfv(aux->luz, aux->tipo, aux->propriedade);
         

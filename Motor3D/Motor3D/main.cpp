@@ -237,6 +237,7 @@ int main(int argc, char* argv[]){
             
             //Callback do GLEW - Tem de estar depois de todos os callbacks do GLUT
             glewInit();
+            ilInit();
             
             //Activar Buffers
             glEnableClientState(GL_VERTEX_ARRAY);
