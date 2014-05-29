@@ -166,7 +166,7 @@ Esfera::Esfera(float raio, int camadas, int fatias){
 }
 
 void Esfera::desenha(){
-    glBindTexture(GL_TEXTURE_2D,texID);
+    
     glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
     glVertexPointer(3,GL_FLOAT,0,0);
     glBindBuffer(GL_ARRAY_BUFFER,buffers[1]);

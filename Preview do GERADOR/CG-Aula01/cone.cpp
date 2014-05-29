@@ -31,69 +31,82 @@ void normal(float v1[], float v2[]){
 Cone::Cone(float raio, float altura, int fatias, int aneis, int camadas){
     
     float angulo=(2*M_PI)/fatias,y=0, r_aux,factor_h=(raio/camadas),alt_aux=0, v1[3],v2[3];
-    int i=0,v=0,j=0,n=0,avanco=0,l_aux;
+    int i=0,v=0,j=0,n=0,avanco=0,t=0,l_aux;
+    float texFactor_fatias=1.0f/fatias;
+    float texFactor_aneis=1.0f/camadas;
     
     altura/=camadas;
     raio=raio/aneis;
     r_aux=raio;
-    int n_pontos=((1+fatias*aneis)*3)  + ((camadas+1)*fatias)*3;
-    n_indices=(fatias*(aneis-1)*2+fatias)*3  +(fatias*(camadas)*2+fatias)*3;
+    int n_pontos=(((fatias+1)+(fatias+1)*aneis)*3)  + ((camadas+1)*(fatias+1))*3;
+    n_indices=(fatias*(aneis-1)*2+fatias)*3  +(fatias*(camadas-1)*2+fatias)*3;
     
     
     indices=(unsigned short*)malloc(n_indices*sizeof(unsigned short));
     float *vertexB=(float*)malloc(n_pontos*sizeof(float)),
     *normalB=(float*)malloc(n_pontos*sizeof(float)),
-    *normLado=(float*)malloc(fatias*3*sizeof(float));
+    *normLado=(float*)malloc((fatias+1)*3*sizeof(float)),
+    *texB=(float*)malloc(((2*n_pontos)/3)*sizeof(float));
     
     //Activar Buffers
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
     
     //Base do cone
-    vertexB[v++]=0;vertexB[v++]=0;vertexB[v++]=0;
-    normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
-    for(l_aux=0;l_aux<fatias;l_aux++){
+    
+    //Primeiro ponto central
+    for (l_aux=0; l_aux<=fatias; l_aux++) {
+        vertexB[v++]=0;vertexB[v++]=raio;vertexB[v++]=0;
+        normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
+        texB[t++]=0;texB[t++]=1;
+    }
+    avanco+=fatias+1;
+    
+    //Circulo central
+    for(l_aux=0;l_aux<=fatias;l_aux++){
         
         vertexB[v++]=r_aux*sin(y);vertexB[v++]=0;vertexB[v++]=r_aux*cos(y);
         normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
-        
-        indices[i++]=0;
-        indices[i++]=l_aux+2;
-        indices[i++]=l_aux+1;
+        texB[t++]=l_aux*texFactor_fatias;texB[t++]=1;
+        if(l_aux!=fatias){
+            indices[i++]=l_aux;
+            indices[i++]=avanco+l_aux+1;
+            indices[i++]=avanco+l_aux;
+        }
         y+=angulo;
     }
-    indices[i-2]=1;
     avanco+=fatias+1;
-
+    
+    //Aneis da base
     for(j=1;j<aneis;j++){
         r_aux+=raio;
         y=0;
-        for(l_aux=0;l_aux<fatias;l_aux++){
+        for(l_aux=0;l_aux<=fatias;l_aux++){
             
             vertexB[v++]=r_aux*sin(y); vertexB[v++]=0; vertexB[v++]=r_aux*cos(y);
             normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
+            texB[t++]=l_aux*texFactor_fatias;texB[t++]=1-j*texFactor_aneis;
             
-            indices[i++]=avanco-fatias+l_aux;
-            indices[i++]=avanco-fatias+l_aux+1;
-            indices[i++]=avanco+l_aux;
-            
-            indices[i++]=avanco+l_aux;
-            indices[i++]=avanco-fatias+l_aux+1;
-            indices[i++]=avanco+l_aux+1;
+            if(l_aux!=fatias){
+                indices[i++]=avanco-(fatias+1)+l_aux;
+                indices[i++]=avanco-(fatias+1)+l_aux+1;
+                indices[i++]=avanco+l_aux;
+                
+                indices[i++]=avanco+l_aux;
+                indices[i++]=avanco-(fatias+1)+l_aux+1;
+                indices[i++]=avanco+l_aux+1;
+            }
             
             y+=angulo;
         }
-        indices[i-5]=avanco-fatias;
-        indices[i-1]=avanco;
-        indices[i-2]=avanco-fatias;
-        avanco+=fatias;
+        avanco+=fatias+1;
     }
-    //Corpo
-    
-    //Calcular Normais
+
+    //Calcular Normais do corpo
     y=0;
-    for(l_aux=0;l_aux<fatias;l_aux++){
+    for(l_aux=0;l_aux<=fatias;l_aux++){
         
         v1[0]=r_aux*sin(y+angulo) - r_aux*sin(y-angulo);
         v1[1]=0;
@@ -110,40 +123,37 @@ Cone::Cone(float raio, float altura, int fatias, int aneis, int camadas){
         y+=angulo;
     }
     
+    //Corpo
     for(j=0;j<=camadas;j++){
 
         y=0;
-        for(l_aux=0;l_aux<fatias;l_aux++){
+        for(l_aux=0;l_aux<=fatias;l_aux++){
             
             vertexB[v++]=r_aux*sin(y); vertexB[v++]=alt_aux; vertexB[v++]=r_aux*cos(y);
             normalB[n++]= normLado[l_aux*3];normalB[n++]= normLado[l_aux*3+1];normalB[n++]= normLado[l_aux*3+2];
-            
-            if(j!=camadas){
-                indices[i++]=avanco-fatias+l_aux;
-                indices[i++]=avanco-fatias+l_aux+1;
-                indices[i++]=avanco+l_aux;
-                
-                indices[i++]=avanco+l_aux;
-                indices[i++]=avanco-fatias+l_aux+1;
-                indices[i++]=avanco+l_aux+1;
-            }else{
-                indices[i++]=avanco-fatias+l_aux;
-                indices[i++]=avanco-fatias+l_aux+1;
-                indices[i++]=avanco+l_aux;
+            texB[t++]=l_aux*texFactor_aneis;texB[t++]=1-j*texFactor_fatias;
+            if(l_aux!=fatias && j!=0){
+                if(j!=camadas){
+                    indices[i++]=avanco-(fatias+1)+l_aux;
+                    indices[i++]=avanco-(fatias+1)+l_aux+1;
+                    indices[i++]=avanco+l_aux;
+                    
+                    indices[i++]=avanco+l_aux;
+                    indices[i++]=avanco-(fatias+1)+l_aux+1;
+                    indices[i++]=avanco+l_aux+1;
+                }else{
+                    indices[i++]=avanco-(fatias+1)+l_aux;
+                    indices[i++]=avanco-(fatias+1)+l_aux+1;
+                    indices[i++]=avanco+l_aux;
+                }
             }
             
             y+=angulo;
         }
-        if(j!=camadas){
-            indices[i-5]=avanco-fatias;
-            indices[i-1]=avanco;
-            indices[i-2]=avanco-fatias;
-        }else{
-            indices[i-2]=avanco-fatias;
-        }
+        
         alt_aux+=altura;
         r_aux-=factor_h;
-        avanco+=fatias;
+        avanco+=fatias+1;
     }
     
     glGenBuffers(1, buffers);
@@ -153,7 +163,10 @@ Cone::Cone(float raio, float altura, int fatias, int aneis, int camadas){
     glBindBuffer(GL_ARRAY_BUFFER,buffers[1]);
     glBufferData(GL_ARRAY_BUFFER,n_pontos*sizeof(float), normalB, GL_STATIC_DRAW);
     
-   // printf("Indices: %d||%d --Pontos: %d||%d -- %d\n",n_indices,i,n_pontos,v,fatias);
+    glBindBuffer(GL_ARRAY_BUFFER,buffers[2]);
+    glBufferData(GL_ARRAY_BUFFER,((2*n_pontos)/3)*sizeof(float), texB, GL_STATIC_DRAW);
+    
+    printf("Indices: %d||%d --Pontos: %d||%d -- %d\n",n_indices,i,n_pontos,v,fatias);
     
     free(vertexB);
     free(normalB);
@@ -166,6 +179,8 @@ void Cone::desenha(){
     glVertexPointer(3,GL_FLOAT,0,0);
     glBindBuffer(GL_ARRAY_BUFFER,buffers[1]);
     glNormalPointer(GL_FLOAT,0,0);
+    glBindBuffer(GL_ARRAY_BUFFER,buffers[2]);
+    glTexCoordPointer(2, GL_FLOAT, 0, 0);
     glDrawElements(GL_TRIANGLES, n_indices ,GL_UNSIGNED_SHORT, indices);
 
     
