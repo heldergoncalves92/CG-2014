@@ -132,6 +132,7 @@ void getCatmullRomPointDERIVADA(float t, int *indices, float *res, Point *points
 
 void getGlobalCatmullRomPoint(float gt, float *res) {
     
+    if(global_point_count!=0){
 	float t = gt * global_point_count; // this is the real global t
 	int index = floor(t);  // which segment
 	t = t - index; // where within  the segment
@@ -144,6 +145,7 @@ void getGlobalCatmullRomPoint(float gt, float *res) {
     indices[3] = (indices[2]+1)%global_point_count;
     
 	getCatmullRomPoint(t, indices, res, globalPoints);
+    }
 }
 
 
