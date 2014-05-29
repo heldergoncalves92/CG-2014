@@ -14,7 +14,7 @@
 #include <math.h>
 #include "circulo.h"
 
-extern unsigned int texID;
+
 void esfera(float raio, int sep_h, int sep_cir);
 
 

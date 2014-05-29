@@ -138,18 +138,24 @@ void plano(float altura, float lado, int sep_h, int sep_v, float z_index, int or
 
 
 Plano::Plano(float altura, float lado, int camadas, int fatias, float z_index, int ori){
-    int k=0,j=0,v=0, i=0, avanco,n=0;
+    int k=0,j=0,v=0, i=0, avanco,n=0,t=0;
     float l_const=lado/fatias, alt_const=altura/camadas,alt_ori=-altura/2,lado_ori=-lado/2;
+    float texFactor_fatias=1.0f/fatias;
+    float texFactor_camadas=1.0f/camadas;
     
     //Activar Buffers
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+   
     
     int n_pontos=(fatias+1)*(camadas+1)*3;
     n_indices=(2*fatias*camadas)*3;
     
     float *vertexB=(float*)malloc(n_pontos*sizeof(float)),
-    *normalB=(float*)malloc(n_pontos*sizeof(float));
+    *normalB=(float*)malloc(n_pontos*sizeof(float)),
+    *texB=(float*)malloc(((n_pontos*2)/3)*sizeof(float));
 
     indices=(unsigned int*)malloc(n_indices*sizeof(unsigned int));
     
@@ -162,6 +168,9 @@ Plano::Plano(float altura, float lado, int camadas, int fatias, float z_index, i
                     //Inserir Ponto
                     vertexB[v++]=lado;vertexB[v++]=altura;vertexB[v++]=z_index;
                     normalB[n++]=0;normalB[n++]=0;normalB[n++]=1;
+                    
+                    texB[t++]=k*texFactor_fatias;texB[t++]=j*texFactor_camadas;
+                  
                     if(k!=fatias && j!=camadas){
                         indices[i++]=avanco+k;
                         indices[i++]=avanco+k+1;
@@ -186,6 +195,7 @@ Plano::Plano(float altura, float lado, int camadas, int fatias, float z_index, i
                     //Inserir Ponto
                     vertexB[v++]=lado;vertexB[v++]=altura;vertexB[v++]=z_index;
                     normalB[n++]=0;normalB[n++]=0;normalB[n++]=-1;
+                    texB[t++]=k*texFactor_fatias;texB[t++]=j*texFactor_camadas;
                     if(k!=fatias && j!=camadas){
                         indices[i++]=avanco+k;
                         indices[i++]=avanco+fatias+1+k;
@@ -209,6 +219,7 @@ Plano::Plano(float altura, float lado, int camadas, int fatias, float z_index, i
                     //Inserir Ponto
                     vertexB[v++]=z_index;vertexB[v++]=altura;vertexB[v++]=lado;
                     normalB[n++]=1;normalB[n++]=0;normalB[n++]=0;
+                    texB[t++]=k*texFactor_fatias;texB[t++]=j*texFactor_camadas;
                     if(k!=fatias && j!=camadas){
                         indices[i++]=avanco+k;
                         indices[i++]=avanco+fatias+1+k;
@@ -231,6 +242,7 @@ Plano::Plano(float altura, float lado, int camadas, int fatias, float z_index, i
                     //Inserir Ponto
                     vertexB[v++]=z_index;vertexB[v++]=altura;vertexB[v++]=lado;
                     normalB[n++]=-1;normalB[n++]=0;normalB[n++]=0;
+                    texB[t++]=k*texFactor_fatias;texB[t++]=j*texFactor_camadas;
                     if(k!=fatias && j!=camadas){
                         indices[i++]=avanco+k;
                         indices[i++]=avanco+k+1;
@@ -253,6 +265,7 @@ Plano::Plano(float altura, float lado, int camadas, int fatias, float z_index, i
                     //Inserir Ponto
                     vertexB[v++]=altura;vertexB[v++]=z_index;vertexB[v++]=lado;
                     normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
+                    texB[t++]=k*texFactor_fatias;texB[t++]=j*texFactor_camadas;
                     if(k!=fatias && j!=camadas){
                         indices[i++]=avanco+k;
                         indices[i++]=avanco+k+1;
@@ -275,6 +288,7 @@ Plano::Plano(float altura, float lado, int camadas, int fatias, float z_index, i
                     //Inserir Ponto
                     vertexB[v++]=altura;vertexB[v++]=z_index;vertexB[v++]=lado;
                     normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
+                    texB[t++]=k*texFactor_fatias;texB[t++]=j*texFactor_camadas;
                     if(k!=fatias && j!=camadas){
                         indices[i++]=avanco+k;
                         indices[i++]=avanco+fatias+1+k;
@@ -293,12 +307,15 @@ Plano::Plano(float altura, float lado, int camadas, int fatias, float z_index, i
         
     }
     
-    glGenBuffers(2, buffers);
+    glGenBuffers(3, buffers);
     glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
     glBufferData(GL_ARRAY_BUFFER,n_pontos*sizeof(float), vertexB, GL_STATIC_DRAW);
     
     glBindBuffer(GL_ARRAY_BUFFER,buffers[1]);
     glBufferData(GL_ARRAY_BUFFER, n_pontos*sizeof(float), normalB,GL_STATIC_DRAW);
+    
+    glBindBuffer(GL_ARRAY_BUFFER,buffers[2]);
+    glBufferData(GL_ARRAY_BUFFER, (2*n_pontos/3)*sizeof(float), texB,GL_STATIC_DRAW);
     
 }
 
@@ -323,7 +340,7 @@ Paralelepipedo::Paralelepipedo(float lado_y, float lado_x, float lado_z, int cam
             begin_x=-lado_x/2,
             begin_z=-lado_z/2,
             altura_aux,lado_aux;
-    
+
     //Activar Buffers
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
@@ -489,7 +506,10 @@ void Paralelepipedo::desenha(){
     glVertexPointer(3,GL_FLOAT,0,0);
     glBindBuffer(GL_ARRAY_BUFFER,buffers[1]);
     glNormalPointer(GL_FLOAT,0,0);
+    glBindBuffer(GL_ARRAY_BUFFER,buffers[2]);
+    glTexCoordPointer(2,GL_FLOAT,0,0);
     glDrawElements(GL_TRIANGLES, n_indices ,GL_UNSIGNED_INT, indices);
+    
 
 }
 
@@ -499,8 +519,9 @@ void Plano::desenha(){
     glVertexPointer(3,GL_FLOAT,0,0);
     glBindBuffer(GL_ARRAY_BUFFER,buffers[1]);
     glNormalPointer(GL_FLOAT,0,0);
+    glBindBuffer(GL_ARRAY_BUFFER,buffers[2]);
+    glTexCoordPointer(2,GL_FLOAT,0,0);
     glDrawElements(GL_TRIANGLES, n_indices ,GL_UNSIGNED_INT, indices);
-    
 }
 
 

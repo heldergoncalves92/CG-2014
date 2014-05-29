@@ -72,16 +72,16 @@ void renderScene(void) {
     //plano(3, 5, 4, 3, 0, 1);
     
    // Paralelepipedo an = Paralelepipedo(2, 4, 3, 1, 3, 4);
-    Esfera an= Esfera(2, 30, 30);
-    //Circulo an= Circulo(1, 15, 3, 0, 0);
-  // Cilindro an = Cilindro(1, 10, 2, 3, 3);
-    //Anel an= Anel(3, 1, 20, 3, 1);
+    //Esfera an= Esfera(2, 30, 30);
+   // Circulo an= Circulo(1, 15, 3, 0, 1);
+   //Cilindro an = Cilindro(1, 10, 2, 3, 3);
+    Anel an= Anel(1.75, 1, 70, 3, 1);
    // Cone an = Cone(1, 2, 20, 5, 10);
     //Plano an1= Plano(8, 8, 3, 3, -4, 1);
-    //Plano an= Plano(8, 8, 3, 3, -4, 3);
+   // Plano an= Plano(8, 8, 3, 3, -4, 1);
    
     
-    
+    glBindTexture(GL_TEXTURE_2D,texID);
    // an1.desenha();
     an.desenha();
    
