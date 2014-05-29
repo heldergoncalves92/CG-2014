@@ -47,7 +47,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "501"
             endingLineNumber = "501"
-            landmarkName = "Plano::desenha()"
+            landmarkName = "Paralelepipedo::Paralelepipedo(float lado_y, float lado_x, float lado_z, int camadas, int fatias_x, int fatias_z)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -74,23 +74,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CG-Aula01/cilindro.cpp"
-            timestampString = "421290305.459034"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "Cilindro::Cilindro(float raio,int fatias,float altura,int aneis,int camadas)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CG-Aula01/cilindro.cpp"
-            timestampString = "421290217.780435"
+            timestampString = "423064015.262294"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "50"
@@ -106,12 +90,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CG-Aula01/cilindro.cpp"
-            timestampString = "421290873.245297"
+            timestampString = "423069349.948342"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
-            landmarkName = "Cilindro::desenha()"
+            startingLineNumber = "196"
+            endingLineNumber = "196"
+            landmarkName = "Cilindro::Cilindro(float raio,int fatias,float altura,int aneis,int camadas)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -255,6 +239,38 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "52"
             endingLineNumber = "52">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CG-Aula01/cilindro.cpp"
+            timestampString = "423066341.928769"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
+            landmarkName = "Cilindro::Cilindro(float raio,int fatias,float altura,int aneis,int camadas)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CG-Aula01/cilindro.cpp"
+            timestampString = "423066341.928769"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "Cilindro::Cilindro(float raio,int fatias,float altura,int aneis,int camadas)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

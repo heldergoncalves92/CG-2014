@@ -22,6 +22,9 @@ Escala escalas=NULL, esc_actual=NULL;
 PropModel l_PropModel=NULL, prop_actual=NULL;
 long currentTime=0,test;
 
+//Numero de modelos desenhados
+int n_desenhos=0, total_desenhos=0;
+char print[20]="";
 
 void changeSize(int w, int h){
     
@@ -71,6 +74,10 @@ void renderScene(void) {
     
 	// pÙr instruÁıes de desenho aqui
 
+    glBegin(GL_POINT);
+    
+    glVertex3f(0, 20, 0);
+    glEnd();
     //LUZES
     defineLuzes();
     
@@ -79,13 +86,14 @@ void renderScene(void) {
     esc_actual=escalas;
     prop_actual=l_PropModel;
     
-    //test=currentTime;
-    currentTime = glutGet(GLUT_ELAPSED_TIME);
-    //printf("Diferença: %lo\n",currentTime-test);
+    n_desenhos=0;
     
+    //Actualiza do tempo
+    currentTime = glutGet(GLUT_ELAPSED_TIME);
     motor_XML(cena);
     
-    
+    sprintf(print, "Galaxy 3D ® => %d/%d desenhados\n",n_desenhos, total_desenhos);
+    glutSetWindowTitle(print);
     
 	// End of frame
 	glutSwapBuffers();
@@ -151,7 +159,7 @@ int main(int argc, char* argv[]){
     //}
     
 	//if(doc.LoadFile(argv[1])){
-    if(doc.LoadFile("sistema_solar.xml")){
+    if(doc.LoadFile("terra.xml")){
         
         root=doc.RootElement();
         cena=root->FirstChild("cena");
@@ -163,7 +171,7 @@ int main(int argc, char* argv[]){
             glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
             glutInitWindowPosition(100, 100);
             glutInitWindowSize(1100, 800);
-            glutCreateWindow("BananaCorp®");
+            glutCreateWindow("Galaxy 3D ®");
             
             
             // pÙr registo de funÁıes aqui

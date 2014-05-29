@@ -14,6 +14,10 @@
 void circulo(float raio, int fatias,int aneis, float altura,int ori, FILE* f){
     float angulo=(2*M_PI)/fatias,x,y=0,l_aux, r_aux1,r_aux2;
 
+
+    //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
+    fprintf(f, "%f %f %f %f %f %f\n",raio, -raio,altura,altura,raio,-raio);
+
     fprintf(f,"%d\n",(2*fatias*(aneis-1)+fatias)*9);
     raio=raio/aneis;
     if(ori){
@@ -72,110 +76,148 @@ void circulo(float raio, int fatias,int aneis, float altura,int ori, FILE* f){
 }
 
 
-void circuloVBO(float raio, int lados,int aneis, float altura,int ori, FILE *f){
+void circuloVBO(float raio, int fatias,int aneis, float altura,int ori, FILE *f){
     
-    float angulo=(2*M_PI)/lados,y=0,l_aux, r_aux;
-    int i=0,v=0,n=0,j=0,avanco;
+    float angulo=(2*M_PI)/fatias,y=0,l_aux, r_aux;
+    float texFactor_aneis=1.0f/aneis;
+    float texFactor_fatias=1.0f/fatias;
+    int i=0,v=0,j=0,n=0,t=0,avanco=0;
     
     raio=raio/aneis;
     r_aux=raio;
-    int n_pontos=(1+lados*aneis)*3;
-    int n_indices=(lados*(aneis-1)*2+lados)*3;
+    int n_pontos=((fatias+1)+(fatias+1)*aneis)*3;
+    int n_indices=(fatias*(aneis-1)*2+fatias)*3;
+    int tex_pontos=(n_pontos*2)/3;
+    
+    
+    
+    float *vertexB=(float*)malloc(n_pontos*sizeof(float)),
+    *normalB=(float*)malloc(n_pontos*sizeof(float)),
+    *texB=(float*)malloc(tex_pontos*sizeof(float));
     
     int *indices=(int*)malloc(n_indices*sizeof(int));
-    float *vertexB=(float*)malloc(n_pontos*sizeof(float)),
-    *normalB=(float*)malloc(n_pontos*sizeof(float));
-
+    
+   
     if(ori){
-        vertexB[v++]=0;vertexB[v++]=altura;vertexB[v++]=0;
-        normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
-        for(l_aux=0;l_aux<lados;l_aux++){
+        //Primeiro ponto central
+        for (l_aux=0; l_aux<=fatias; l_aux++) {
+            vertexB[v++]=0;vertexB[v++]=altura;vertexB[v++]=0;
+            normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
+            texB[t++]=l_aux*texFactor_fatias;texB[t++]=1;
+        }
+        avanco+=fatias+1;
+        
+        //Primeiro circulo
+        for(l_aux=0;l_aux<=fatias;l_aux++){
             
             vertexB[v++]=r_aux*sin(y);vertexB[v++]=altura;vertexB[v++]=r_aux*cos(y);
             normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
-            
-            indices[i++]=0;
-            indices[i++]=l_aux+1;
-            indices[i++]=l_aux+2;
+            texB[t++]=l_aux*texFactor_fatias;texB[t++]=1-texFactor_aneis;
+            if(l_aux!=fatias){
+                indices[i++]=l_aux;
+                indices[i++]=avanco+l_aux;
+                indices[i++]=avanco+l_aux+1;
+            }
             y+=angulo;
         }
-        indices[i-1]=1;
+        avanco+=fatias+1;
         
-        for(j++;j<aneis;j++){
+        //Aneis da base
+        for(j=1;j<aneis;j++){
             r_aux+=raio;
             y=0;
-            for(l_aux=0;l_aux<lados;l_aux++){
-                avanco=j*lados+1;
+            for(l_aux=0;l_aux<=fatias;l_aux++){
                 
                 vertexB[v++]=r_aux*sin(y); vertexB[v++]=altura; vertexB[v++]=r_aux*cos(y);
                 normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
+                texB[t++]=l_aux*texFactor_fatias;texB[t++]=1-(j+1)*texFactor_aneis;
                 
-                indices[i++]=avanco-lados+l_aux;
-                indices[i++]=avanco+l_aux;
-                indices[i++]=avanco-lados+l_aux+1;
-
-                indices[i++]=avanco+l_aux;
-                indices[i++]=avanco+l_aux+1;
-                indices[i++]=avanco-lados+l_aux+1;
-
+                if(l_aux!=fatias){
+                    indices[i++]=avanco-(fatias+1)+l_aux;
+                    indices[i++]=avanco+l_aux;
+                    indices[i++]=avanco-(fatias+1)+l_aux+1;
+                    
+                    indices[i++]=avanco+l_aux;
+                    indices[i++]=avanco+l_aux+1;
+                    indices[i++]=avanco-(fatias+1)+l_aux+1;
+                }
+                
                 y+=angulo;
             }
-            indices[i-4]=avanco-lados;
-            indices[i-2]=avanco;
-            indices[i-1]=avanco-lados;
+            avanco+=fatias+1;
         }
     }else{
-        vertexB[v++]=0;vertexB[v++]=altura;vertexB[v++]=0;
-        normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
-        for(l_aux=0;l_aux<lados;l_aux++){
+        //Primeiro ponto central
+        for (l_aux=0; l_aux<=fatias; l_aux++) {
+            vertexB[v++]=0;vertexB[v++]=altura;vertexB[v++]=0;
+            normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
+            texB[t++]=l_aux*texFactor_fatias;texB[t++]=1;
+        }
+        avanco+=fatias+1;
+        
+        //Primeiro circulo
+        for(l_aux=0;l_aux<=fatias;l_aux++){
             
             vertexB[v++]=r_aux*sin(y);vertexB[v++]=altura;vertexB[v++]=r_aux*cos(y);
             normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
-            
-            indices[i++]=0;
-            indices[i++]=l_aux+2;
-            indices[i++]=l_aux+1;
+            texB[t++]=l_aux*texFactor_fatias;texB[t++]=1-texFactor_aneis;
+            if(l_aux!=fatias){
+                indices[i++]=l_aux;
+                indices[i++]=avanco+l_aux+1;
+                indices[i++]=avanco+l_aux;
+            }
             y+=angulo;
         }
-        indices[i-2]=1;
+        avanco+=fatias+1;
         
-        for(j++;j<aneis;j++){
+        //Aneis da base
+        for(j=1;j<aneis;j++){
             r_aux+=raio;
             y=0;
-            for(l_aux=0;l_aux<lados;l_aux++){
-                avanco=j*lados+1;
+            for(l_aux=0;l_aux<=fatias;l_aux++){
                 
                 vertexB[v++]=r_aux*sin(y); vertexB[v++]=altura; vertexB[v++]=r_aux*cos(y);
                 normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
+                texB[t++]=l_aux*texFactor_fatias;texB[t++]=1-(j+1)*texFactor_aneis;
                 
-                indices[i++]=avanco-lados+l_aux;
-                indices[i++]=avanco-lados+l_aux+1;
-                indices[i++]=avanco+l_aux;
-                
-                indices[i++]=avanco+l_aux;
-                indices[i++]=avanco-lados+l_aux+1;
-                indices[i++]=avanco+l_aux+1;
+                if(l_aux!=fatias){
+                    indices[i++]=avanco-(fatias+1)+l_aux;
+                    indices[i++]=avanco-(fatias+1)+l_aux+1;
+                    indices[i++]=avanco+l_aux;
+                    
+                    indices[i++]=avanco+l_aux;
+                    indices[i++]=avanco-(fatias+1)+l_aux+1;
+                    indices[i++]=avanco+l_aux+1;
+                }
                 
                 y+=angulo;
             }
-            indices[i-5]=avanco-lados;
-            indices[i-1]=avanco;
-            indices[i-2]=avanco-lados;
+            avanco+=fatias+1;
         }
-        
     }
-    
-    //Imprimir os vertices e indices
+
+    //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
+    fprintf(f, "%f %f %f %f %f %f\n",raio, -raio,altura,altura,raio,-raio);
+ 
+   //Imprimir os vertices, indices, normais e coordenadas de textura
     fprintf(f, "%d\n",n_pontos);
     for(i=0;i<n_pontos;i+=3)
         fprintf(f, "%f %f %f\n",vertexB[i],vertexB[i+1],vertexB[i+2]);
 
     fprintf(f, "%d\n",n_indices);
     for(i=0;i<n_indices;i+=3)
-        fprintf(f, "%d %d %d\n",indices[i],indices[i+1],indices[i+2]);
+        fprintf(f, "%d %d %d\n",indices[i],indices[i+1],indices[i+2]);   
 
     for(i=0;i<n_pontos;i+=3)
         fprintf(f, "%f %f %f\n",normalB[i],normalB[i+1],normalB[i+2]);
+
+    for(i=0;i<tex_pontos ;i+=2)
+        fprintf(f, "%f %f\n",texB[i],texB[i+1]);
+
+    
+    free(vertexB);
+    free(normalB);
+    free(texB);
 
 }
 

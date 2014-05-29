@@ -44,7 +44,7 @@ Cilindro::Cilindro(float raio,int fatias,float altura,int aneis,int camadas){
     float texFactor_camadas=1.0f/camadas;
     float texFactor_aneis=1.0f/aneis;
     
-    r_aux=raio;
+
     int n_pontos=((fatias+1)*(camadas+1)*3) + ((fatias+1)+(fatias+1)*aneis)*6;
     n_indices= (fatias*camadas*3*2) + (fatias*(aneis-1)*2+fatias)*6;
     
@@ -60,59 +60,9 @@ Cilindro::Cilindro(float raio,int fatias,float altura,int aneis,int camadas){
     glEnableClientState(GL_NORMAL_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     
-    //Circulo do topo
-    r_aux=raio/aneis;
     
-    //Primeiro ponto central
-    for (l_aux=0; l_aux<=fatias; l_aux++) {
-        vertexB[v++]=0;vertexB[v++]=altura;vertexB[v++]=0;
-        normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
-        texB[t++]=l_aux*texFactor_fatias;texB[t++]=1;
-    }
-    avanco+=fatias+1;
     
-    //Primeiro circulo
-    for(l_aux=0;l_aux<=fatias;l_aux++){
-        
-        vertexB[v++]=r_aux*sin(y);vertexB[v++]=altura;vertexB[v++]=r_aux*cos(y);
-        normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
-        texB[t++]=l_aux*texFactor_fatias; texB[t++]=1.0f-texFactor_camadas;
-        if(l_aux!=fatias){
-            indices[i++]=l_aux;
-            indices[i++]=avanco+l_aux;
-            indices[i++]=avanco+l_aux+1;
-        }
-        y+=angulo;
-    }
-    avanco+=fatias+1;
-    
-    //Aneis do topo
-    for(j=1;j<aneis;j++){
-        r_aux+=raio;
-        y=0;
-        for(l_aux=0;l_aux<=fatias;l_aux++){
-            
-            vertexB[v++]=r_aux*sin(y); vertexB[v++]=altura; vertexB[v++]=r_aux*cos(y);
-            normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
-            texB[t++]=l_aux*texFactor_fatias;texB[t++]=(aneis-(j+1)*texFactor_aneis);
-            
-            if(l_aux!=fatias){
-                indices[i++]=avanco-(fatias+1)+l_aux;
-                indices[i++]=avanco+l_aux;
-                indices[i++]=avanco-(fatias+1)+l_aux+1;
-                
-                indices[i++]=avanco+l_aux;
-                indices[i++]=avanco+l_aux+1;
-                indices[i++]=avanco-(fatias+1)+l_aux+1;
-            }
-            
-            y+=angulo;
-        }
-        avanco+=fatias+1;
-    }
-    
-
-    //Circulo da base
+    //------------- Circulo da base ----------------//
     r_aux=raio/aneis;
     
     //Primeiro ponto central
@@ -128,7 +78,7 @@ Cilindro::Cilindro(float raio,int fatias,float altura,int aneis,int camadas){
         
         vertexB[v++]=r_aux*sin(y);vertexB[v++]=0;vertexB[v++]=r_aux*cos(y);
         normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
-        texB[t++]=l_aux*texFactor_fatias;texB[t++]=1.0f-texFactor_camadas;
+        texB[t++]=l_aux*texFactor_fatias; texB[t++]=1.0f-texFactor_aneis;
         if(l_aux!=fatias){
             indices[i++]=avanco-(fatias+1)+l_aux;
             indices[i++]=avanco+l_aux+1;
@@ -140,30 +90,31 @@ Cilindro::Cilindro(float raio,int fatias,float altura,int aneis,int camadas){
     
     //Aneis da base
     for(j=1;j<aneis;j++){
-        r_aux+=raio;
+        r_aux+=raio/aneis;
         y=0;
         for(l_aux=0;l_aux<=fatias;l_aux++){
             
             vertexB[v++]=r_aux*sin(y); vertexB[v++]=0; vertexB[v++]=r_aux*cos(y);
             normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
-            texB[t++]=l_aux*texFactor_fatias;texB[t++]=(aneis-(j+1)*texFactor_aneis);
+            texB[t++]=l_aux*texFactor_fatias;texB[t++]=1.0f-((j+1)*texFactor_aneis);
             
             if(l_aux!=fatias){
                 indices[i++]=avanco-(fatias+1)+l_aux;
                 indices[i++]=avanco-(fatias+1)+l_aux+1;
-                indices[i++]=avanco+l_aux;
+                indices[i++]=avanco+l_aux+1;
                 
                 indices[i++]=avanco+l_aux;
-                indices[i++]=avanco-(fatias+1)+l_aux+1;
+                indices[i++]=avanco-(fatias+1)+l_aux;
                 indices[i++]=avanco+l_aux+1;
             }
-            
             y+=angulo;
         }
         avanco+=fatias+1;
     }
+
     
-    //Corpo
+    //------------ Corpo ------------//
+    r_aux=raio;
     for(j=0;j<=camadas;j++){
         y=0;
         
@@ -191,6 +142,58 @@ Cilindro::Cilindro(float raio,int fatias,float altura,int aneis,int camadas){
         alt_aux-=altura/camadas;
     }
 
+    
+    //------------- Circulo do topo -------------//
+    r_aux=raio/aneis;
+    
+    //Primeiro ponto central
+    for (l_aux=0; l_aux<=fatias; l_aux++) {
+        vertexB[v++]=0;vertexB[v++]=altura;vertexB[v++]=0;
+        normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
+        texB[t++]=l_aux*texFactor_fatias;texB[t++]=1;
+    }
+    avanco+=fatias+1;
+    
+    //Primeiro circulo
+    for(l_aux=0;l_aux<=fatias;l_aux++){
+        
+        vertexB[v++]=r_aux*sin(y);vertexB[v++]=altura;vertexB[v++]=r_aux*cos(y);
+        normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
+        texB[t++]=l_aux*texFactor_fatias; texB[t++]=1.0f-texFactor_aneis;
+        if(l_aux!=fatias){
+            indices[i++]=avanco-(fatias+1)+l_aux;
+            indices[i++]=avanco+l_aux;
+            indices[i++]=avanco+l_aux+1;
+        }
+        y+=angulo;
+    }
+    avanco+=fatias+1;
+    
+    //Aneis do topo
+    for(j=1;j<aneis;j++){
+        r_aux+=raio/aneis;
+        y=0;
+        for(l_aux=0;l_aux<=fatias;l_aux++){
+            
+            vertexB[v++]=r_aux*sin(y); vertexB[v++]=altura; vertexB[v++]=r_aux*cos(y);
+            normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
+            texB[t++]=l_aux*texFactor_fatias;texB[t++]=1.0f-((j+1)*texFactor_aneis);
+            
+            if(l_aux!=fatias){
+                indices[i++]=avanco-(fatias+1)+l_aux;
+                indices[i++]=avanco+l_aux+1;
+                indices[i++]=avanco-(fatias+1)+l_aux+1;
+                
+                indices[i++]=avanco+l_aux;
+                indices[i++]=avanco+l_aux+1;
+                indices[i++]=avanco-(fatias+1)+l_aux;
+            }
+            
+            y+=angulo;
+        }
+        avanco+=fatias+1;
+    }
+  
 
     printf("%d||%d -- %d||%d -- %d\n",n_indices,i,n_pontos,v,fatias);
     glGenBuffers(2, buffers);

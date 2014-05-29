@@ -58,9 +58,9 @@ Cone::Cone(float raio, float altura, int fatias, int aneis, int camadas){
     
     //Primeiro ponto central
     for (l_aux=0; l_aux<=fatias; l_aux++) {
-        vertexB[v++]=0;vertexB[v++]=raio;vertexB[v++]=0;
+        vertexB[v++]=0;vertexB[v++]=0;vertexB[v++]=0;
         normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
-        texB[t++]=0;texB[t++]=1;
+        texB[t++]=l_aux*texFactor_fatias;texB[t++]=1;
     }
     avanco+=fatias+1;
     
@@ -156,7 +156,7 @@ Cone::Cone(float raio, float altura, int fatias, int aneis, int camadas){
         avanco+=fatias+1;
     }
     
-    glGenBuffers(1, buffers);
+    glGenBuffers(3, buffers);
     glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
     glBufferData(GL_ARRAY_BUFFER,n_pontos*sizeof(float), vertexB, GL_STATIC_DRAW);
     
@@ -170,6 +170,7 @@ Cone::Cone(float raio, float altura, int fatias, int aneis, int camadas){
     
     free(vertexB);
     free(normalB);
+    free(texB);
     free(normLado);
     
 }

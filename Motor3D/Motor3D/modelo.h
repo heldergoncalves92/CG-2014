@@ -10,8 +10,8 @@
 #define __Motor3D__modelo__
 
 #include <iostream>
-#include <GLUT/glut.h>
 #include "material.h"
+#include "viewFrustumCulling.h"
 
 
 //Estrutura para as VBO -> '.vbo'
@@ -35,6 +35,7 @@ typedef struct sr_time{
 
 typedef struct smodelo{
     
+    ViewFrustum pontos;
     short tipo;
     union{
         Vbo vbo;

@@ -37,7 +37,7 @@ void mov_rato_fps(int x, int y){
         }
     }
     
-  //  printf("H: %f -- V: %f -- %f,%f,%f\n",angCamFPS_h,angCamFPS_v,px,py,pz);
+   // printf("H: %f -- V: %f -- %f,%f,%f\n",angCamFPS_h,angCamFPS_v,px,py,pz);
    // glutPostRedisplay();
 
 }

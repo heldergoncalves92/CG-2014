@@ -170,11 +170,19 @@ void renderCatmullRomCurve(Translacao* t) {
 
 void do_line(Translacao* t){
     
-    glMaterialfv(GL_FRONT, GL_EMISSION, white);
+    
+    
     glBindBuffer(GL_ARRAY_BUFFER,t->buffer[0]);
     glVertexPointer(3,GL_FLOAT,0,0);
-    glDrawArrays(GL_LINE_LOOP, 0, 2000);
-    glMaterialfv(GL_FRONT, GL_EMISSION, neutro);
+    
+    if(glIsEnabled(GL_LIGHTING)){
+        glDisable(GL_LIGHTING);
+        glDrawArrays(GL_LINE_LOOP, 0, 2000);
+        glEnable(GL_LIGHTING);
+    }else
+        glDrawArrays(GL_LINE_LOOP, 0, 2000);
+    
+   
 }
 
 Translacao* insereTranslacao(Point *listaPontos, Translacao *translacoes, int numeroPontos, float tempo, float x, float y, float z){
@@ -191,9 +199,11 @@ Translacao* insereTranslacao(Point *listaPontos, Translacao *translacoes, int nu
     aux->pZ = z;
     aux->next=NULL;
     
-    global_point_count=aux->point_count;
-    globalPoints = aux->points;
-    renderCatmullRomCurve(aux);
+    if(tempo!=0){
+        global_point_count=aux->point_count;
+        globalPoints = aux->points;
+        renderCatmullRomCurve(aux);
+    }
     
     if(translacoes==NULL){
         translacoes=aux;
