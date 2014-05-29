@@ -15,6 +15,7 @@
 		2CBA9C33193377CE0030821D /* libIL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CBA9C32193377CE0030821D /* libIL.dylib */; };
 		2CBA9C361933B32C0030821D /* luzes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CBA9C341933B32C0030821D /* luzes.cpp */; };
 		2CCA882619352E2C009840F9 /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA882419352E2C009840F9 /* material.cpp */; };
+		2CCA8829193627A4009840F9 /* viewFrustumCulling.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CCA8827193627A4009840F9 /* viewFrustumCulling.cpp */; };
 		2CCFE06118D36B440000456E /* camera_fps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CCFE06018D36B440000456E /* camera_fps.cpp */; };
 		3C2A5AF818CE27E000F81F61 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C2A5AF718CE27E000F81F61 /* main.cpp */; };
 		3C2A5AFA18CE27E000F81F61 /* Motor3D.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3C2A5AF918CE27E000F81F61 /* Motor3D.1 */; };
@@ -56,6 +57,8 @@
 		2CBA9C351933B32C0030821D /* luzes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luzes.h; sourceTree = "<group>"; };
 		2CCA882419352E2C009840F9 /* material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = material.cpp; sourceTree = "<group>"; };
 		2CCA882519352E2C009840F9 /* material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = material.h; sourceTree = "<group>"; };
+		2CCA8827193627A4009840F9 /* viewFrustumCulling.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = viewFrustumCulling.cpp; sourceTree = "<group>"; };
+		2CCA8828193627A4009840F9 /* viewFrustumCulling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = viewFrustumCulling.h; sourceTree = "<group>"; };
 		2CCFE05F18D36AEF0000456E /* camera_fps.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = camera_fps.h; sourceTree = "<group>"; };
 		2CCFE06018D36B440000456E /* camera_fps.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera_fps.cpp; sourceTree = "<group>"; };
 		3C2A5AF418CE27E000F81F61 /* Motor3D */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Motor3D; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,6 +138,8 @@
 				2CBA9C351933B32C0030821D /* luzes.h */,
 				2CCA882419352E2C009840F9 /* material.cpp */,
 				2CCA882519352E2C009840F9 /* material.h */,
+				2CCA8827193627A4009840F9 /* viewFrustumCulling.cpp */,
+				2CCA8828193627A4009840F9 /* viewFrustumCulling.h */,
 			);
 			path = Motor3D;
 			sourceTree = "<group>";
@@ -210,6 +215,7 @@
 				2CCFE06118D36B440000456E /* camera_fps.cpp in Sources */,
 				2C87D54718D347F9003DF930 /* camera_explorador.cpp in Sources */,
 				3C2A5B1718CE29B100F81F61 /* tinyxmlerror.cpp in Sources */,
+				2CCA8829193627A4009840F9 /* viewFrustumCulling.cpp in Sources */,
 				3C2A5AF818CE27E000F81F61 /* main.cpp in Sources */,
 				3C2A5B1618CE29B100F81F61 /* tinyxml.cpp in Sources */,
 				2C490CC8191BDE8700B9FFAB /* escala.cpp in Sources */,

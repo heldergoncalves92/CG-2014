@@ -23,7 +23,7 @@ void motor_XML(TiXmlNode* root){
         
         if (strcmp(tag, "modelo")==0) {
             modelo=prop_actual->modelo;
-            if (modelo) {
+            if (modelo && testaModelo(modelo->pontos)==INSIDE) {
                 do_Materiais(prop_actual->materiais);
                 if(modelo->tipo==1)
                     desenha_RTime(modelo->u.rTime);
@@ -31,6 +31,7 @@ void motor_XML(TiXmlNode* root){
                     desenha_vbo(modelo->u.vbo, prop_actual->texID);
                 
                 do_MattNeutro(prop_actual->materiais);
+                n_desenhos++;
             }
             //Actualiza para propModel actual
             prop_actual=prop_actual->next;
@@ -85,18 +86,22 @@ void prepara_MotorXML(TiXmlNode* root){
                             if(std::regex_match(attr->Value(), e) ){
                                 lista_modelos=ler_VBO(attr->Value(),lista_modelos);
                                 propModel->modelo=lista_modelos;
+                                total_desenhos++;
                             }
                             else{
                                 std::regex e ("(.*)(.3d)");
                                 if(std::regex_match(attr->Value(), e) ){
                                     lista_modelos=ler_RTime(attr->Value(),lista_modelos);
                                     propModel->modelo=lista_modelos;
+                                    total_desenhos++;
                                 }
                                 else
                                     printf("ERRO! Ficheiro '%s' inexistente\n", attr->Value());
                             }
-                        }else
+                        }else{
                             propModel->modelo=modelo;
+                            total_desenhos++;
+                        }
                         
                     }else if (strcmp(attr->Name(), "textura")==0) {
                         //Carregar textura

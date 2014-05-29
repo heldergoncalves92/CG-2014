@@ -30,7 +30,7 @@ PropModel addPropModel(PropModel novo, PropModel lista){
     return lista;
 }
 
-Modelo addVbo(const char* nome, GLuint *buffers, int n_indices, unsigned short *indices, Modelo lista){
+Modelo addVbo(const char* nome, GLuint *buffers, int n_indices, unsigned short *indices, ViewFrustum viewFrustum, Modelo lista){
     
     Modelo aux=(Modelo)malloc(sizeof(NModelo));
     Vbo novo=(Vbo)malloc(sizeof(NVbo));
@@ -44,6 +44,7 @@ Modelo addVbo(const char* nome, GLuint *buffers, int n_indices, unsigned short *
     //Definiçoes para o lista de Modelos
     aux->next=lista;
     aux->tipo=2;
+    aux->pontos=viewFrustum;
     aux->u.vbo=novo;
     
     return aux;
@@ -68,6 +69,44 @@ void desenha_vbo(Vbo vbo, unsigned int texID){
     
     //Para nehuma textura estar seleccionada
     glBindTexture(GL_TEXTURE_2D,0);
+    
+    
+    /*
+    //Para ver caixas utilizadas no viewfruntum
+    glBegin(GL_LINE_LOOP);
+        glVertex3f(1, 1, 1);
+        glVertex3f(1, -1, 1);
+        glVertex3f(-1, -1, 1);
+        glVertex3f(-1, 1, 1);
+    glEnd();
+
+    glBegin(GL_LINE_LOOP);
+        glVertex3f(1, 1, -1);
+        glVertex3f(1, -1, -1);
+        glVertex3f(-1, -1, -1);
+        glVertex3f(-1, 1, -1);
+    glEnd();
+    
+    glBegin(GL_LINE_STRIP);
+        glVertex3f(1, 1, 1);
+        glVertex3f(1, 1, -1);
+    glEnd();
+    
+    glBegin(GL_LINE_STRIP);
+        glVertex3f(-1, 1, 1);
+        glVertex3f(-1, 1, -1);
+    glEnd();
+    
+    glBegin(GL_LINE_STRIP);
+        glVertex3f(1, -1, 1);
+        glVertex3f(1, -1, -1);
+    glEnd();
+    
+    glBegin(GL_LINE_STRIP);
+        glVertex3f(-1, -1, 1);
+        glVertex3f(-1, -1, -1);
+    glEnd();
+     */
 }
 
 Modelo ler_VBO(const char* filename, Modelo lista){
@@ -78,9 +117,14 @@ Modelo ler_VBO(const char* filename, Modelo lista){
     float cx,cy,cz,*vertices=NULL,*normais=NULL,*texB=NULL;
     FILE *f = fopen(filename, "r");
     GLuint *buffers=NULL;
+    ViewFrustum viewFrustum=NULL;
     
     //Testa se ficheiro existe
     if(f){
+        //Lê os MAX e MIN para o ViewFrustum
+        viewFrustum=(ViewFrustum)malloc(sizeof(NViewFrustum));
+        fscanf(f, "%f %f %f %f %f %f\n", &viewFrustum->maxX, &viewFrustum->minX, &viewFrustum->maxY, &viewFrustum->minY, &viewFrustum->maxZ, &viewFrustum->minZ);
+        
         
         //Lê o número total de pontos e aloca memória
         fscanf(f, "%d\n", &n_pontos);
@@ -139,6 +183,7 @@ Modelo ler_VBO(const char* filename, Modelo lista){
         
         fclose(f);
         
+        
         //Aloca memória para os buffers
         buffers=(GLuint*)malloc(3*sizeof(GLuint));
         
@@ -155,8 +200,8 @@ Modelo ler_VBO(const char* filename, Modelo lista){
         free(normais);
         free(texB);
         
-        //Adiciona a VBO à estrutura e desenha a mesmawa
-        return addVbo(filename, buffers, n_indices, indices, lista);
+        //Adiciona a VBO à estrutura
+        return addVbo(filename, buffers, n_indices, indices, viewFrustum, lista);
     }else
         printf("ERRO! Não fez load do ficheiro '%s'!\n",filename);
     
@@ -165,7 +210,7 @@ Modelo ler_VBO(const char* filename, Modelo lista){
 }
 
 //Real Time '.3d'
-Modelo addRTime(const char* nome, float *vertices, int n_pontos, Modelo lista){
+Modelo addRTime(const char* nome, float *vertices, int n_pontos, ViewFrustum viewFrustum, Modelo lista){
     
     Modelo aux=(Modelo)malloc(sizeof(NModelo));
     RTime novo =(RTime)malloc(sizeof(NRTime));
@@ -178,6 +223,7 @@ Modelo addRTime(const char* nome, float *vertices, int n_pontos, Modelo lista){
     //Definiçoes para o lista de Modelos
     aux->next=lista;
     aux->tipo=1;
+    aux->pontos=viewFrustum;
     aux->u.rTime=novo;
 
     return aux;
@@ -201,7 +247,13 @@ Modelo ler_RTime(const char* filename, Modelo lista){
     int n_pontos,i=0;
     float cx,cy,cz,*vertices;
     FILE *f = fopen(filename, "r");
+    ViewFrustum viewFrustum=NULL;
+    
     if(f){
+        
+        viewFrustum=(ViewFrustum)malloc(sizeof(NViewFrustum)); //De momento, não serve para nada..
+        
+        
         fscanf(f, "%d\n", &n_pontos);
         vertices=(float*)malloc(n_pontos*sizeof(float));
         while (fscanf(f, "%f %f %f\n", &cx, &cy, &cz)!=EOF){
@@ -210,7 +262,7 @@ Modelo ler_RTime(const char* filename, Modelo lista){
             vertices[i++]=cz;
         }
         fclose(f);
-        return addRTime(filename, vertices, n_pontos, lista);
+        return addRTime(filename, vertices, n_pontos, viewFrustum, lista);
     }else
         printf("ERRO! Não fez load do ficheiro '%s'!\n",filename);
     return lista;

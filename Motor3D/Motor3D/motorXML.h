@@ -29,7 +29,7 @@ extern Escala escalas, esc_actual;
 extern PropModel l_PropModel, prop_actual;
 extern long currentTime;
 
-
+extern int n_desenhos, total_desenhos;
 void motor_XML(TiXmlNode *doc);
 void prepara_MotorXML(TiXmlNode* root);
 
