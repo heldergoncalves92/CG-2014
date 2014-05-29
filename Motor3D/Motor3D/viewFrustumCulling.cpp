@@ -79,8 +79,7 @@ int testaModelo(ViewFrustum vfc){
     glGetFloatv(GL_MODELVIEW_MATRIX, A);
     glPopMatrix();
     
-    //Testar pontos..  QUAIS?!? Perguntar
-    if (testaSOLID(vfc->maxX,vfc->minX,vfc->maxY,vfc->minY,vfc->maxY,vfc->minX)==OUT) // if (tipo==ESFERA) maxX => raio
+    if (testaSOLID(vfc->maxX,vfc->minX,vfc->maxY,vfc->minY,vfc->maxZ,vfc->minZ)==OUT)
         return OUT;
 
     
@@ -91,7 +90,46 @@ int testaModelo(ViewFrustum vfc){
 
 
 
+void desenhaCaixa(ViewFrustum view){
+    
+    if(view){
+        //Para ver caixas utilizadas no viewfruntum
+        glBegin(GL_LINE_LOOP);
+        glVertex3f(view->maxX, view->maxY, view->maxZ);
+        glVertex3f(view->maxX, view->minY, view->maxZ);
+        glVertex3f(view->minX, view->minY, view->maxZ);
+        glVertex3f(view->minX, view->maxY, view->maxZ);
+        glEnd();
+        
+        glBegin(GL_LINE_LOOP);
+        glVertex3f(view->maxX, view->maxY, -1);
+        glVertex3f(view->maxX, view->minY, -1);
+        glVertex3f(view->minX, view->minY, -1);
+        glVertex3f(view->minX, view->maxY, -1);
+        glEnd();
+        
+        glBegin(GL_LINE_STRIP);
+        glVertex3f(view->maxX, view->maxY, view->maxZ);
+        glVertex3f(view->maxX, view->maxY, view->minZ);
+        glEnd();
+        
+        glBegin(GL_LINE_STRIP);
+        glVertex3f(view->minX, view->maxY, view->maxZ);
+        glVertex3f(view->minX, view->maxY, view->minZ);
+        glEnd();
+        
+        glBegin(GL_LINE_STRIP);
+        glVertex3f(view->maxX, view->minY, view->maxZ);
+        glVertex3f(view->maxX, view->minY, view->minZ);
+        glEnd();
+        
+        glBegin(GL_LINE_STRIP);
+        glVertex3f(view->minX, view->minY, view->maxZ);
+        glVertex3f(view->minX, view->minY, view->minZ);
+        glEnd();
 
+    }
+}
 
 /*
  //Calcula a matrix A

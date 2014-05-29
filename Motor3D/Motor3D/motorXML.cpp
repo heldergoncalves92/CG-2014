@@ -32,6 +32,7 @@ void motor_XML(TiXmlNode* root){
                 
                 do_MattNeutro(prop_actual->materiais);
                 n_desenhos++;
+                desenhaCaixa(modelo->pontos);
             }
             //Actualiza para propModel actual
             prop_actual=prop_actual->next;

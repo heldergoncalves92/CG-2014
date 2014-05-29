@@ -197,9 +197,11 @@ Translacao* insereTranslacao(Point *listaPontos, Translacao *translacoes, int nu
     aux->pZ = z;
     aux->next=NULL;
     
-    global_point_count=aux->point_count;
-    globalPoints = aux->points;
-    renderCatmullRomCurve(aux);
+    if(tempo!=0){
+        global_point_count=aux->point_count;
+        globalPoints = aux->points;
+        renderCatmullRomCurve(aux);
+    }
     
     if(translacoes==NULL){
         translacoes=aux;

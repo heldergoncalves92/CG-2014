@@ -17,6 +17,9 @@ void esfera(float raio, int camadas, int fatias, FILE* f){
     h_aux2+=angulo_h;
     y=0;
     
+    //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
+    fprintf(f, "%f %f %f %f %f %f\n",raio, -raio,raio, -raio,raio,-raio);
+ 
     fprintf(f,"%d\n",2*fatias*(camadas-1)*9);
 
     for (l_aux=0; l_aux<fatias; l_aux++) {
@@ -139,6 +142,9 @@ void esferaVBO(float raio, int camadas, int fatias,FILE* f){
         }
     }
 
+    //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
+    fprintf(f, "%f %f %f %f %f %f\n",raio, -raio,raio, -raio,raio,-raio);
+ 
     //Imprimir os vertices, indices, normais e coordenadas de textura
     fprintf(f, "%d\n",n_pontos);
     for(i=0;i<n_pontos;i+=3)
@@ -153,6 +159,10 @@ void esferaVBO(float raio, int camadas, int fatias,FILE* f){
 
     for(i=0;i<tex_pontos ;i+=2)
         fprintf(f, "%f %f\n",texB[i],texB[i+1]);
+
+    free(vertexB);
+    free(normalB);
+    free(texB);
 
 }
 

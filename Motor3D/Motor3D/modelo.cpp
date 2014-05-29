@@ -69,44 +69,7 @@ void desenha_vbo(Vbo vbo, unsigned int texID){
     
     //Para nehuma textura estar seleccionada
     glBindTexture(GL_TEXTURE_2D,0);
-    
-    
-    /*
-    //Para ver caixas utilizadas no viewfruntum
-    glBegin(GL_LINE_LOOP);
-        glVertex3f(1, 1, 1);
-        glVertex3f(1, -1, 1);
-        glVertex3f(-1, -1, 1);
-        glVertex3f(-1, 1, 1);
-    glEnd();
-
-    glBegin(GL_LINE_LOOP);
-        glVertex3f(1, 1, -1);
-        glVertex3f(1, -1, -1);
-        glVertex3f(-1, -1, -1);
-        glVertex3f(-1, 1, -1);
-    glEnd();
-    
-    glBegin(GL_LINE_STRIP);
-        glVertex3f(1, 1, 1);
-        glVertex3f(1, 1, -1);
-    glEnd();
-    
-    glBegin(GL_LINE_STRIP);
-        glVertex3f(-1, 1, 1);
-        glVertex3f(-1, 1, -1);
-    glEnd();
-    
-    glBegin(GL_LINE_STRIP);
-        glVertex3f(1, -1, 1);
-        glVertex3f(1, -1, -1);
-    glEnd();
-    
-    glBegin(GL_LINE_STRIP);
-        glVertex3f(-1, -1, 1);
-        glVertex3f(-1, -1, -1);
-    glEnd();
-     */
+     
 }
 
 Modelo ler_VBO(const char* filename, Modelo lista){

@@ -30,5 +30,6 @@ typedef struct sVFC{
 
 
 int testaModelo(ViewFrustum vfc);
+void desenhaCaixa(ViewFrustum view);
 
 #endif /* defined(__Motor3D__viewFrustumCulling__) */

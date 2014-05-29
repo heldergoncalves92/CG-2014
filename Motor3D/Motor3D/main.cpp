@@ -159,7 +159,7 @@ int main(int argc, char* argv[]){
     //}
     
 	//if(doc.LoadFile(argv[1])){
-    if(doc.LoadFile("sistema_solar.xml")){
+    if(doc.LoadFile("terra.xml")){
         
         root=doc.RootElement();
         cena=root->FirstChild("cena");

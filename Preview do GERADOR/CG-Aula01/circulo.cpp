@@ -111,7 +111,7 @@ Circulo::Circulo(float raio, int fatias,int aneis, float alt,int ori){
             
             vertexB[v++]=r_aux*sin(y);vertexB[v++]=alt;vertexB[v++]=r_aux*cos(y);
             normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
-            texB[t++]=l_aux*texFactor_fatias;texB[t++]=1;
+            texB[t++]=l_aux*texFactor_fatias;texB[t++]=1-texFactor_aneis;
             if(l_aux!=fatias){
                 indices[i++]=l_aux;
                 indices[i++]=avanco+l_aux;
@@ -129,7 +129,7 @@ Circulo::Circulo(float raio, int fatias,int aneis, float alt,int ori){
                 
                 vertexB[v++]=r_aux*sin(y); vertexB[v++]=alt; vertexB[v++]=r_aux*cos(y);
                 normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
-                texB[t++]=l_aux*texFactor_fatias;texB[t++]=1-j*texFactor_aneis;
+                texB[t++]=l_aux*texFactor_fatias;texB[t++]=1-(j+1)*texFactor_aneis;
                 
                 if(l_aux!=fatias){
                     indices[i++]=avanco-(fatias+1)+l_aux;
@@ -159,7 +159,7 @@ Circulo::Circulo(float raio, int fatias,int aneis, float alt,int ori){
             
             vertexB[v++]=r_aux*sin(y);vertexB[v++]=alt;vertexB[v++]=r_aux*cos(y);
             normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
-            texB[t++]=l_aux*texFactor_fatias;texB[t++]=1;
+            texB[t++]=l_aux*texFactor_fatias;texB[t++]=1-texFactor_aneis;
             if(l_aux!=fatias){
                 indices[i++]=l_aux;
                 indices[i++]=avanco+l_aux+1;
@@ -177,7 +177,7 @@ Circulo::Circulo(float raio, int fatias,int aneis, float alt,int ori){
                 
                 vertexB[v++]=r_aux*sin(y); vertexB[v++]=alt; vertexB[v++]=r_aux*cos(y);
                 normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
-                texB[t++]=l_aux*texFactor_fatias;texB[t++]=1-j*texFactor_aneis;
+                texB[t++]=l_aux*texFactor_fatias;texB[t++]=1-(j+1)*texFactor_aneis;
                 
                 if(l_aux!=fatias){
                     indices[i++]=avanco-(fatias+1)+l_aux;
@@ -207,7 +207,9 @@ Circulo::Circulo(float raio, int fatias,int aneis, float alt,int ori){
         printf("%d||%d -- %d||%d -- %d\n",n_indices,i,n_pontos,v,fatias);
     
     free(vertexB);
-    free(normalB);}
+    free(normalB);
+    free(texB);
+}
 
 void Circulo::desenha(){
     

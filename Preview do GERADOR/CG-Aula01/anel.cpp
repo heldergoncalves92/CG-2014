@@ -16,7 +16,6 @@ Anel::Anel(float raio_fora, float raio_dentro, int fatias, int aneis, int ori){
     
     float angulo=(2*M_PI)/fatias,y=0,l_aux,raio=(raio_fora-raio_dentro)/aneis;
     int i=0,v=0,j,n=0,t=0,avanco;
-    float texFactor_fatias=1.0f/fatias;
     float texFactor_aneis=1.0f/aneis;
     int replic=0;
 
@@ -74,7 +73,7 @@ Anel::Anel(float raio_fora, float raio_dentro, int fatias, int aneis, int ori){
         for (j=0; j<=fatias; j++) {
             vertexB[v++]=raio_dentro*sin(y); vertexB[v++]=0; vertexB[v++]=raio_dentro*cos(y);
             normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
-            texB[t++]=j*texFactor_fatias; texB[t++]=1;
+            texB[t++]=replic++; texB[t++]=1;
             y+=angulo;
         }
         avanco=fatias+1;
@@ -82,11 +81,12 @@ Anel::Anel(float raio_fora, float raio_dentro, int fatias, int aneis, int ori){
         for(j=1;j<=aneis;j++){
             raio_dentro+=raio;
             y=0;
+            replic=0;
             for(l_aux=0;l_aux<=fatias;l_aux++){
                 
                 vertexB[v++]=raio_dentro*sin(y); vertexB[v++]=0; vertexB[v++]=raio_dentro*cos(y);
                 normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
-                texB[t++]=l_aux*texFactor_fatias;texB[t++]=1-j*texFactor_aneis;
+                texB[t++]=replic++;texB[t++]=1-j*texFactor_aneis;
                 
                 if(l_aux!=fatias){
                     indices[i++]=avanco-(fatias+1)+l_aux;
@@ -104,7 +104,7 @@ Anel::Anel(float raio_fora, float raio_dentro, int fatias, int aneis, int ori){
         }
     }
     
-    glGenBuffers(1, buffers);
+    glGenBuffers(3, buffers);
     glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
     glBufferData(GL_ARRAY_BUFFER,n_pontos*sizeof(float), vertexB, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER,buffers[1]);
