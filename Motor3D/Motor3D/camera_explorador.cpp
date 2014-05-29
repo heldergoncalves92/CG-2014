@@ -51,7 +51,7 @@ void mov_rato_explorador(int x, int y){
             if(teste+angCam_v>-M_PI_2 && teste+angCam_v<M_PI_2 )
                 angAux_v=teste;
         }
-        glutPostRedisplay();
+     //   glutPostRedisplay();
     }
 }
 
@@ -68,7 +68,7 @@ void teclado_normal_explorador(unsigned char tecla,int x, int y){
         default:
             break;
     }
-    glutPostRedisplay();
+  //  glutPostRedisplay();
 }
 
 void teclado_especial_explorador(int tecla,int x, int y){
@@ -92,7 +92,7 @@ void teclado_especial_explorador(int tecla,int x, int y){
         default:
             break;
     }
-    glutPostRedisplay();
+   // glutPostRedisplay();
 }
 
 void preDefinicoes_Explorador(TiXmlNode *node){

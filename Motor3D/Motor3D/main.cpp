@@ -10,6 +10,7 @@
 #include "motorXML.h"
 #include "camera_explorador.h"
 #include "camera_fps.h"
+#include "luzes.h"
 
 //Inicializaçoes Principais
 TiXmlNode *cena=NULL;
@@ -21,10 +22,6 @@ Escala escalas=NULL, esc_actual=NULL;
 PropModel l_PropModel=NULL, prop_actual=NULL;
 long currentTime=0,test;
 
-//LUZES
-float pos[4]={0,17,0,1},pos1[4]={0,-17,0,1},pos2[4]={17,0,0,1},pos3[4]={-17,0,0,1},
-diff[3]={1,1,1},
-amb[3]={0.06,0.18,0.18};
 
 void changeSize(int w, int h){
     
@@ -72,22 +69,10 @@ void renderScene(void) {
                       0.0f, 1.0f, 0.0f);
         }
     
-    
 	// pÙr instruÁıes de desenho aqui
-    //LUZES
-    glLightfv(GL_LIGHT0, GL_POSITION,pos);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, diff);
-    
-    glLightfv(GL_LIGHT1, GL_POSITION,pos1);
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, diff);
-    
-    glLightfv(GL_LIGHT2, GL_POSITION,pos2);
-    glLightfv(GL_LIGHT2, GL_DIFFUSE, diff);
-    
-    glLightfv(GL_LIGHT3, GL_POSITION,pos3);
-    glLightfv(GL_LIGHT3, GL_DIFFUSE, diff);
 
+    //LUZES
+    defineLuzes();
     
 	rot_actual=rotacoes;
     tra_actual=translacoes;
@@ -138,6 +123,12 @@ void front_menu(int op){
         case 7:
             glDisable(GL_LIGHTING);
             break;
+        case 8:
+            glEnable(GL_TEXTURE_2D);
+            break;
+        case 9:
+            glDisable(GL_TEXTURE_2D);
+            break;
         default:
             break;
     }
@@ -150,7 +141,7 @@ int main(int argc, char* argv[]){
     TiXmlElement *root=NULL;
     TiXmlNode *node=NULL;
     TiXmlAttribute *attr=NULL;
-    int M_Visual, M_Camera, M_Luzes;
+    int M_Visual, M_Camera, M_Luzes, M_Texturas;
     
     
     
@@ -211,12 +202,11 @@ int main(int argc, char* argv[]){
                 tipo_camera=1;
             }
             
+            //Luzes
             if((node=root->FirstChild("luzes"))){
-                
+                glEnable(GL_LIGHTING);
+                preparaLuzes(node);
             }
-            
-            //Carregar todas as estruturas para correr o Motor3D
-            prepara_MotorXML(cena);
             
             
             //MENU
@@ -233,29 +223,36 @@ int main(int argc, char* argv[]){
             glutAddMenuEntry("Ligar",6);
             glutAddMenuEntry("Desligar",7);
             
+            M_Texturas=glutCreateMenu(front_menu);
+            glutAddMenuEntry("Ligar",8);
+            glutAddMenuEntry("Desligar",9);
+            
             glutCreateMenu(front_menu);
             glutAddSubMenu("Visualização",M_Visual);
             glutAddSubMenu("Camera",M_Camera);
             glutAddSubMenu("Luz",M_Luzes);
+            glutAddSubMenu("Texturas",M_Texturas);
             
             glutAttachMenu(GLUT_RIGHT_BUTTON);
             
             //Callback do GLEW - Tem de estar depois de todos os callbacks do GLUT
-            //glewInit();
+            glewInit();
+            ilInit();
+            
+            //Activar Buffers
+            glEnableClientState(GL_VERTEX_ARRAY);
+            glEnableClientState(GL_NORMAL_ARRAY);
+            glEnableClientState(GL_TEXTURE_COORD_ARRAY);
             
             // alguns settings para OpenGL
             glEnable(GL_DEPTH_TEST);
             glEnable(GL_CULL_FACE);
+            glEnable(GL_TEXTURE_2D);
             glClearColor(0.0f,0.0f,0.0f,0.0f);
             
-            //Luzes
-            glEnable(GL_LIGHTING);
-            glEnable(GL_LIGHT0);
-            glEnable(GL_LIGHT1);
-            glEnable(GL_LIGHT2);
-            glEnable(GL_LIGHT3);
             
-            
+            //Carregar todas as estruturas para correr o Motor3D
+            prepara_MotorXML(cena);
 
             // entrar no ciclo do GLUT
             glutMainLoop();

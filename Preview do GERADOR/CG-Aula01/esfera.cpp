@@ -77,11 +77,12 @@ Esfera::Esfera(float raio, int camadas, int fatias){
     glEnableClientState(GL_NORMAL_ARRAY);
     
     int n_pontos=(2*(fatias+1)+(fatias+1)*(camadas-1))*3;
+    int tex_pontos=(2*n_pontos)/3;
     n_indices=(fatias*(camadas-1)*2)*3;
     
     float *vertexB=(float*)malloc(n_pontos*sizeof(float)),
     *normalB=(float*)malloc(n_pontos*sizeof(float)),
-    *texB=(float*)malloc(((n_pontos*2)/3)*sizeof(float));
+    *texB=(float*)malloc(tex_pontos*sizeof(float));
     indices=(unsigned int*)malloc(n_indices*sizeof(unsigned int));
     h_aux+=angulo_h;
     
@@ -154,7 +155,7 @@ Esfera::Esfera(float raio, int camadas, int fatias){
     glBindBuffer(GL_ARRAY_BUFFER,buffers[1]);
     glBufferData(GL_ARRAY_BUFFER,n_pontos*sizeof(float), normalB, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER,buffers[2]);
-    glBufferData(GL_ARRAY_BUFFER,((2*n_pontos)/3)*sizeof(float), texB, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER,tex_pontos*sizeof(float), texB, GL_STATIC_DRAW);
     
     
 //    printf("%d||%d -- %d||%d -- %d\n",n_indices,i,n_pontos,v,fatias);

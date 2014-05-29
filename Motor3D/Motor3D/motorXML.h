@@ -10,8 +10,10 @@
 #define Motor3D_motorXML_h
 
 
-//#include <GL/glew.h>
+#include <glew.h>
 #include <GLUT/glut.h>
+#include <il.h>
+
 #include <iostream>
 #include <string>
 #include <regex>

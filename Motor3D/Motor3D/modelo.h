@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <GLUT/glut.h>
+#include "material.h"
 
 
 //Estrutura para as VBO -> '.vbo'
@@ -45,7 +46,9 @@ typedef struct smodelo{
 
 typedef struct sPropModel{
     Modelo modelo;
+    Material materiais;
     unsigned int texID;
+    
     struct sPropModel *next;
     
 }*PropModel, NPropModel;
@@ -59,7 +62,7 @@ Modelo addVbo(const char* nome, GLuint *buffers, int n_indices, unsigned short *
 Modelo ler_RTime(const char* filename, Modelo lista);
 Modelo ler_VBO(const char* filename, Modelo lista);
 Modelo search_Modelo(const char* nome, Modelo lista);
-void desenha_vbo(Vbo vbo);
+void desenha_vbo(Vbo vbo, unsigned int texID);
 void desenha_RTime(RTime modelo);
 
 

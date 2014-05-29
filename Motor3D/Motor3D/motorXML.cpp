@@ -15,7 +15,6 @@ int first;
 void motor_XML(TiXmlNode* root){
     
     TiXmlNode *child;
-    TiXmlAttribute * attr;
     Modelo modelo;
     const char* tag;
     
@@ -23,16 +22,18 @@ void motor_XML(TiXmlNode* root){
         tag=child->Value();
         
         if (strcmp(tag, "modelo")==0) {
-            attr=child->ToElement()->FirstAttribute();
-            if (strcmp(attr->Name(), "ficheiro")==0) {
-                modelo=search_Modelo(attr->Value(), lista_modelos);
-                if (modelo) {
-                    if(modelo->tipo==1)
-                        desenha_RTime(modelo->u.rTime);
-                    else
-                        desenha_vbo(modelo->u.vbo);
-                }
+            modelo=prop_actual->modelo;
+            if (modelo) {
+                do_Materiais(prop_actual->materiais);
+                if(modelo->tipo==1)
+                    desenha_RTime(modelo->u.rTime);
+                else
+                    desenha_vbo(modelo->u.vbo, prop_actual->texID);
+                
+                do_MattNeutro(prop_actual->materiais);
             }
+            //Actualiza para propModel actual
+            prop_actual=prop_actual->next;
         }else
             if (strcmp(tag, "grupo")==0) {
                 glPushMatrix();
@@ -54,7 +55,6 @@ void motor_XML(TiXmlNode* root){
 
 void prepara_MotorXML(TiXmlNode* root){
     
-    TiXmlNode *child;
     TiXmlAttribute * attr;
     Modelo modelo;
     PropModel propModel=NULL;
@@ -65,53 +65,76 @@ void prepara_MotorXML(TiXmlNode* root){
     float timeTrans=-1;
     int flag;
     
+    unsigned int t,tw,th;
+	unsigned char *texData;
     
-    for (child = root->FirstChild(); child; child=child->NextSibling()) {
-        tag=child->Value();
+    
+    for (root = root->FirstChild(); root; root=root->NextSibling()) {
+        tag=root->Value();
         if (strcmp(tag, "grupo")==0) {
-            prepara_MotorXML((child));
+            prepara_MotorXML((root));
         }else
             if (strcmp(tag, "modelo")==0) {
-                if (strcmp(tag, "modelo")==0) {
-                    propModel=initPropModel();
-                    for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){
-                        if (strcmp(attr->Name(), "ficheiro")==0) {
-                            modelo=search_Modelo(attr->Value(), lista_modelos);
-                            if (!modelo) {
-                                
-                                std::regex e ("(.*)(.vbo)");
+                propModel=initPropModel();
+                for(attr=root->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                    if (strcmp(attr->Name(), "ficheiro")==0) {
+                        modelo=search_Modelo(attr->Value(), lista_modelos);
+                        if (!modelo) {
+                            
+                            std::regex e ("(.*)(.vbo)");
+                            if(std::regex_match(attr->Value(), e) ){
+                                lista_modelos=ler_VBO(attr->Value(),lista_modelos);
+                                propModel->modelo=lista_modelos;
+                            }
+                            else{
+                                std::regex e ("(.*)(.3d)");
                                 if(std::regex_match(attr->Value(), e) ){
-                                    lista_modelos=ler_VBO(attr->Value(),lista_modelos);
+                                    lista_modelos=ler_RTime(attr->Value(),lista_modelos);
                                     propModel->modelo=lista_modelos;
                                 }
-                                else{
-                                    std::regex e ("(.*)(.3d)");
-                                    if(std::regex_match(attr->Value(), e) ){
-                                        lista_modelos=ler_RTime(attr->Value(),lista_modelos);
-                                        propModel->modelo=lista_modelos;
-                                    }
-                                    else
-                                        printf("ERRO! Ficheiro '%s' inexistente\n", attr->Value());
-                                }
-                            }else
-                                propModel->modelo=modelo;
-                            
-                        }else if (strcmp(attr->Name(), "textura")==0) {
-                            //carregar textura
-                            flag=0;
-                        }
+                                else
+                                    printf("ERRO! Ficheiro '%s' inexistente\n", attr->Value());
+                            }
+                        }else
+                            propModel->modelo=modelo;
                         
-                        //Adicionar PropModel
-                        l_PropModel=addPropModel(propModel, l_PropModel);
+                    }else if (strcmp(attr->Name(), "textura")==0) {
+                        //Carregar textura
+                        ilEnable(IL_ORIGIN_SET);
+                        ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
+                        ilGenImages(1,&t);
+                        ilBindImage(t);
+                        ilLoadImage((ILstring)attr->Value());
+                        tw = ilGetInteger(IL_IMAGE_WIDTH);
+                        th = ilGetInteger(IL_IMAGE_HEIGHT);
+                        ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+                        texData = ilGetData();
+                        
+                        glGenTextures(1,&propModel->texID);
+                        
+                        glBindTexture(GL_TEXTURE_2D,propModel->texID);
+                        glTexParameteri(GL_TEXTURE_2D,	GL_TEXTURE_WRAP_S,		GL_REPEAT);
+                        glTexParameteri(GL_TEXTURE_2D,	GL_TEXTURE_WRAP_T,		GL_REPEAT);
+                        
+                        glTexParameteri(GL_TEXTURE_2D,	GL_TEXTURE_MAG_FILTER,   	GL_LINEAR);
+                        glTexParameteri(GL_TEXTURE_2D,	GL_TEXTURE_MIN_FILTER,    	GL_LINEAR);
+                        
+                        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
                         
                     }
                 }
+                //Propriedades dos Materiais
+                propModel->materiais=preparaMaterial(root);
+                
+                //Adicionar PropModel
+                l_PropModel=addPropModel(propModel, l_PropModel);
+                
             }else
                 if (strcmp(tag, "translacao")==0) {
                     x=y=z=0;
                     flag=0;
                     timeTrans=0;
-                    for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                    for(attr=root->ToElement()->FirstAttribute();attr;attr=attr->Next()){
                         if (strcmp(attr->Name(), "tempo")==0)
                             timeTrans=atof(attr->Value());
                         else
@@ -120,8 +143,8 @@ void prepara_MotorXML(TiXmlNode* root){
                                 flag=1;}
                             else
                                 if (strcmp(attr->Name(), "y")==0){
-                                        y=atof(attr->Value());
-                                        flag=1;}
+                                    y=atof(attr->Value());
+                                    flag=1;}
                                 else
                                     if (strcmp(attr->Name(), "z")==0){
                                         z=atof(attr->Value());
@@ -132,13 +155,13 @@ void prepara_MotorXML(TiXmlNode* root){
                         timeTrans=0;
                     listaPontos = NULL;
                     numeroPontos = -1;
-                    numeroPontos = lerPontos(child, &listaPontos);
+                    numeroPontos = lerPontos(root, &listaPontos);
                     translacoes=insereTranslacao(listaPontos,translacoes,numeroPontos, timeTrans, x, y, z);
                 }
                 else
                     if (strcmp(tag, "rotacao")==0) {
                         angulo=x=y=z=0;
-                        for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                        for(attr=root->ToElement()->FirstAttribute();attr;attr=attr->Next()){
                             if (strcmp(attr->Name(), "x")==0)
                                 x=atof(attr->Value());
                             else
@@ -161,7 +184,7 @@ void prepara_MotorXML(TiXmlNode* root){
                     }else
                         if (strcmp(tag, "escala")==0) {
                             x=y=z=1;
-                            for(attr=child->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                            for(attr=root->ToElement()->FirstAttribute();attr;attr=attr->Next()){
                                 if (strcmp(attr->Name(), "x")==0)
                                     x=atof(attr->Value());
                                 else
@@ -173,6 +196,8 @@ void prepara_MotorXML(TiXmlNode* root){
                             }
                             escalas=insereEscala(x,y,z,escalas);
                         }
+
+        
     }
 }
 
