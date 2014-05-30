@@ -8,6 +8,28 @@
 
 #include "patch.h"
 
+float maxLista(float *lista, int n_pontos){
+    float max;
+    int i;
+
+    for(i=0; i<n_pontos; i+=3)
+        if (lista[i]>max)
+            max=lista[i];
+    
+    return max;
+}
+
+float minLista(float *lista, int n_pontos){
+    float min;
+    int i;
+
+    for(i=0; i<n_pontos; i+=3)
+        if (lista[i]<min)
+            min=lista[i];
+    
+    return min;
+}
+
 
 float* getPoints(int *patchs, int n_patch, float *vertices, int n_vertices, int detail, float *normais, float *texB){
    
@@ -214,7 +236,8 @@ void read_Patch(FILE *f_patch, FILE *f, int detail){
     
     
 
-    //Descobrir os maximos e imprimir
+    //Descobrir os maximos e minimos para o ViewFrustumCulling
+    fprintf(f, "%f %f %f %f %f %f\n",maxLista(points, n_pontos),minLista(points, n_pontos),maxLista(points+1, n_pontos),minLista(points+1, n_pontos),maxLista(points+2, n_pontos),minLista(points+2, n_pontos));
 
 	//Imprimir Vertices
 	fprintf(f, "%d\n",n_pontos);

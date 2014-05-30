@@ -217,7 +217,9 @@ Modelo ler_RTime(const char* filename, Modelo lista){
     
     if(f){
         
-        viewFrustum=(ViewFrustum)malloc(sizeof(NViewFrustum)); //De momento, não serve para nada..
+        //Lê os MAX e MIN para o ViewFrustum
+        viewFrustum=(ViewFrustum)malloc(sizeof(NViewFrustum));
+        fscanf(f, "%f %f %f %f %f %f\n", &viewFrustum->maxX, &viewFrustum->minX, &viewFrustum->maxY, &viewFrustum->minY, &viewFrustum->maxZ, &viewFrustum->minZ);
         
         
         fscanf(f, "%d\n", &n_pontos);

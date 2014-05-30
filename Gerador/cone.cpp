@@ -13,13 +13,14 @@ float resN[3];
 
 void cone(float raio_base, float altura, int fatias, int aneis, int camadas, FILE* f){
     float angulo=(2*M_PI)/fatias,x,y=0,l_aux,  alt_aux1,alt_aux2=0,r_aux1,r_aux2=raio_base;
-    altura/=camadas;
+
+    //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
+    fprintf(f, "%f %f %f %d %f %f\n",raio_base, -raio_base,altura,0,raio_base,-raio_base);
+
     
     float i=1,factor_h=(i/camadas);
     float raio = raio_base/aneis;
-
-    //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
-    fprintf(f, "%f %f %f %d %f %f\n",raio, -raio,altura,0,raio,-raio);
+    altura/=camadas;
     
     fprintf(f,"%d\n",(2*fatias*(aneis-1)+fatias)*9+((camadas-1)*fatias*2+fatias)*9);
 
@@ -112,6 +113,10 @@ void coneVBO(float raio, float altura, int fatias, int aneis, int camadas, FILE 
     float texFactor_fatias=1.0f/fatias;
     float texFactor_aneis=1.0f/camadas;
     
+    //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
+    fprintf(f, "%f %f %f %d %f %f\n",raio, -raio,altura,0,raio,-raio);
+
+
     altura/=camadas;
     raio=raio/aneis;
     r_aux=raio;
@@ -128,6 +133,9 @@ void coneVBO(float raio, float altura, int fatias, int aneis, int camadas, FILE 
     
 
     
+ 
+
+
     //--------- Base do cone ------------//
     
     //Primeiro ponto central
@@ -143,7 +151,7 @@ void coneVBO(float raio, float altura, int fatias, int aneis, int camadas, FILE 
         
         vertexB[v++]=r_aux*sin(y);vertexB[v++]=0;vertexB[v++]=r_aux*cos(y);
         normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
-        texB[t++]=l_aux*texFactor_fatias;texB[t++]=1;
+        texB[t++]=l_aux*texFactor_fatias;texB[t++]=1-texFactor_aneis;
         if(l_aux!=fatias){
             indices[i++]=l_aux;
             indices[i++]=avanco+l_aux+1;
@@ -161,7 +169,7 @@ void coneVBO(float raio, float altura, int fatias, int aneis, int camadas, FILE 
             
             vertexB[v++]=r_aux*sin(y); vertexB[v++]=0; vertexB[v++]=r_aux*cos(y);
             normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
-            texB[t++]=l_aux*texFactor_fatias;texB[t++]=1-j*texFactor_aneis;
+            texB[t++]=l_aux*texFactor_fatias;texB[t++]=1-(j+1)*texFactor_aneis;
             
             if(l_aux!=fatias){
                 indices[i++]=avanco-(fatias+1)+l_aux;
@@ -230,9 +238,6 @@ void coneVBO(float raio, float altura, int fatias, int aneis, int camadas, FILE 
         avanco+=fatias+1;
     }
     
-    //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
-    fprintf(f, "%f %f %f %d %f %f\n",raio, -raio,altura,0,raio,-raio);
- 
     //Imprimir os vertices, indices, normais e coordenadas de textura
     fprintf(f, "%d\n",n_pontos);
     for(i=0;i<n_pontos;i+=3)

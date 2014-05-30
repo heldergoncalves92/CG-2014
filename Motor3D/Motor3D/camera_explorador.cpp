@@ -9,7 +9,7 @@
 #include "camera_explorador.h"
 
 
-float raio=180,angCam_h=0,angCam_v=0.5,angAux_h=0,angAux_v=0,x_tela,y_tela,look[]={0,0,0},avanco=0.5;
+float raio=8,angCam_h=0,angCam_v=0.5,angAux_h=0,angAux_v=0,x_tela,y_tela,look[]={0,0,0},avanco=0.5;
 int estado_botao=0;
 
 

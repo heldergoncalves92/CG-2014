@@ -102,10 +102,10 @@ void desenhaCaixa(ViewFrustum view){
         glEnd();
         
         glBegin(GL_LINE_LOOP);
-        glVertex3f(view->maxX, view->maxY, -1);
-        glVertex3f(view->maxX, view->minY, -1);
-        glVertex3f(view->minX, view->minY, -1);
-        glVertex3f(view->minX, view->maxY, -1);
+        glVertex3f(view->maxX, view->maxY, view->minZ);
+        glVertex3f(view->maxX, view->minY, view->minZ);
+        glVertex3f(view->minX, view->minY, view->minZ);
+        glVertex3f(view->minX, view->maxY, view->minZ);
         glEnd();
         
         glBegin(GL_LINE_STRIP);

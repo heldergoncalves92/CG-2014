@@ -100,10 +100,10 @@ int main(int argc, char *argv[]){
 									fclose(f);
 
 								}else
-									printf("ERRO!! Parametros não estão correctos!\nEx: paralelepipedo [altura] [lado_X] [lado_Z] [camadas] [fatias_x] [fatias_z] [output]\n");
+									printf("ERRO!! Parametros não estão correctos!\nEx: paralelepipedo [lado_Y] [lado_X] [lado_Z] [camadas] [fatias_X] [fatias_Z] [output]\n");
 							}
 							else
-								printf("ERRO!! Número de argumentos errado\nEx: paralelepipedo [altura] [lado_X] [lado_Z] [camadas] [fatias_x] [fatias_z] [output]\n");
+								printf("ERRO!! Número de argumentos errado\nEx: paralelepipedo [lado_Y] [lado_X] [lado_Z] [camadas] [fatias_X] [fatias_Z] [output]\n");
 						}
 						else
 							if(strcmp(op,"cone")==0){

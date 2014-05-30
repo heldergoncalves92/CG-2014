@@ -14,10 +14,11 @@ void cilindro(float raio,int fatias,int camadas,float altura,int aneis, FILE* f)
     float angulo=(2*M_PI)/fatias,x,y=0,l_aux,h_aux1,h_aux2=0, r_aux1,r_aux2;
     int aneis_aux=aneis-1;
 
-    raio=raio/aneis;
-
     //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
     fprintf(f, "%f %f %f %d %f %f\n",raio, -raio,altura,0,raio,-raio);
+    
+    raio=raio/aneis;
+
     
     fprintf(f,"%d\n",(2*fatias*(aneis-1)+fatias)*9*2 + 2*fatias*camadas*9);
 

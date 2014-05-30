@@ -83,6 +83,10 @@ void circuloVBO(float raio, int fatias,int aneis, float altura,int ori, FILE *f)
     float texFactor_fatias=1.0f/fatias;
     int i=0,v=0,j=0,n=0,t=0,avanco=0;
     
+    //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
+    fprintf(f, "%f %f %f %f %f %f\n",raio, -raio,altura,altura,raio,-raio);
+ 
+    
     raio=raio/aneis;
     r_aux=raio;
     int n_pontos=((fatias+1)+(fatias+1)*aneis)*3;
@@ -196,9 +200,6 @@ void circuloVBO(float raio, int fatias,int aneis, float altura,int ori, FILE *f)
         }
     }
 
-    //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
-    fprintf(f, "%f %f %f %f %f %f\n",raio, -raio,altura,altura,raio,-raio);
- 
    //Imprimir os vertices, indices, normais e coordenadas de textura
     fprintf(f, "%d\n",n_pontos);
     for(i=0;i<n_pontos;i+=3)

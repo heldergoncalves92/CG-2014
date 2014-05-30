@@ -152,10 +152,11 @@ Plano::Plano(float altura, float lado, int camadas, int fatias, float z_index, i
     
     int n_pontos=(fatias+1)*(camadas+1)*3;
     n_indices=(2*fatias*camadas)*3;
+    int tex_pontos=(n_pontos*2)/3;
     
     float *vertexB=(float*)malloc(n_pontos*sizeof(float)),
     *normalB=(float*)malloc(n_pontos*sizeof(float)),
-    *texB=(float*)malloc(((n_pontos*2)/3)*sizeof(float));
+    *texB=(float*)malloc(tex_pontos*sizeof(float));
 
     indices=(unsigned int*)malloc(n_indices*sizeof(unsigned int));
     
@@ -332,7 +333,7 @@ void paralelepipedo(float altura, float lado_x, float lado_z, int sep_h, int sep
 }
 
 Paralelepipedo::Paralelepipedo(float lado_y, float lado_x, float lado_z, int camadas, int fatias_x, int fatias_z){
-    int     k=0,j=0,v=0, i=0, avanco=0,n=0;
+    int     k=0,j=0,v=0, i=0, avanco=0,n=0,t=0;
     float   change_x=lado_x/fatias_x,
             change_z=lado_z/fatias_z,
             change_y=lado_y/camadas,
@@ -340,16 +341,24 @@ Paralelepipedo::Paralelepipedo(float lado_y, float lado_x, float lado_z, int cam
             begin_x=-lado_x/2,
             begin_z=-lado_z/2,
             altura_aux,lado_aux;
+    float texFactor_fatias_x=1.0f/fatias_x;
+    float texFactor_fatias_z=1.0f/fatias_z;
+    float texFactor_fatias_y=1.0f/camadas;
+    
 
     //Activar Buffers
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     
     int n_pontos=(2*(fatias_x+1)*(camadas+1) + 2*(fatias_z+1)*(camadas+1) + 2*(fatias_x+1)*(fatias_z+1))*3;
     n_indices=(2*fatias_x*camadas + 2*fatias_z*camadas + 2* fatias_x*fatias_z)*3*2;
+    int tex_pontos=(n_pontos*2)/3;
     
     float *vertexB=(float*)malloc(n_pontos*sizeof(float)),
-    *normalB=(float*)malloc(n_pontos*sizeof(float));
+    *normalB=(float*)malloc(n_pontos*sizeof(float)),
+    *texB=(float*)malloc(tex_pontos*sizeof(float));
+
     indices=(unsigned int*)malloc(n_indices*sizeof(unsigned int));
     
     //1
@@ -360,6 +369,7 @@ Paralelepipedo::Paralelepipedo(float lado_y, float lado_x, float lado_z, int cam
             //Inserir Ponto
             vertexB[v++]=lado_aux;vertexB[v++]=altura_aux;vertexB[v++]=fabs(begin_z);
             normalB[n++]=0;normalB[n++]=0;normalB[n++]=1;
+            texB[t++]=k*texFactor_fatias_x;texB[t++]=j*texFactor_fatias_y;
             if(k!=fatias_x && j!=camadas){
                 indices[i++]=avanco+k;
                 indices[i++]=avanco+k+1;
@@ -383,6 +393,7 @@ Paralelepipedo::Paralelepipedo(float lado_y, float lado_x, float lado_z, int cam
             //Inserir Ponto
             vertexB[v++]=lado_aux;vertexB[v++]=altura_aux;vertexB[v++]=begin_z;
             normalB[n++]=0;normalB[n++]=0;normalB[n++]=-1;
+            texB[t++]=k*texFactor_fatias_x;texB[t++]=j*texFactor_fatias_y;
             if(k!=fatias_x && j!=camadas){
                 indices[i++]=avanco+k;
                 indices[i++]=avanco+fatias_x+1+k;
@@ -406,6 +417,7 @@ Paralelepipedo::Paralelepipedo(float lado_y, float lado_x, float lado_z, int cam
             //Inserir Ponto
             vertexB[v++]=fabs(begin_x);vertexB[v++]=altura_aux;vertexB[v++]=lado_aux;
             normalB[n++]=1;normalB[n++]=0;normalB[n++]=0;
+            texB[t++]=k*texFactor_fatias_z;texB[t++]=j*texFactor_fatias_y;
             if(k!=fatias_z && j!=camadas){
                 indices[i++]=avanco+k;
                 indices[i++]=avanco+fatias_z+1+k;
@@ -429,6 +441,7 @@ Paralelepipedo::Paralelepipedo(float lado_y, float lado_x, float lado_z, int cam
             //Inserir Ponto
             vertexB[v++]=begin_x;vertexB[v++]=altura_aux;vertexB[v++]=lado_aux;
             normalB[n++]=-1;normalB[n++]=0;normalB[n++]=0;
+            texB[t++]=k*texFactor_fatias_z;texB[t++]=j*texFactor_fatias_y;
             if(k!=fatias_z && j!=camadas){
                 indices[i++]=avanco+k;
                 indices[i++]=avanco+k+1;
@@ -453,6 +466,7 @@ Paralelepipedo::Paralelepipedo(float lado_y, float lado_x, float lado_z, int cam
             //Inserir Ponto
             vertexB[v++]=altura_aux;vertexB[v++]=fabsf(begin_y);vertexB[v++]=lado_aux;
             normalB[n++]=0;normalB[n++]=1;normalB[n++]=0;
+            texB[t++]=k*texFactor_fatias_z;texB[t++]=j*texFactor_fatias_x;
             if(k!=fatias_z && j!=fatias_x){
                 indices[i++]=avanco+k;
                 indices[i++]=avanco+k+1;
@@ -477,6 +491,7 @@ Paralelepipedo::Paralelepipedo(float lado_y, float lado_x, float lado_z, int cam
             //Inserir Ponto
             vertexB[v++]=altura_aux;vertexB[v++]=begin_y;vertexB[v++]=lado_aux;
             normalB[n++]=0;normalB[n++]=-1;normalB[n++]=0;
+            texB[t++]=k*texFactor_fatias_z;texB[t++]=j*texFactor_fatias_x;
             if(k!=fatias_z && j!=fatias_x){
                 indices[i++]=avanco+k;
                 indices[i++]=avanco+fatias_z+1+k;
@@ -492,12 +507,15 @@ Paralelepipedo::Paralelepipedo(float lado_y, float lado_x, float lado_z, int cam
         altura_aux+=change_x;
     }
 
-    glGenBuffers(2, buffers);
+    glGenBuffers(3, buffers);
     glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
     glBufferData(GL_ARRAY_BUFFER,n_pontos*sizeof(float), vertexB, GL_STATIC_DRAW);
     
     glBindBuffer(GL_ARRAY_BUFFER,buffers[1]);
     glBufferData(GL_ARRAY_BUFFER,n_pontos*sizeof(float), normalB, GL_STATIC_DRAW);
+    
+    glBindBuffer(GL_ARRAY_BUFFER,buffers[2]);
+    glBufferData(GL_ARRAY_BUFFER,tex_pontos*sizeof(float), texB, GL_STATIC_DRAW);
 }
 
 void Paralelepipedo::desenha(){

@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Motor3D/motorXML.cpp"
-            timestampString = "423102235.375594"
+            timestampString = "423152474.564867"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
             landmarkName = "prepara_MotorXML(TiXmlNode* root)"
             landmarkType = "7">
          </BreakpointContent>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Motor3D/motorXML.cpp"
-            timestampString = "423102235.375594"
+            timestampString = "423152474.564867"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
             landmarkName = "prepara_MotorXML(TiXmlNode* root)"
             landmarkType = "7">
          </BreakpointContent>
@@ -302,6 +302,22 @@
             startingLineNumber = "26"
             endingLineNumber = "26"
             landmarkName = "mov_rato_fps(int x, int y)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Motor3D/viewFrustumCulling.cpp"
+            timestampString = "423153551.051779"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "desenhaCaixa(ViewFrustum view)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

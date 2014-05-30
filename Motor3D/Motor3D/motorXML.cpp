@@ -24,7 +24,6 @@ void motor_XML(TiXmlNode* root){
         if (strcmp(tag, "modelo")==0) {
             modelo=prop_actual->modelo;
             if (modelo && testaModelo(modelo->pontos)==INSIDE) {
-                glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,'3');
                 do_Materiais(prop_actual->materiais);
                 if(modelo->tipo==1)
                     desenha_RTime(modelo->u.rTime);
