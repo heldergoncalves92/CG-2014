@@ -93,7 +93,39 @@ Material preparaMaterial(TiXmlNode *root){
                         //Adicionar à lista ligada a propriedade;
                         matt->next=l_materiais;
                         l_materiais=matt;
-                    }
+                    }else
+                        if(strcmp("ambiente", tag)==0){
+                            matt=initMaterial(GL_AMBIENT);
+                            for(attr=root->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                                if (strcmp(attr->Name(), "r")==0)
+                                    matt->cor[0]=atof(attr->Value());
+                                else
+                                    if (strcmp(attr->Name(), "g")==0)
+                                        matt->cor[1]=atof(attr->Value());
+                                    else
+                                        if (strcmp(attr->Name(), "b")==0)
+                                            matt->cor[2]=atof(attr->Value());
+                            }
+                            //Adicionar à lista ligada a propriedade;
+                            matt->next=l_materiais;
+                            l_materiais=matt;
+                        }else
+                            if(strcmp("ambDiff", tag)==0){
+                                matt=initMaterial(GL_AMBIENT_AND_DIFFUSE);
+                                for(attr=root->ToElement()->FirstAttribute();attr;attr=attr->Next()){
+                                    if (strcmp(attr->Name(), "r")==0)
+                                        matt->cor[0]=atof(attr->Value());
+                                    else
+                                        if (strcmp(attr->Name(), "g")==0)
+                                            matt->cor[1]=atof(attr->Value());
+                                        else
+                                            if (strcmp(attr->Name(), "b")==0)
+                                                matt->cor[2]=atof(attr->Value());
+                                }
+                                //Adicionar à lista ligada a propriedade;
+                                matt->next=l_materiais;
+                                l_materiais=matt;
+                            }
         
     }
     return l_materiais;

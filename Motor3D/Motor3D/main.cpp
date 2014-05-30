@@ -26,7 +26,7 @@ PropModel l_PropModel=NULL, prop_actual=NULL;
 long currentTime=0,test;
 
 //Numero de modelos desenhados
-int n_desenhos=0, total_desenhos=0;
+int n_desenhos=0, total_desenhos=0, enableViewFrustum=0;
 char print[20]="";
 
 void changeSize(int w, int h){
@@ -148,6 +148,12 @@ void front_menu(int op){
         case 9:
             glDisable(GL_TEXTURE_2D);
             break;
+        case 10:
+            enableViewFrustum=0;
+            break;
+        case 11:
+            enableViewFrustum=1;
+            break;
         default:
             break;
     }
@@ -160,7 +166,8 @@ int main(int argc, char* argv[]){
     TiXmlElement *root=NULL;
     TiXmlNode *node=NULL;
     TiXmlAttribute *attr=NULL;
-    int M_Visual, M_Camera, M_Luzes, M_Texturas;
+    const char *tag=NULL;
+    int M_Visual, M_Camera, M_Luzes, M_Texturas, M_ViewFrustum;
     
     
     
@@ -170,7 +177,7 @@ int main(int argc, char* argv[]){
     //}
     
 	//if(doc.LoadFile(argv[1])){
-    if(doc.LoadFile("test.xml")){
+    if(doc.LoadFile("sistema_solar.xml")){
         
         root=doc.RootElement();
         cena=root->FirstChild("cena");
@@ -191,29 +198,33 @@ int main(int argc, char* argv[]){
             glutIdleFunc(renderScene);
             
             // funções do teclado e rato
-            if((node=root->FirstChild("camera")) && (attr=node->ToElement()->FirstAttribute())){
-                if (strcmp(attr->Name(), "tipo")==0) {
-                    if(strcmp(attr->Value(), "fps")==0){
-                        preDefinicoes_FPS(node);
-                        glutKeyboardFunc(teclado_normal_fps);
-                        glutSpecialFunc(teclado_especial_fps);
-                        glutMouseFunc(rato_fps);
-                        glutMotionFunc(mov_rato_fps);
-                        tipo_camera=2;
-                    }else
-                        if (strcmp(attr->Value(), "explorador")==0){
-                            preDefinicoes_Explorador(node);
-                            glutKeyboardFunc(teclado_normal_explorador);
-                            glutSpecialFunc(teclado_especial_explorador);
-                            glutMouseFunc(rato_explorador);
-                            glutMotionFunc(mov_rato_explorador);
-                            tipo_camera=1;
+            if((node=root->FirstChild("cameras"))){
+                for (node=node->FirstChild(); node; node=node->NextSibling()) {
+                    tag=node->Value();
+                    if(strcmp("camera", tag)==0 && (attr=node->ToElement()->FirstAttribute())){
+                        if (strcmp(attr->Name(), "tipo")==0) {
+                            if(strcmp(attr->Value(), "fps")==0){
+                                preDefinicoes_FPS(node);
+                                glutKeyboardFunc(teclado_normal_fps);
+                                glutSpecialFunc(teclado_especial_fps);
+                                glutMouseFunc(rato_fps);
+                                glutMotionFunc(mov_rato_fps);
+                                tipo_camera=2;
+                            }else
+                                if (strcmp(attr->Value(), "explorador")==0){
+                                    preDefinicoes_Explorador(node);
+                                    glutKeyboardFunc(teclado_normal_explorador);
+                                    glutSpecialFunc(teclado_especial_explorador);
+                                    glutMouseFunc(rato_explorador);
+                                    glutMotionFunc(mov_rato_explorador);
+                                    tipo_camera=1;
+                                }
                         }
+                    }
+
                 }
-            }
-            
-            //Caso não esteja definida nenhuma camera, o modo explorador fica activo por defeito
-            if(tipo_camera==0){
+            }else{
+                //Caso não esteja definida nenhuma camera, o modo explorador fica activo por defeito
                 glutKeyboardFunc(teclado_normal_explorador);
                 glutSpecialFunc(teclado_especial_explorador);
                 glutMouseFunc(rato_explorador);
@@ -246,11 +257,16 @@ int main(int argc, char* argv[]){
             glutAddMenuEntry("Ligar",8);
             glutAddMenuEntry("Desligar",9);
             
+            M_ViewFrustum=glutCreateMenu(front_menu);
+            glutAddMenuEntry("Ligar",10);
+            glutAddMenuEntry("Desligar",11);
+            
             glutCreateMenu(front_menu);
             glutAddSubMenu("Visualização",M_Visual);
             glutAddSubMenu("Camera",M_Camera);
             glutAddSubMenu("Luz",M_Luzes);
             glutAddSubMenu("Texturas",M_Texturas);
+            glutAddSubMenu("ViewFrustumCulling",M_ViewFrustum);
             
             glutAttachMenu(GLUT_RIGHT_BUTTON);
             

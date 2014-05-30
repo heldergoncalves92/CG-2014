@@ -23,7 +23,7 @@ void motor_XML(TiXmlNode* root){
         
         if (strcmp(tag, "modelo")==0) {
             modelo=prop_actual->modelo;
-            if (modelo && testaModelo(modelo->pontos)==INSIDE) {
+            if (modelo && ( enableViewFrustum ||testaModelo(modelo->pontos)==INSIDE)) {
                 do_Materiais(prop_actual->materiais);
                 if(modelo->tipo==1)
                     desenha_RTime(modelo->u.rTime);
@@ -132,15 +132,16 @@ void prepara_MotorXML(TiXmlNode* root){
                 }
                 for (child=root->FirstChild(); child; child=child->NextSibling()) {
                     tag=child->Value();
+                    
                     //Propiedades do Picking
                     if(strcmp("picking", tag)==0){
                         propModel->picking=preparaPicking(child);
+                    }else
+                        //Propriedades dos Materiais
+                        if(strcmp("materiais", tag)==0){
+                        propModel->materiais=preparaMaterial(child);
                     }
                 }
-                
-                //Propriedades dos Materiais
-                propModel->materiais=preparaMaterial(root);
-                
                 
                 //Adicionar PropModel
                 l_PropModel=addPropModel(propModel, l_PropModel);
