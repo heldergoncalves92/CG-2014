@@ -9,7 +9,7 @@
 #include "camera_explorador.h"
 
 
-float raio=180,raioAux=0,angCam_h=0,angCam_v=0.5,angAux_h=0,angAux_v=0,x_tela,y_tela,look[]={0,0,0},avanco=0.5;
+float raio=180,angCam_h=0,angCam_v=0.5,angAux_h=0,angAux_v=0,x_tela,y_tela,look[]={0,0,0},avanco=0.5;
 int estado_botao=0;
 
 
@@ -17,7 +17,7 @@ int estado_botao=0;
 
 void modo_explorador(){
     //Câmera em modo explorador
-	gluLookAt(look[0]+(raio+raioAux)*sin(angCam_h+angAux_h)*cos(angCam_v+angAux_v),look[1]+(raio+raioAux)*sin(angCam_v+angAux_v),look[2]+(raio+raioAux)*cos(angCam_h+angAux_h)*cos(angCam_v+angAux_v),
+	gluLookAt(look[0]+(raio)*sin(angCam_h+angAux_h)*cos(angCam_v+angAux_v),look[1]+(raio)*sin(angCam_v+angAux_v),look[2]+(raio)*cos(angCam_h+angAux_h)*cos(angCam_v+angAux_v),
 	          look[0], look[1], look[2],
               0.0f, 1.0f, 0.0f);
 }
@@ -37,6 +37,10 @@ void rato_explorador(int botao, int estado, int x, int y){
             angAux_h=0;
             angAux_v=0;
         }
+    }else{
+        if (estado==GLUT_DOWN)
+            do_Picking(x, y);
+    
     }
 }
 

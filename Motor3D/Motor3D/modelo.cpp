@@ -7,16 +7,19 @@
 //
 
 #include "modelo.h"
+int cor_picks=1;
 
 PropModel initPropModel(){
     PropModel aux=(PropModel)malloc(sizeof(NPropModel));
     aux->modelo=NULL;
     aux->materiais=NULL;
+    aux->picking=NULL;
     aux->texID=0;
     aux->next=NULL;
     
     return aux;
 }
+
 
 PropModel addPropModel(PropModel novo, PropModel lista){
     PropModel aux=lista;
@@ -247,3 +250,57 @@ Modelo search_Modelo(const char* nome, Modelo lista){
     }
     return NULL;
 }
+
+Picking initPicking(){
+    
+    Picking picking=(Picking)malloc(sizeof(NPicking));
+    picking->cor=cor_picks;
+    picking->descricao="Sem descrição";
+    picking->titulo="Sem titulo";
+    cor_picks++;
+    
+    return picking;
+    
+}
+
+
+Picking preparaPicking(TiXmlNode *root){
+    
+    Picking picking=initPicking();
+    const char* tag=NULL;
+    int flag=0;
+    
+    
+    for(root=root->FirstChild(); root; root=root->NextSibling()){
+
+        tag=root->Value();
+        if(strcmp("descricao", tag)==0){
+            flag=1;
+            picking->descricao=root->FirstChild()->Value();
+
+        }else if(strcmp("titulo", tag)==0){
+            flag=1;
+            picking->titulo=root->FirstChild()->Value();
+            
+        }
+    }
+    
+    
+    if(flag)
+        return picking;
+    
+    free(picking);
+    return NULL;
+    
+}
+
+
+    
+
+
+
+
+
+
+
+

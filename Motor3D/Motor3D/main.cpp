@@ -12,9 +12,12 @@
 #include "camera_fps.h"
 #include "luzes.h"
 
+//#include <freeglut.h>
+
 //Inicializaçoes Principais
 TiXmlNode *cena=NULL;
 int tipo_camera=0;
+//char* print_ecra="";
 
 Rotacao *rotacoes=NULL, *rot_actual=NULL;
 Translacao *translacoes=NULL, *tra_actual=NULL;
@@ -74,11 +77,7 @@ void renderScene(void) {
     
 	// pÙr instruÁıes de desenho aqui
 
-    glBegin(GL_POINT);
-    
-    glVertex3f(0, 20, 0);
-    glEnd();
-    //LUZES
+        //LUZES
     defineLuzes();
     
 	rot_actual=rotacoes;
@@ -92,9 +91,21 @@ void renderScene(void) {
     currentTime = glutGet(GLUT_ELAPSED_TIME);
     motor_XML(cena);
     
+    
+    
+    
     sprintf(print, "Galaxy 3D ® => %d/%d desenhados\n",n_desenhos, total_desenhos);
     glutSetWindowTitle(print);
     
+  /*  setOrthographicProjection();
+    
+	glPushMatrix();
+	glLoadIdentity();
+	renderBitmapString(5,30,GLUT_BITMAP_HELVETICA_18,"Lighthouse3D");
+	glPopMatrix();
+    
+	restorePerspectiveProjection();
+    */
 	// End of frame
 	glutSwapBuffers();
 }
@@ -259,8 +270,9 @@ int main(int argc, char* argv[]){
             glClearColor(0.0f,0.0f,0.0f,0.0f);
             
             
-            //Carregar todas as estruturas para correr o Motor3D
+            //Carregar todas as estruturas para correr o Motor3D e prepara o Picking
             prepara_MotorXML(cena);
+            initPickingCena(cena);
 
             // entrar no ciclo do GLUT
             glutMainLoop();

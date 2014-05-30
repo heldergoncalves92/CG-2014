@@ -170,19 +170,25 @@ void renderCatmullRomCurve(Translacao* t) {
 
 void do_line(Translacao* t){
     
+    int luz=1, textura=1;
+    if(!glIsEnabled(GL_LIGHTING))
+        luz=0;
     
+    if(!glIsEnabled(GL_TEXTURE_2D))
+        textura=0;
+    
+    glDisable(GL_LIGHTING);
+    glDisable(GL_TEXTURE_2D);
     
     glBindBuffer(GL_ARRAY_BUFFER,t->buffer[0]);
     glVertexPointer(3,GL_FLOAT,0,0);
+    glDrawArrays(GL_LINE_LOOP, 0, 2000);
     
-    if(glIsEnabled(GL_LIGHTING)){
-        glDisable(GL_LIGHTING);
-        glDrawArrays(GL_LINE_LOOP, 0, 2000);
+    if(luz)
         glEnable(GL_LIGHTING);
-    }else
-        glDrawArrays(GL_LINE_LOOP, 0, 2000);
     
-   
+    if(textura)
+        glEnable(GL_TEXTURE_2D);
 }
 
 Translacao* insereTranslacao(Point *listaPontos, Translacao *translacoes, int numeroPontos, float tempo, float x, float y, float z){

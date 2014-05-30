@@ -9,9 +9,8 @@
 #ifndef Motor3D_camera_h
 #define Motor3D_camera_h
 
-#include <math.h>
-#include <GLUT/glut.h>
-#include "tinyxml/tinyxml.h"
+
+#include "picking.h"
 
 
 

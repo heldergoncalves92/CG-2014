@@ -9,9 +9,9 @@
 #ifndef Motor3D_camera_fps_h
 #define Motor3D_camera_fps_h
 
-#include <math.h>
-#include <GLUT/glut.h>
-#include "tinyxml/tinyxml.h"
+
+#include "picking.h"
+
 
 //Modo FPS
 void modo_fps();

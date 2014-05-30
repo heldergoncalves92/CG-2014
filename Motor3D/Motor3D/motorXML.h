@@ -11,7 +11,6 @@
 
 
 #include <glew.h>
-#include <GLUT/glut.h>
 #include <il.h>
 
 #include <iostream>
@@ -23,13 +22,16 @@
 #include "rotacoes.h"
 #include "escala.h"
 
+
+extern Picking *pickings;
 extern Rotacao *rotacoes, *rot_actual;
 extern Translacao *translacoes, *tra_actual;
 extern Escala escalas, esc_actual;
 extern PropModel l_PropModel, prop_actual;
 extern long currentTime;
-
+extern int tipo_camera;
 extern int n_desenhos, total_desenhos;
+extern char* print_ecra;
 void motor_XML(TiXmlNode *doc);
 void prepara_MotorXML(TiXmlNode* root);
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C05EF051937AC770036B6D1 /* picking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C05EF031937AC770036B6D1 /* picking.cpp */; };
 		2C48576018D10A5D00D87F19 /* motorXML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C48575F18D10A5D00D87F19 /* motorXML.cpp */; };
 		2C490CC8191BDE8700B9FFAB /* escala.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C490CC6191BDE8700B9FFAB /* escala.cpp */; };
 		2C6E6AE918F5BEED00E11652 /* modelo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C6E6AE718F5BEED00E11652 /* modelo.cpp */; };
@@ -43,6 +44,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2C05EF031937AC770036B6D1 /* picking.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = picking.cpp; sourceTree = "<group>"; };
+		2C05EF041937AC770036B6D1 /* picking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = picking.h; sourceTree = "<group>"; };
 		2C48575E18D10A4800D87F19 /* motorXML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = motorXML.h; sourceTree = "<group>"; };
 		2C48575F18D10A5D00D87F19 /* motorXML.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = motorXML.cpp; sourceTree = "<group>"; };
 		2C490CC6191BDE8700B9FFAB /* escala.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = escala.cpp; sourceTree = "<group>"; };
@@ -140,6 +143,8 @@
 				2CCA882519352E2C009840F9 /* material.h */,
 				2CCA8827193627A4009840F9 /* viewFrustumCulling.cpp */,
 				2CCA8828193627A4009840F9 /* viewFrustumCulling.h */,
+				2C05EF031937AC770036B6D1 /* picking.cpp */,
+				2C05EF041937AC770036B6D1 /* picking.h */,
 			);
 			path = Motor3D;
 			sourceTree = "<group>";
@@ -209,6 +214,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C6E6AE918F5BEED00E11652 /* modelo.cpp in Sources */,
+				2C05EF051937AC770036B6D1 /* picking.cpp in Sources */,
 				3C56FE11190C0ECE005A4AF2 /* rotacoes.cpp in Sources */,
 				2CCA882619352E2C009840F9 /* material.cpp in Sources */,
 				3CE84AFA1908144200D511E3 /* catmull.cpp in Sources */,
@@ -309,6 +315,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					/usr/local/Cellar/glew/1.10.0/include/GL/,
 					/usr/local/Cellar/devil/1.7.8_1/include/IL/,
+					/usr/local/Cellar/freeglut/2.8.1/include/GL,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -329,6 +336,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					/usr/local/Cellar/glew/1.10.0/include/GL/,
 					/usr/local/Cellar/devil/1.7.8_1/include/IL/,
+					/usr/local/Cellar/freeglut/2.8.1/include/GL,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

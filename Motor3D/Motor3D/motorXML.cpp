@@ -24,6 +24,7 @@ void motor_XML(TiXmlNode* root){
         if (strcmp(tag, "modelo")==0) {
             modelo=prop_actual->modelo;
             if (modelo && testaModelo(modelo->pontos)==INSIDE) {
+                glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,'3');
                 do_Materiais(prop_actual->materiais);
                 if(modelo->tipo==1)
                     desenha_RTime(modelo->u.rTime);
@@ -57,6 +58,7 @@ void motor_XML(TiXmlNode* root){
 
 void prepara_MotorXML(TiXmlNode* root){
     
+    TiXmlNode *child=NULL;
     TiXmlAttribute * attr;
     Modelo modelo;
     PropModel propModel=NULL;
@@ -129,8 +131,17 @@ void prepara_MotorXML(TiXmlNode* root){
                         
                     }
                 }
+                for (child=root->FirstChild(); child; child=child->NextSibling()) {
+                    tag=child->Value();
+                    //Propiedades do Picking
+                    if(strcmp("picking", tag)==0){
+                        propModel->picking=preparaPicking(child);
+                    }
+                }
+                
                 //Propriedades dos Materiais
                 propModel->materiais=preparaMaterial(root);
+                
                 
                 //Adicionar PropModel
                 l_PropModel=addPropModel(propModel, l_PropModel);

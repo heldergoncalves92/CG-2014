@@ -9,7 +9,7 @@
 #include "camera_fps.h"
 
 float px=0,py=0,pz=0, angCamFPS_h=0, angCamFPS_v=0, x_telaFPS,y_telaFPS,velocidade_FPS=1;
-
+int estado_botaoFPS=0;
 void modo_fps(){
     
     //Câmera em modo explorador
@@ -24,16 +24,18 @@ void modo_fps(){
 void mov_rato_fps(int x, int y){
     float teste;
     
-    if(x_telaFPS!=x){
-        angCamFPS_h+= (x_telaFPS-x)*0.002;
-        x_telaFPS=x;
-    }
-    
-    if(y_telaFPS!=y){
-        teste= (y-y_telaFPS)*0.002;
-        if(teste+angCamFPS_v>-M_PI_2 && teste+angCamFPS_v<M_PI_2 ){
-            angCamFPS_v-=teste;
-            y_telaFPS=y;
+    if(estado_botaoFPS){
+        if(x_telaFPS!=x){
+            angCamFPS_h+= (x_telaFPS-x)*0.002;
+            x_telaFPS=x;
+        }
+        
+        if(y_telaFPS!=y){
+            teste= (y-y_telaFPS)*0.002;
+            if(teste+angCamFPS_v>-M_PI_2 && teste+angCamFPS_v<M_PI_2 ){
+                angCamFPS_v-=teste;
+                y_telaFPS=y;
+            }
         }
     }
     
@@ -43,11 +45,19 @@ void mov_rato_fps(int x, int y){
 }
 
 void rato_fps(int botao, int estado, int x, int y){
-    if (botao==GLUT_LEFT_BUTTON)
+    if (botao==GLUT_LEFT_BUTTON){
         if (estado==GLUT_DOWN){
+            estado_botaoFPS=1;
             x_telaFPS=x;
             y_telaFPS=y;
-        }
+        }else
+            estado_botaoFPS=0;
+    }else{
+        if (estado==GLUT_DOWN)
+            do_Picking(x, y);
+        
+    }
+    
         
 }
 

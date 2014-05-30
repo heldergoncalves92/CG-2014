@@ -14,12 +14,15 @@ float* getPoints(int *patchs, int n_patch, float *vertices, int n_vertices, int 
     float Ax,Ay,Az,Bx,By,Bz,Cx,Cy,Cz,Dx,Dy,Dz,Ex,Ey,Ez,Fx,Fy,Fz,Gx,Gy,Gz,Hx,Hy,Hz,Ix,Iy,Iz,Jx,Jy,Jz,Kx,Ky,Kz,Lx,Ly,Lz,Mx,My,Mz,Nx,Ny,Nz,Ox,Oy,Oz,Px,Py,Pz;
 	float change = 1.0 / detail, *points=(float*)malloc(n_patch*(3*(detail+1)*(detail+1))*sizeof(float));
 	float a,b,c,d, Xta,Yta,Zta, Xtc,Ytc,Ztc, Xn,Yn,Zn, modulo;
-	int v=0,n=0,t=0,i,j,k;
+	int v=0,n=0,t=0,i,j,k,texX,texY;
     
 	
                           
     for(k=0;k<n_patch;k++){
-    
+        
+        //Para as texturas
+        texX=texY=0;
+
         // Variables
         a = 0.0;
         b = 1.0 - a;
@@ -146,12 +149,18 @@ float* getPoints(int *patchs, int n_patch, float *vertices, int n_vertices, int 
                 normais[n++]=-Yn/modulo;
                 normais[n++]=-Zn/modulo;
 
-                texB[t++]=0;
+                texB[t++]=texX++;
+                texB[t++]=texY;
+
 
                 //change the c-variable within the inner loop
                 c += change;
                 d  = 1.0 - c;
             }
+            //Actualizar o TexX a cada nova linha
+            texX=0;
+            texY++;
+
             //change the a-variable outside the inner loop
             a += change;
             b  = 1.0 - a;

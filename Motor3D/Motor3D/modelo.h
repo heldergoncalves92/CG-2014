@@ -9,7 +9,6 @@
 #ifndef __Motor3D__modelo__
 #define __Motor3D__modelo__
 
-#include <iostream>
 #include "material.h"
 #include "viewFrustumCulling.h"
 
@@ -45,10 +44,19 @@ typedef struct smodelo{
     
 }*Modelo, NModelo;
 
+typedef struct sPicking{
+    
+    int cor;
+    const char *descricao;
+    const char *titulo;
+    
+}*Picking, NPicking;
+
 typedef struct sPropModel{
     Modelo modelo;
     Material materiais;
     unsigned int texID;
+    Picking picking;
     
     struct sPropModel *next;
     
@@ -65,6 +73,8 @@ Modelo ler_VBO(const char* filename, Modelo lista);
 Modelo search_Modelo(const char* nome, Modelo lista);
 void desenha_vbo(Vbo vbo, unsigned int texID);
 void desenha_RTime(RTime modelo);
+
+Picking preparaPicking(TiXmlNode *root);
 
 
 #endif /* defined(__Motor3D__modelo__) */
