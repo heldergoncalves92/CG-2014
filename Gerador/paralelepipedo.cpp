@@ -12,17 +12,15 @@
 void paralelepipedo(float lado_y, float lado_x, float lado_z, int camadas, int fatias, int fatias_z, FILE* f){
     
 	int flag=0;
+
     //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
     fprintf(f, "%f %f %f %f %f %f\n",lado_x/2.0f,-lado_x/2.0f,lado_y/2.0f,-lado_y/2.0f,lado_z/2.0f,-lado_z/2.0f);
- 
 	fprintf(f,"%d\n",2*(2*camadas*fatias + 2*fatias_z*camadas + 2*fatias*fatias_z)*9);
 
     plano(lado_y, lado_x, camadas, fatias, lado_z/2, 1,f, flag);
     plano(lado_y, lado_x, camadas, fatias, -lado_z/2, 2,f, flag);
-    
     plano(lado_y, lado_z, camadas, fatias_z, lado_x/2, 3,f, flag);
     plano(lado_y, lado_z, camadas, fatias_z, -lado_x/2, 4,f, flag);
-    
     plano(lado_x, lado_z, fatias, fatias_z, lado_y/2, 5,f, flag);
     plano(lado_x, lado_z, fatias, fatias_z, -lado_y/2, 6,f, flag);
 }
@@ -45,6 +43,7 @@ void paralelepipedoVBO(float lado_y, float lado_x, float lado_z, int camadas, in
     int n_indices=(2*fatias_x*camadas + 2*fatias_z*camadas + 2* fatias_x*fatias_z)*3*2;
     int tex_pontos=(n_pontos*2)/3;
     
+    //Alocações de memória
     float *vertexB=(float*)malloc(n_pontos*sizeof(float)),
     *normalB=(float*)malloc(n_pontos*sizeof(float)),
     *texB=(float*)malloc(tex_pontos*sizeof(float));

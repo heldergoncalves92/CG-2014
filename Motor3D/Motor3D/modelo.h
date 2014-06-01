@@ -49,6 +49,8 @@ typedef struct sPicking{
     int cor;
     const char *descricao;
     const char *titulo;
+    int desenha;
+    long pressTime;
     
 }*Picking, NPicking;
 
@@ -73,7 +75,7 @@ Modelo ler_VBO(const char* filename, Modelo lista);
 Modelo search_Modelo(const char* nome, Modelo lista);
 void desenha_vbo(Vbo vbo, unsigned int texID);
 void desenha_RTime(RTime modelo);
-
+void do_Picking(Picking pick,ViewFrustum viewFC, long time);
 Picking preparaPicking(TiXmlNode *root);
 
 

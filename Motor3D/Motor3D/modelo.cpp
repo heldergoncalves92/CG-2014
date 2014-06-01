@@ -253,12 +253,14 @@ Modelo search_Modelo(const char* nome, Modelo lista){
     return NULL;
 }
 
+//--------- Picking -----------// Não devia estar aqui, mas estava a dar problema com includes e não estava com paciencia xD
 Picking initPicking(){
     
     Picking picking=(Picking)malloc(sizeof(NPicking));
     picking->cor=cor_picks;
     picking->descricao="Sem descrição";
     picking->titulo="Sem titulo";
+    picking->desenha=0;
     cor_picks++;
     
     return picking;
@@ -296,13 +298,45 @@ Picking preparaPicking(TiXmlNode *root){
     
 }
 
+void renderBitmapString(float x,float y,float z,void *font,char *string) {
+    
+    char *c;
+    glRasterPos3f(x, y, z);
+    for (c=string; *c != '\0'; c++) {
+       // glutBitmapCharacter(font, *c);
+         glutBitmapCharacter(font, *c);
+    }
+}
+
+void do_Picking(Picking pick,ViewFrustum viewFC, long time){
+    if (pick && pick->desenha==1) {
+        
+        int luz=1, textura=1;
+        if(!glIsEnabled(GL_LIGHTING))
+            luz=0;
+        
+        if(!glIsEnabled(GL_TEXTURE_2D))
+            textura=0;
+        
+        glDisable(GL_LIGHTING);
+        glDisable(GL_TEXTURE_2D);
+        
+        if(time-pick->pressTime>5000)
+            pick->desenha=0;
+        
+        renderBitmapString(0, 2*viewFC->maxY, 0, GLUT_BITMAP_HELVETICA_18, (char*)pick->titulo);
+        renderBitmapString(0, viewFC->maxY, 0, GLUT_BITMAP_HELVETICA_12, (char*)pick->descricao);
+
+        
+        if(luz)
+            glEnable(GL_LIGHTING);
+        
+        if(textura)
+            glEnable(GL_TEXTURE_2D);
+    }
+}
+
 
     
-
-
-
-
-
-
 
 

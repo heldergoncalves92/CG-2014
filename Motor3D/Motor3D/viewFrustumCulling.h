@@ -22,6 +22,9 @@
 
 typedef struct sVFC{
     
+    //Função desactivada, porque de mometo só existe um modo de teste
+    //int tipoCaixa;
+    
     float maxX, maxY, maxZ;
     float minX, minY, minZ;
     

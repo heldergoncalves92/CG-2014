@@ -16,14 +16,11 @@ void cone(float raio_base, float altura, int fatias, int aneis, int camadas, FIL
 
     //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
     fprintf(f, "%f %f %f %d %f %f\n",raio_base, -raio_base,altura,0,raio_base,-raio_base);
+    fprintf(f,"%d\n",(2*fatias*(aneis-1)+fatias)*9+((camadas-1)*fatias*2+fatias)*9);
 
-    
     float i=1,factor_h=(i/camadas);
     float raio = raio_base/aneis;
     altura/=camadas;
-    
-    fprintf(f,"%d\n",(2*fatias*(aneis-1)+fatias)*9+((camadas-1)*fatias*2+fatias)*9);
-
 
     for(l_aux=0;l_aux<fatias;l_aux++){
             x=y;
@@ -108,14 +105,13 @@ void normal(float v1[], float v2[]){
 
 void coneVBO(float raio, float altura, int fatias, int aneis, int camadas, FILE *f){
     
-       float angulo=(2*M_PI)/fatias,y=0, r_aux,factor_h=(raio/camadas),alt_aux=0, v1[3],v2[3];
+    float angulo=(2*M_PI)/fatias,y=0, r_aux,factor_h=(raio/camadas),alt_aux=0, v1[3],v2[3];
     int i=0,v=0,j=0,n=0,avanco=0,t=0,l_aux;
     float texFactor_fatias=1.0f/fatias;
     float texFactor_aneis=1.0f/camadas;
     
     //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
     fprintf(f, "%f %f %f %d %f %f\n",raio, -raio,altura,0,raio,-raio);
-
 
     altura/=camadas;
     raio=raio/aneis;
@@ -124,20 +120,15 @@ void coneVBO(float raio, float altura, int fatias, int aneis, int camadas, FILE 
     int n_indices=(fatias*(aneis-1)*2+fatias)*3  +(fatias*(camadas-1)*2+fatias)*3;
     int tex_pontos= (2*n_pontos)/3;
     
-    
+    //Alocações de memória
     int* indices=(int*)malloc(n_indices*sizeof(int));
     float *vertexB=(float*)malloc(n_pontos*sizeof(float)),
     *normalB=(float*)malloc(n_pontos*sizeof(float)),
     *normLado=(float*)malloc((fatias+1)*3*sizeof(float)),
     *texB=(float*)malloc(tex_pontos*sizeof(float));
     
-
     
- 
-
-
     //--------- Base do cone ------------//
-    
     //Primeiro ponto central
     for (l_aux=0; l_aux<=fatias; l_aux++) {
         vertexB[v++]=0;vertexB[v++]=0;vertexB[v++]=0;

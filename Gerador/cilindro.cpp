@@ -16,11 +16,9 @@ void cilindro(float raio,int fatias,int camadas,float altura,int aneis, FILE* f)
 
     //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
     fprintf(f, "%f %f %f %d %f %f\n",raio, -raio,altura,0,raio,-raio);
-    
-    raio=raio/aneis;
-
-    
     fprintf(f,"%d\n",(2*fatias*(aneis-1)+fatias)*9*2 + 2*fatias*camadas*9);
+
+    raio=raio/aneis;
 
     for(l_aux=0;l_aux<fatias;l_aux++){
             x=y;
@@ -110,14 +108,13 @@ void cilindroVBO(float raio,int fatias,int camadas,float altura,int aneis, FILE*
     int n_indices= (fatias*camadas*3*2) + (fatias*(aneis-1)*2+fatias)*6;
     int tex_pontos=(n_pontos*2)/3;
     
+    //Alocações de memória
     float *vertexB=(float*)malloc(n_pontos*sizeof(float)),
     *normalB=(float*)malloc(n_pontos*sizeof(float)),
     *texB=(float*)malloc(tex_pontos*sizeof(float));
     int *indices=(int*)malloc(n_indices*sizeof(int));
 
 
-    
-    
     //------------- Circulo da base ----------------//
     r_aux=raio/aneis;
     

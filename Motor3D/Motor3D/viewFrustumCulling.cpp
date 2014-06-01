@@ -10,7 +10,7 @@
 
 float M[16],P[16],A[16];
 
-
+//Função que testa um ponto no clipSpace
 int testaPonto(float x, float y, float z){
     float lx, ly, lz, lw, w=1;
     
@@ -32,7 +32,7 @@ int testaPonto(float x, float y, float z){
 
 int testaSOLID(float maxX, float minX, float maxY, float minY, float maxZ, float minZ){
     
-    
+    //Testa os 8 pontos da caixa
     if(testaPonto(maxX, maxY, maxZ)==INSIDE)
         return INSIDE;
     
@@ -57,12 +57,11 @@ int testaSOLID(float maxX, float minX, float maxY, float minY, float maxZ, float
     if(testaPonto(minX, minY, minZ)==INSIDE)
         return INSIDE;
     
-    
-    
     return OUT;
 }
 
 
+//Função adaptada para varios tipos de formatos de caixa (caixa, esfera, etc)
 int testaModelo(ViewFrustum vfc){
     glGetFloatv(GL_MODELVIEW_MATRIX,M);
     glGetFloatv(GL_PROJECTION_MATRIX,P);
@@ -79,6 +78,7 @@ int testaModelo(ViewFrustum vfc){
     glGetFloatv(GL_MODELVIEW_MATRIX, A);
     glPopMatrix();
     
+    //Neste caso só testamos um tipo, mas podia haver mais, fazendo um 'if' no tipo de caixa
     if (testaSOLID(vfc->maxX,vfc->minX,vfc->maxY,vfc->minY,vfc->maxZ,vfc->minZ)==OUT)
         return OUT;
 
@@ -130,26 +130,3 @@ void desenhaCaixa(ViewFrustum view){
 
     }
 }
-
-/*
- //Calcula a matrix A
- A[0] =P[0]*M[0] + P[4]*M[1] + P[8]*M[2]  + P[12]*M[3];
- A[1] =P[1]*M[0] + P[5]*M[1] + P[9]*M[2]  + P[13]*M[3];
- A[2] =P[2]*M[0] + P[6]*M[1] + P[10]*M[2] + P[14]*M[3];
- A[3] =P[3]*M[0] + P[7]*M[1] + P[11]*M[2] + P[15]*M[3];
- 
- A[4] =P[0]*M[4] + P[4]*M[5] + P[8]*M[6]  + P[12]*M[7];
- A[5] =P[1]*M[4] + P[5]*M[5] + P[9]*M[6]  + P[13]*M[7];
- A[6] =P[2]*M[4] + P[6]*M[5] + P[10]*M[6] + P[14]*M[7];
- A[7] =P[3]*M[4] + P[7]*M[5] + P[11]*M[6] + P[15]*M[7];
- 
- A[8] =P[0]*M[8] + P[4]*M[9] + P[8]*M[10]  + P[12]*M[11];
- A[9] =P[1]*M[8] + P[5]*M[9] + P[9]*M[10]  + P[13]*M[11];
- A[10]=P[2]*M[8] + P[6]*M[9] + P[10]*M[10] + P[14]*M[11];
- A[11]=P[3]*M[8] + P[7]*M[9] + P[11]*M[10] + P[15]*M[11];
- 
- A[12]=P[0]*M[12] + P[4]*M[13] + P[8]*M[14]  + P[12]*M[15];
- A[13]=P[1]*M[12] + P[5]*M[13] + P[9]*M[14]  + P[13]*M[15];
- A[14]=P[2]*M[12] + P[6]*M[13] + P[10]*M[14] + P[14]*M[15];
- A[15]=P[3]*M[12] + P[7]*M[13] + P[11]*M[14] + P[15]*M[15];
- */

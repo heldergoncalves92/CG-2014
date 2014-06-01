@@ -19,7 +19,6 @@ void esfera(float raio, int camadas, int fatias, FILE* f){
     
     //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
     fprintf(f, "%f %f %f %f %f %f\n",raio, -raio,raio, -raio,raio,-raio);
- 
     fprintf(f,"%d\n",2*fatias*(camadas-1)*9);
 
     for (l_aux=0; l_aux<fatias; l_aux++) {

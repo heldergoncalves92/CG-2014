@@ -26,7 +26,7 @@ PropModel l_PropModel=NULL, prop_actual=NULL;
 long currentTime=0,test;
 
 //Numero de modelos desenhados
-int n_desenhos=0, total_desenhos=0, enableViewFrustum=0;
+int n_desenhos=0, total_desenhos=0, enableViewFrustum=0, caixasDesenho=0;
 char print[20]="";
 
 void changeSize(int w, int h){
@@ -55,7 +55,6 @@ void changeSize(int w, int h){
 }
 
 
-
 void renderScene(void) {
     
 	// clear buffers
@@ -64,6 +63,7 @@ void renderScene(void) {
 	// set the camera
 	glLoadIdentity();
 	
+    //Vê o glutAt a usar
     if (tipo_camera==1)
         modo_explorador();
     else
@@ -77,9 +77,10 @@ void renderScene(void) {
     
 	// pÙr instruÁıes de desenho aqui
 
-        //LUZES
+    //LUZES
     defineLuzes();
     
+    //Actualiza apontadores
 	rot_actual=rotacoes;
     tra_actual=translacoes;
     esc_actual=escalas;
@@ -91,22 +92,11 @@ void renderScene(void) {
     currentTime = glutGet(GLUT_ELAPSED_TIME);
     motor_XML(cena);
     
-    
-    
-    
+    //Alterar titulo da janela a cada frame
     sprintf(print, "Galaxy 3D ® => %d/%d desenhados\n",n_desenhos, total_desenhos);
     glutSetWindowTitle(print);
     
-  /*  setOrthographicProjection();
-    
-	glPushMatrix();
-	glLoadIdentity();
-	renderBitmapString(5,30,GLUT_BITMAP_HELVETICA_18,"Lighthouse3D");
-	glPopMatrix();
-    
-	restorePerspectiveProjection();
-    */
-	// End of frame
+    // End of frame
 	glutSwapBuffers();
 }
 
@@ -154,6 +144,13 @@ void front_menu(int op){
         case 11:
             enableViewFrustum=1;
             break;
+        case 12:
+            caixasDesenho=1;
+            break;
+        case 13:
+            caixasDesenho=0;
+            break;
+
         default:
             break;
     }
@@ -170,14 +167,14 @@ int main(int argc, char* argv[]){
     int M_Visual, M_Camera, M_Luzes, M_Texturas, M_ViewFrustum;
     
     
+   
+    if(argc!=2){
+        printf("ERRO!! Número de argumentos errado, falta XML de input!\n");
+        return 1;
+    }
     
-    //if(argc!=2){
-    //    printf("ERRO!! Número de argumentos errado, falta XML de input!\n");
-    //    return 1;
-    //}
-    
-	//if(doc.LoadFile(argv[1])){
-    if(doc.LoadFile("sistema_solar.xml")){
+	if(doc.LoadFile(argv[1])){
+    //if(doc.LoadFile("sistema_solar.xml")){
         
         root=doc.RootElement();
         cena=root->FirstChild("cena");
@@ -260,6 +257,8 @@ int main(int argc, char* argv[]){
             M_ViewFrustum=glutCreateMenu(front_menu);
             glutAddMenuEntry("Ligar",10);
             glutAddMenuEntry("Desligar",11);
+            glutAddMenuEntry("Desenhar Limites",12);
+            glutAddMenuEntry("Não Desenhar Limites",13);
             
             glutCreateMenu(front_menu);
             glutAddSubMenu("Visualização",M_Visual);
@@ -268,6 +267,7 @@ int main(int argc, char* argv[]){
             glutAddSubMenu("Texturas",M_Texturas);
             glutAddSubMenu("ViewFrustumCulling",M_ViewFrustum);
             
+            //Activar pop-up Menus  <<<<---------<<<<------<<<<---------<<<<------
             glutAttachMenu(GLUT_RIGHT_BUTTON);
             
             //Callback do GLEW - Tem de estar depois de todos os callbacks do GLUT

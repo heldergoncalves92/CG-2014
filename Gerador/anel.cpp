@@ -69,7 +69,7 @@ void anelVBO(float raio_fora, float raio_dentro, int fatias, int aneis, int ori,
     int n_indices=6*fatias*aneis;
     int tex_pontos= (2*n_pontos)/3;
     
-    
+    //Alocações de memória
     int *indices=(int*)malloc(n_indices*sizeof(int));
     
     float   *vertexB=(float*)malloc(n_pontos*sizeof(float)),

@@ -12,6 +12,7 @@
 #include "motorXML.h"
 #include "camera_explorador.h"
 #include "camera_fps.h"
+#include <unistd.h>
 
 
 void do_Picking(int xx, int yy);

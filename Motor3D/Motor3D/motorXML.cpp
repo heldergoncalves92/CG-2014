@@ -31,8 +31,12 @@ void motor_XML(TiXmlNode* root){
                     desenha_vbo(modelo->u.vbo, prop_actual->texID);
                 
                 do_MattNeutro(prop_actual->materiais);
+                do_Picking(prop_actual->picking, modelo->pontos,currentTime);
                 n_desenhos++;
-                desenhaCaixa(modelo->pontos);
+                
+                //Desenhar caixas do ViewFrustum
+                if(caixasDesenho)
+                    desenhaCaixa(modelo->pontos);
             }
             //Actualiza para propModel actual
             prop_actual=prop_actual->next;

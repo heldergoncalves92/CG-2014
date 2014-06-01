@@ -16,8 +16,6 @@ void modo_fps(){
 	gluLookAt(px,py,pz,
 	          px+sin(angCamFPS_h)*cos(angCamFPS_v), py+sin(angCamFPS_v), pz+cos(angCamFPS_h)*cos(angCamFPS_v),
               0.0f, 1.0f, 0.0f);
-
-    
 }
 
 

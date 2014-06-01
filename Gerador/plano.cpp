@@ -17,7 +17,6 @@
  
  5 -> +ZoX
  6 -> -ZoX
- 
 */
 
 void plano(float altura, float lado, int camadas, int fatias, float z_index, int ori, FILE* f, int flag){
@@ -29,7 +28,6 @@ void plano(float altura, float lado, int camadas, int fatias, float z_index, int
             if (flag==1){ 
                 //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
                 fprintf(f, "%f %f %f %f %f %f\n",lado/2.0f,-lado/2.0f,altura/2.0f, -altura/2.0f,z_index, z_index);
-            
                 fprintf(f,"%d\n",2*camadas*fatias*9);
             }
             for(altura=alt_ori;camadas>0;camadas--){
@@ -52,7 +50,6 @@ void plano(float altura, float lado, int camadas, int fatias, float z_index, int
             if (flag==1){ 
                 //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
                 fprintf(f, "%f %f %f %f %f %f\n",lado/2.0f,-lado/2.0f,altura/2.0f, -altura/2.0f,z_index, z_index);
-            
                 fprintf(f,"%d\n",2*camadas*fatias*9);
             }
             for(altura=alt_ori;camadas>0;camadas--){
@@ -75,7 +72,6 @@ void plano(float altura, float lado, int camadas, int fatias, float z_index, int
             if (flag==1){ 
                 //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
                 fprintf(f, "%f %f %f %f %f %f\n",z_index, z_index,altura/2.0f, -altura/2.0f,lado/2.0f,-lado/2.0f);
-                
                 fprintf(f,"%d\n",2*camadas*fatias*9);
             }
             for(altura=alt_ori;camadas>0;camadas--){
@@ -98,7 +94,6 @@ void plano(float altura, float lado, int camadas, int fatias, float z_index, int
             if (flag==1){ 
                 //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
                 fprintf(f, "%f %f %f %f %f %f\n",z_index, z_index,altura/2.0f, -altura/2.0f,lado/2.0f,-lado/2.0f);
-                
                 fprintf(f,"%d\n",2*camadas*fatias*9);
             }
             for(altura=alt_ori;camadas>0;camadas--){
@@ -121,7 +116,6 @@ void plano(float altura, float lado, int camadas, int fatias, float z_index, int
             if (flag==1){ 
                 //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
                 fprintf(f, "%f %f %f %f %f %f\n",altura/2.0f, -altura/2.0f,z_index, z_index,lado/2.0f,-lado/2.0f);
-                
                 fprintf(f,"%d\n",2*camadas*fatias*9);
             }
             for(altura=alt_ori;camadas>0;camadas--){
@@ -144,7 +138,6 @@ void plano(float altura, float lado, int camadas, int fatias, float z_index, int
             if (flag==1){ 
                 //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
                 fprintf(f, "%f %f %f %f %f %f\n",altura/2.0f, -altura/2.0f,z_index, z_index,lado/2.0f,-lado/2.0f);
-                
                 fprintf(f,"%d\n",2*camadas*fatias*9);
             }
             for(altura=alt_ori;camadas>0;camadas--){
@@ -181,6 +174,7 @@ void planoVBO(float altura, float lado, int camadas, int fatias, float z_index, 
     int n_indices=(2*fatias*camadas)*3;
     int tex_pontos=(n_pontos*2)/3;
     
+    //Alocações de memória
     float *vertexB=(float*)malloc(n_pontos*sizeof(float)),
     *normalB=(float*)malloc(n_pontos*sizeof(float)),
     *texB=(float*)malloc(tex_pontos*sizeof(float));

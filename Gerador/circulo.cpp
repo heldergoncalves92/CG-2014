@@ -10,15 +10,13 @@
 
 //ORI --- 1 -> BASE && 0 -> TOPO
 
-
 void circulo(float raio, int fatias,int aneis, float altura,int ori, FILE* f){
     float angulo=(2*M_PI)/fatias,x,y=0,l_aux, r_aux1,r_aux2;
 
-
     //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
     fprintf(f, "%f %f %f %f %f %f\n",raio, -raio,altura,altura,raio,-raio);
-
     fprintf(f,"%d\n",(2*fatias*(aneis-1)+fatias)*9);
+
     raio=raio/aneis;
     if(ori){
         for(l_aux=0;l_aux<fatias;l_aux++){
@@ -85,7 +83,6 @@ void circuloVBO(float raio, int fatias,int aneis, float altura,int ori, FILE *f)
     
     //Imprimir maxX, minX, maxY, minY, maxZ, minZ para o ViewFrustumCulling
     fprintf(f, "%f %f %f %f %f %f\n",raio, -raio,altura,altura,raio,-raio);
- 
     
     raio=raio/aneis;
     r_aux=raio;
@@ -93,12 +90,10 @@ void circuloVBO(float raio, int fatias,int aneis, float altura,int ori, FILE *f)
     int n_indices=(fatias*(aneis-1)*2+fatias)*3;
     int tex_pontos=(n_pontos*2)/3;
     
-    
-    
+    //Alocações de memória
     float *vertexB=(float*)malloc(n_pontos*sizeof(float)),
     *normalB=(float*)malloc(n_pontos*sizeof(float)),
     *texB=(float*)malloc(tex_pontos*sizeof(float));
-    
     int *indices=(int*)malloc(n_indices*sizeof(int));
     
    

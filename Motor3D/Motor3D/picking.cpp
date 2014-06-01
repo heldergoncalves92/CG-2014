@@ -121,9 +121,11 @@ void do_Picking(int x, int y){
     
     if (res[0]){
         if((pick_aux=procuraPicking((int)res[0]))){
-            //printf("Picked Snowman number %d\n", (int)res[0]);
             printf("Titulo: %s\nDescrição: %s\n\n",  pick_aux->titulo, pick_aux->descricao );
             
+            //Flag para poder desenhar descrição && tempo do click para a flag ser desligada passada 'X' tempo
+            pick_aux->desenha=1;
+            pick_aux->pressTime=currentTime;
         }
     }else
         printf("Nothing selected\n");

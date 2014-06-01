@@ -232,8 +232,6 @@ void read_Patch(FILE *f_patch, FILE *f, int detail){
     normais=(float*)malloc(n_patch*(3*(detail+1)*(detail+1))*sizeof(float));
     texB=(float*)malloc(tex_pontos*sizeof(float));
     points=getPoints(patchs,n_patch,vertices,n_vertices,detail, normais, texB);
-
-    
     
 
     //Descobrir os maximos e minimos para o ViewFrustumCulling
@@ -244,24 +242,18 @@ void read_Patch(FILE *f_patch, FILE *f, int detail){
     for(i=0;i<n_pontos;i+=3)
         fprintf(f, "%f %f %f\n",points[i],points[i+1],points[i+2]);
     
-    
     //Imprimir Indices
     n_indices=n_patch * detail * detail *3*2;
     fprintf(f, "%d\n",n_indices);
-    
     avanco=(detail+1)*(detail+1);
-    
     for(i=0;i<n_patch;i++){
         for (j=0; j<detail; j++) {
             for (v=0; v<detail; v++) {
-                
-                
+
                 fprintf(f, "%d %d %d\n",i*avanco + j*(detail+1) + v, i*avanco + j*(detail+1) + v+1 ,i*avanco + (j+1)*(detail+1) + v );
-                fprintf(f, "%d %d %d\n", i*avanco + j*(detail+1) + v+1 , i*avanco + (j+1)*(detail+1) + v+1 ,i*avanco + (j+1)*(detail+1) + v  );
-              
+                fprintf(f, "%d %d %d\n", i*avanco + j*(detail+1) + v+1 , i*avanco + (j+1)*(detail+1) + v+1 ,i*avanco + (j+1)*(detail+1) + v );              
             }
         }
-        
     }
 
     //Imprimir Normais
